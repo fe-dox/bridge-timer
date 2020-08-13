@@ -18,7 +18,7 @@ namespace TCTimer
         private void aboutMenuItem_Click(object sender, EventArgs e)
         {
             var about = new AboutForm();
-            about.Show();
+            about.ShowDialog(this);
         }
     }
 }

@@ -72,7 +72,7 @@ namespace TCTimer
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "AboutForm";
+            this.Name = "About";
             this.Text = "About";
             this.ResumeLayout(false);
         }

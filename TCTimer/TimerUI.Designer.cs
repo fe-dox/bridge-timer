@@ -51,15 +51,22 @@
             this.label4 = new System.Windows.Forms.Label();
             this.breakTextBox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label5 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.button6 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.numericUpDown3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).BeginInit();
             this.groupBox2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // showTimerButton
@@ -70,7 +77,6 @@
             this.showTimerButton.TabIndex = 0;
             this.showTimerButton.Text = "Show Timer";
             this.showTimerButton.UseVisualStyleBackColor = true;
-            this.showTimerButton.Click += new System.EventHandler(this.showTimerButton_Click);
             // 
             // groupBox1
             // 
@@ -106,7 +112,6 @@
             this.minutesPerRoundUpDown.Size = new System.Drawing.Size(54, 20);
             this.minutesPerRoundUpDown.TabIndex = 4;
             this.minutesPerRoundUpDown.Value = new decimal(new int[] {165, 0, 0, 65536});
-            this.minutesPerRoundUpDown.ValueChanged += new System.EventHandler(this.numericUpDown2_ValueChanged);
             // 
             // numberOfRoundsUpDown
             // 
@@ -124,7 +129,6 @@
             this.label1.Size = new System.Drawing.Size(101, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Number of rounds";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -138,10 +142,9 @@
             // 
             this.label3.Location = new System.Drawing.Point(6, 68);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(79, 17);
+            this.label3.Size = new System.Drawing.Size(101, 17);
             this.label3.TabIndex = 2;
-            this.label3.Text = "Time for break";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
+            this.label3.Text = "Seconds for break";
             // 
             // currentRoundLabel
             // 
@@ -265,12 +268,36 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.button6);
+            this.groupBox3.Controls.Add(this.numericUpDown1);
+            this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.checkBox1);
+            this.groupBox3.Controls.Add(this.textBox1);
             this.groupBox3.Location = new System.Drawing.Point(208, 87);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(385, 99);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Message";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.Location = new System.Drawing.Point(253, 19);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(104, 20);
+            this.checkBox1.TabIndex = 2;
+            this.checkBox1.Text = "Show fullscreen";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            this.textBox1.AcceptsReturn = true;
+            this.textBox1.Location = new System.Drawing.Point(6, 19);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.PasswordChar = '$';
+            this.textBox1.Size = new System.Drawing.Size(241, 74);
+            this.textBox1.TabIndex = 1;
             // 
             // menuStrip1
             // 
@@ -293,6 +320,30 @@
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeToolStripMenuItem.Text = "Close";
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(251, 42);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(50, 18);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Duration";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Location = new System.Drawing.Point(317, 40);
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(62, 20);
+            this.numericUpDown1.TabIndex = 4;
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(253, 66);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(126, 23);
+            this.button6.TabIndex = 5;
+            this.button6.Text = "Send Message";
+            this.button6.UseVisualStyleBackColor = true;
             // 
             // TimerForm
             // 
@@ -321,8 +372,11 @@
             ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -333,6 +387,8 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.Label currentRoundLabel;
         private System.Windows.Forms.Label currentTime;
@@ -344,14 +400,17 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.NumericUpDown minutesPerRoundUpDown;
         private System.Windows.Forms.NumericUpDown numberOfRoundsUpDown;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.NumericUpDown numericUpDown3;
         private System.Windows.Forms.TextBox resultsUrl;
         private System.Windows.Forms.CheckBox shortenUrlCheck;
         private System.Windows.Forms.Button showTimerButton;
+        private System.Windows.Forms.TextBox textBox1;
 
         #endregion
     }

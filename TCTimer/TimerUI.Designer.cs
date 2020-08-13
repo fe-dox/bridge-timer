@@ -31,7 +31,7 @@
         {
             this.showTimerButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.breakTimeUpDown = new System.Windows.Forms.NumericUpDown();
             this.minutesPerRoundUpDown = new System.Windows.Forms.NumericUpDown();
             this.numberOfRoundsUpDown = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
@@ -39,34 +39,35 @@
             this.label3 = new System.Windows.Forms.Label();
             this.currentRoundLabel = new System.Windows.Forms.Label();
             this.currentTime = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
+            this.previousRoundButton = new System.Windows.Forms.Button();
+            this.nextRoundButton = new System.Windows.Forms.Button();
+            this.addOneMinute = new System.Windows.Forms.Button();
+            this.substractOneMinute = new System.Windows.Forms.Button();
+            this.stopStartButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.shortenUrlCheck = new System.Windows.Forms.CheckBox();
+            this.shortenUrlCheckBox = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.resultsUrl = new System.Windows.Forms.TextBox();
+            this.resultsUrlTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.breakTextBox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button6 = new System.Windows.Forms.Button();
+            this.messageDurationUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label5 = new System.Windows.Forms.Label();
+            this.showMessageFullscreenCheckBox = new System.Windows.Forms.CheckBox();
+            this.messageTextBox = new System.Windows.Forms.TextBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label5 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.button6 = new System.Windows.Forms.Button();
+            this.closeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize) (this.messageDurationUpDown)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // showTimerButton
@@ -80,7 +81,7 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.numericUpDown3);
+            this.groupBox1.Controls.Add(this.breakTimeUpDown);
             this.groupBox1.Controls.Add(this.minutesPerRoundUpDown);
             this.groupBox1.Controls.Add(this.numberOfRoundsUpDown);
             this.groupBox1.Controls.Add(this.label1);
@@ -93,14 +94,14 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Time Settings";
             // 
-            // numericUpDown3
+            // breakTimeUpDown
             // 
-            this.numericUpDown3.Location = new System.Drawing.Point(130, 66);
-            this.numericUpDown3.Maximum = new decimal(new int[] {300, 0, 0, 0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(54, 20);
-            this.numericUpDown3.TabIndex = 5;
-            this.numericUpDown3.Value = new decimal(new int[] {30, 0, 0, 0});
+            this.breakTimeUpDown.Location = new System.Drawing.Point(130, 66);
+            this.breakTimeUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
+            this.breakTimeUpDown.Name = "breakTimeUpDown";
+            this.breakTimeUpDown.Size = new System.Drawing.Size(54, 20);
+            this.breakTimeUpDown.TabIndex = 5;
+            this.breakTimeUpDown.Value = new decimal(new int[] {30, 0, 0, 0});
             // 
             // minutesPerRoundUpDown
             // 
@@ -166,56 +167,56 @@
             this.currentTime.Text = "00:00";
             this.currentTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button1
+            // previousRoundButton
             // 
-            this.button1.Location = new System.Drawing.Point(237, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(54, 54);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.previousRoundButton.Location = new System.Drawing.Point(237, 27);
+            this.previousRoundButton.Name = "previousRoundButton";
+            this.previousRoundButton.Size = new System.Drawing.Size(54, 54);
+            this.previousRoundButton.TabIndex = 4;
+            this.previousRoundButton.Text = "<";
+            this.previousRoundButton.UseVisualStyleBackColor = true;
             // 
-            // button2
+            // nextRoundButton
             // 
-            this.button2.Location = new System.Drawing.Point(297, 27);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(54, 54);
-            this.button2.TabIndex = 5;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.nextRoundButton.Location = new System.Drawing.Point(297, 27);
+            this.nextRoundButton.Name = "nextRoundButton";
+            this.nextRoundButton.Size = new System.Drawing.Size(54, 54);
+            this.nextRoundButton.TabIndex = 5;
+            this.nextRoundButton.Text = ">";
+            this.nextRoundButton.UseVisualStyleBackColor = true;
             // 
-            // button3
+            // addOneMinute
             // 
-            this.button3.Location = new System.Drawing.Point(357, 27);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(54, 54);
-            this.button3.TabIndex = 6;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.addOneMinute.Location = new System.Drawing.Point(357, 27);
+            this.addOneMinute.Name = "addOneMinute";
+            this.addOneMinute.Size = new System.Drawing.Size(54, 54);
+            this.addOneMinute.TabIndex = 6;
+            this.addOneMinute.Text = "+1";
+            this.addOneMinute.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // substractOneMinute
             // 
-            this.button4.Location = new System.Drawing.Point(417, 27);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(54, 54);
-            this.button4.TabIndex = 7;
-            this.button4.Text = "button4";
-            this.button4.UseVisualStyleBackColor = true;
+            this.substractOneMinute.Location = new System.Drawing.Point(417, 27);
+            this.substractOneMinute.Name = "substractOneMinute";
+            this.substractOneMinute.Size = new System.Drawing.Size(54, 54);
+            this.substractOneMinute.TabIndex = 7;
+            this.substractOneMinute.Text = "-1";
+            this.substractOneMinute.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // stopStartButton
             // 
-            this.button5.Location = new System.Drawing.Point(177, 27);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(54, 54);
-            this.button5.TabIndex = 8;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
+            this.stopStartButton.Location = new System.Drawing.Point(177, 27);
+            this.stopStartButton.Name = "stopStartButton";
+            this.stopStartButton.Size = new System.Drawing.Size(54, 54);
+            this.stopStartButton.TabIndex = 8;
+            this.stopStartButton.Text = ">/||";
+            this.stopStartButton.UseVisualStyleBackColor = true;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.shortenUrlCheck);
+            this.groupBox2.Controls.Add(this.shortenUrlCheckBox);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Controls.Add(this.resultsUrl);
+            this.groupBox2.Controls.Add(this.resultsUrlTextBox);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.breakTextBox);
             this.groupBox2.Location = new System.Drawing.Point(12, 192);
@@ -225,16 +226,16 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Additional Settings";
             // 
-            // shortenUrlCheck
+            // shortenUrlCheckBox
             // 
-            this.shortenUrlCheck.Checked = true;
-            this.shortenUrlCheck.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.shortenUrlCheck.Location = new System.Drawing.Point(467, 46);
-            this.shortenUrlCheck.Name = "shortenUrlCheck";
-            this.shortenUrlCheck.Size = new System.Drawing.Size(98, 18);
-            this.shortenUrlCheck.TabIndex = 3;
-            this.shortenUrlCheck.Text = "Shorten URL";
-            this.shortenUrlCheck.UseVisualStyleBackColor = true;
+            this.shortenUrlCheckBox.Checked = true;
+            this.shortenUrlCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.shortenUrlCheckBox.Location = new System.Drawing.Point(467, 46);
+            this.shortenUrlCheckBox.Name = "shortenUrlCheckBox";
+            this.shortenUrlCheckBox.Size = new System.Drawing.Size(98, 18);
+            this.shortenUrlCheckBox.TabIndex = 3;
+            this.shortenUrlCheckBox.Text = "Shorten URL";
+            this.shortenUrlCheckBox.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -244,12 +245,12 @@
             this.label6.TabIndex = 2;
             this.label6.Text = "Results URL";
             // 
-            // resultsUrl
+            // resultsUrlTextBox
             // 
-            this.resultsUrl.Location = new System.Drawing.Point(91, 45);
-            this.resultsUrl.Name = "resultsUrl";
-            this.resultsUrl.Size = new System.Drawing.Size(368, 20);
-            this.resultsUrl.TabIndex = 1;
+            this.resultsUrlTextBox.Location = new System.Drawing.Point(91, 45);
+            this.resultsUrlTextBox.Name = "resultsUrlTextBox";
+            this.resultsUrlTextBox.Size = new System.Drawing.Size(368, 20);
+            this.resultsUrlTextBox.TabIndex = 1;
             // 
             // label4
             // 
@@ -269,72 +270,16 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.button6);
-            this.groupBox3.Controls.Add(this.numericUpDown1);
+            this.groupBox3.Controls.Add(this.messageDurationUpDown);
             this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.checkBox1);
-            this.groupBox3.Controls.Add(this.textBox1);
+            this.groupBox3.Controls.Add(this.showMessageFullscreenCheckBox);
+            this.groupBox3.Controls.Add(this.messageTextBox);
             this.groupBox3.Location = new System.Drawing.Point(208, 87);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(385, 99);
             this.groupBox3.TabIndex = 11;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Message";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.Location = new System.Drawing.Point(253, 19);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(104, 20);
-            this.checkBox1.TabIndex = 2;
-            this.checkBox1.Text = "Show fullscreen";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // textBox1
-            // 
-            this.textBox1.AcceptsReturn = true;
-            this.textBox1.Location = new System.Drawing.Point(6, 19);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.PasswordChar = '$';
-            this.textBox1.Size = new System.Drawing.Size(241, 74);
-            this.textBox1.TabIndex = 1;
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.fileToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(605, 24);
-            this.menuStrip1.TabIndex = 12;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // fileToolStripMenuItem
-            // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.closeToolStripMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
-            this.fileToolStripMenuItem.Text = "File";
-            // 
-            // closeToolStripMenuItem
-            // 
-            this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.closeToolStripMenuItem.Text = "Close";
-            // 
-            // label5
-            // 
-            this.label5.Location = new System.Drawing.Point(251, 42);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(50, 18);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Duration";
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(317, 40);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(62, 20);
-            this.numericUpDown1.TabIndex = 4;
             // 
             // button6
             // 
@@ -345,6 +290,72 @@
             this.button6.Text = "Send Message";
             this.button6.UseVisualStyleBackColor = true;
             // 
+            // messageDurationUpDown
+            // 
+            this.messageDurationUpDown.Location = new System.Drawing.Point(317, 40);
+            this.messageDurationUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
+            this.messageDurationUpDown.Minimum = new decimal(new int[] {5, 0, 0, 0});
+            this.messageDurationUpDown.Name = "messageDurationUpDown";
+            this.messageDurationUpDown.Size = new System.Drawing.Size(62, 20);
+            this.messageDurationUpDown.TabIndex = 4;
+            this.messageDurationUpDown.Value = new decimal(new int[] {5, 0, 0, 0});
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(251, 42);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(50, 18);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Duration";
+            // 
+            // showMessageFullscreenCheckBox
+            // 
+            this.showMessageFullscreenCheckBox.Location = new System.Drawing.Point(253, 19);
+            this.showMessageFullscreenCheckBox.Name = "showMessageFullscreenCheckBox";
+            this.showMessageFullscreenCheckBox.Size = new System.Drawing.Size(104, 20);
+            this.showMessageFullscreenCheckBox.TabIndex = 2;
+            this.showMessageFullscreenCheckBox.Text = "Show fullscreen";
+            this.showMessageFullscreenCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // messageTextBox
+            // 
+            this.messageTextBox.AcceptsReturn = true;
+            this.messageTextBox.Location = new System.Drawing.Point(6, 19);
+            this.messageTextBox.Multiline = true;
+            this.messageTextBox.Name = "messageTextBox";
+            this.messageTextBox.PasswordChar = '$';
+            this.messageTextBox.Size = new System.Drawing.Size(241, 74);
+            this.messageTextBox.TabIndex = 1;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.fileToolStripMenuItem, this.aboutMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(605, 24);
+            this.menuStrip1.TabIndex = 12;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.closeMenuItem});
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // closeMenuItem
+            // 
+            this.closeMenuItem.Name = "closeMenuItem";
+            this.closeMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeMenuItem.Text = "Close";
+            this.closeMenuItem.Click += new System.EventHandler(this.closeMenuItem_Click);
+            // 
+            // aboutMenuItem
+            // 
+            this.aboutMenuItem.Name = "aboutMenuItem";
+            this.aboutMenuItem.Size = new System.Drawing.Size(52, 20);
+            this.aboutMenuItem.Text = "About";
+            // 
             // TimerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -353,11 +364,11 @@
             this.ClientSize = new System.Drawing.Size(605, 276);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.stopStartButton);
+            this.Controls.Add(this.substractOneMinute);
+            this.Controls.Add(this.addOneMinute);
+            this.Controls.Add(this.nextRoundButton);
+            this.Controls.Add(this.previousRoundButton);
             this.Controls.Add(this.currentTime);
             this.Controls.Add(this.currentRoundLabel);
             this.Controls.Add(this.groupBox1);
@@ -367,29 +378,26 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "TimerForm";
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize) (this.messageDurationUpDown)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
 
+        private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
+        private System.Windows.Forms.Button addOneMinute;
         private System.Windows.Forms.TextBox breakTextBox;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.NumericUpDown breakTimeUpDown;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem closeMenuItem;
         private System.Windows.Forms.Label currentRoundLabel;
         private System.Windows.Forms.Label currentTime;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -403,14 +411,18 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.NumericUpDown messageDurationUpDown;
+        private System.Windows.Forms.TextBox messageTextBox;
         private System.Windows.Forms.NumericUpDown minutesPerRoundUpDown;
+        private System.Windows.Forms.Button nextRoundButton;
         private System.Windows.Forms.NumericUpDown numberOfRoundsUpDown;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
-        private System.Windows.Forms.TextBox resultsUrl;
-        private System.Windows.Forms.CheckBox shortenUrlCheck;
+        private System.Windows.Forms.Button previousRoundButton;
+        private System.Windows.Forms.TextBox resultsUrlTextBox;
+        private System.Windows.Forms.CheckBox shortenUrlCheckBox;
+        private System.Windows.Forms.CheckBox showMessageFullscreenCheckBox;
         private System.Windows.Forms.Button showTimerButton;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button stopStartButton;
+        private System.Windows.Forms.Button substractOneMinute;
 
         #endregion
     }

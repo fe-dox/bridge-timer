@@ -7,6 +7,8 @@ namespace TCTimer
     {
         public TimerForm()
         {
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             InitializeComponent();
         }
 

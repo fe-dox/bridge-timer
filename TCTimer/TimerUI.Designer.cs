@@ -29,7 +29,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.showTimerButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.breakTimeUpDown = new System.Windows.Forms.NumericUpDown();
@@ -61,7 +60,6 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).BeginInit();
@@ -426,7 +424,6 @@
         private System.Windows.Forms.Button showTimerButton;
         private System.Windows.Forms.Button stopStartButton;
         private System.Windows.Forms.Button substractOneMinute;
-        private System.Windows.Forms.Timer timer1;
 
         #endregion
     }

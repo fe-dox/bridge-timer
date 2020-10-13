@@ -29,6 +29,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimerForm));
             this.showTimerButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.breakTimeUpDown = new System.Windows.Forms.NumericUpDown();
@@ -51,7 +52,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.breakTextBox = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.button6 = new System.Windows.Forms.Button();
+            this.sendMessageButton = new System.Windows.Forms.Button();
             this.messageDurationUpDown = new System.Windows.Forms.NumericUpDown();
             this.label5 = new System.Windows.Forms.Label();
             this.showMessageFullscreenCheckBox = new System.Windows.Forms.CheckBox();
@@ -72,12 +73,16 @@
             // 
             // showTimerButton
             // 
+            this.showTimerButton.Image = ((System.Drawing.Image) (resources.GetObject("showTimerButton.Image")));
             this.showTimerButton.Location = new System.Drawing.Point(12, 27);
             this.showTimerButton.Name = "showTimerButton";
             this.showTimerButton.Size = new System.Drawing.Size(134, 54);
             this.showTimerButton.TabIndex = 0;
             this.showTimerButton.Text = "Show Timer";
+            this.showTimerButton.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.showTimerButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.showTimerButton.UseVisualStyleBackColor = true;
+            this.showTimerButton.Click += new System.EventHandler(this.showTimerButton_Click);
             // 
             // groupBox1
             // 
@@ -102,6 +107,7 @@
             this.breakTimeUpDown.Size = new System.Drawing.Size(54, 20);
             this.breakTimeUpDown.TabIndex = 5;
             this.breakTimeUpDown.Value = new decimal(new int[] {30, 0, 0, 0});
+            this.breakTimeUpDown.ValueChanged += new System.EventHandler(this.breakTimeUpDown_ValueChanged);
             // 
             // minutesPerRoundUpDown
             // 
@@ -113,6 +119,7 @@
             this.minutesPerRoundUpDown.Size = new System.Drawing.Size(54, 20);
             this.minutesPerRoundUpDown.TabIndex = 4;
             this.minutesPerRoundUpDown.Value = new decimal(new int[] {165, 0, 0, 65536});
+            this.minutesPerRoundUpDown.ValueChanged += new System.EventHandler(this.minutesPerRoundUpDown_ValueChanged);
             // 
             // numberOfRoundsUpDown
             // 
@@ -122,6 +129,7 @@
             this.numberOfRoundsUpDown.Size = new System.Drawing.Size(54, 20);
             this.numberOfRoundsUpDown.TabIndex = 3;
             this.numberOfRoundsUpDown.Value = new decimal(new int[] {12, 0, 0, 0});
+            this.numberOfRoundsUpDown.ValueChanged += new System.EventHandler(this.numberOfRoundsUpDown_ValueChanged);
             // 
             // label1
             // 
@@ -154,7 +162,7 @@
             this.currentRoundLabel.Name = "currentRoundLabel";
             this.currentRoundLabel.Size = new System.Drawing.Size(114, 23);
             this.currentRoundLabel.TabIndex = 1;
-            this.currentRoundLabel.Text = "Runda 11";
+            this.currentRoundLabel.Text = "Runda 0";
             this.currentRoundLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // currentTime
@@ -169,48 +177,55 @@
             // 
             // previousRoundButton
             // 
+            this.previousRoundButton.Image = ((System.Drawing.Image) (resources.GetObject("previousRoundButton.Image")));
             this.previousRoundButton.Location = new System.Drawing.Point(237, 27);
             this.previousRoundButton.Name = "previousRoundButton";
+            this.previousRoundButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.previousRoundButton.Size = new System.Drawing.Size(54, 54);
             this.previousRoundButton.TabIndex = 4;
-            this.previousRoundButton.Text = "<";
             this.previousRoundButton.UseVisualStyleBackColor = true;
+            this.previousRoundButton.Click += new System.EventHandler(this.previousRoundButton_Click);
             // 
             // nextRoundButton
             // 
+            this.nextRoundButton.Image = ((System.Drawing.Image) (resources.GetObject("nextRoundButton.Image")));
             this.nextRoundButton.Location = new System.Drawing.Point(297, 27);
             this.nextRoundButton.Name = "nextRoundButton";
             this.nextRoundButton.Size = new System.Drawing.Size(54, 54);
             this.nextRoundButton.TabIndex = 5;
-            this.nextRoundButton.Text = ">";
             this.nextRoundButton.UseVisualStyleBackColor = true;
+            this.nextRoundButton.Click += new System.EventHandler(this.nextRoundButton_Click);
             // 
             // addOneMinute
             // 
+            this.addOneMinute.Image = ((System.Drawing.Image) (resources.GetObject("addOneMinute.Image")));
             this.addOneMinute.Location = new System.Drawing.Point(357, 27);
             this.addOneMinute.Name = "addOneMinute";
             this.addOneMinute.Size = new System.Drawing.Size(54, 54);
             this.addOneMinute.TabIndex = 6;
-            this.addOneMinute.Text = "+1";
             this.addOneMinute.UseVisualStyleBackColor = true;
+            this.addOneMinute.Click += new System.EventHandler(this.addOneMinute_Click);
             // 
             // substractOneMinute
             // 
+            this.substractOneMinute.Image = ((System.Drawing.Image) (resources.GetObject("substractOneMinute.Image")));
             this.substractOneMinute.Location = new System.Drawing.Point(417, 27);
             this.substractOneMinute.Name = "substractOneMinute";
+            this.substractOneMinute.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.substractOneMinute.Size = new System.Drawing.Size(54, 54);
             this.substractOneMinute.TabIndex = 7;
-            this.substractOneMinute.Text = "-1";
             this.substractOneMinute.UseVisualStyleBackColor = true;
+            this.substractOneMinute.Click += new System.EventHandler(this.subtractOneMinute_Click);
             // 
             // stopStartButton
             // 
+            this.stopStartButton.Image = ((System.Drawing.Image) (resources.GetObject("stopStartButton.Image")));
             this.stopStartButton.Location = new System.Drawing.Point(177, 27);
             this.stopStartButton.Name = "stopStartButton";
             this.stopStartButton.Size = new System.Drawing.Size(54, 54);
             this.stopStartButton.TabIndex = 8;
-            this.stopStartButton.Text = ">/||";
             this.stopStartButton.UseVisualStyleBackColor = true;
+            this.stopStartButton.Click += new System.EventHandler(this.stopStartButton_Click);
             // 
             // groupBox2
             // 
@@ -236,6 +251,7 @@
             this.shortenUrlCheckBox.TabIndex = 3;
             this.shortenUrlCheckBox.Text = "Shorten URL";
             this.shortenUrlCheckBox.UseVisualStyleBackColor = true;
+            this.shortenUrlCheckBox.CheckedChanged += new System.EventHandler(this.shortenUrlCheckBox_CheckedChanged);
             // 
             // label6
             // 
@@ -251,6 +267,8 @@
             this.resultsUrlTextBox.Name = "resultsUrlTextBox";
             this.resultsUrlTextBox.Size = new System.Drawing.Size(368, 20);
             this.resultsUrlTextBox.TabIndex = 1;
+            this.resultsUrlTextBox.TextChanged += new System.EventHandler(this.resultsUrlTextBox_TextChanged);
+            this.resultsUrlTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.resultsUrlTextBox_KeyPress);
             // 
             // label4
             // 
@@ -263,13 +281,15 @@
             // breakTextBox
             // 
             this.breakTextBox.Location = new System.Drawing.Point(91, 19);
+            this.breakTextBox.MaxLength = 120;
             this.breakTextBox.Name = "breakTextBox";
             this.breakTextBox.Size = new System.Drawing.Size(474, 20);
             this.breakTextBox.TabIndex = 0;
+            this.breakTextBox.TextChanged += new System.EventHandler(this.breakTextBox_TextChanged);
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.button6);
+            this.groupBox3.Controls.Add(this.sendMessageButton);
             this.groupBox3.Controls.Add(this.messageDurationUpDown);
             this.groupBox3.Controls.Add(this.label5);
             this.groupBox3.Controls.Add(this.showMessageFullscreenCheckBox);
@@ -281,14 +301,15 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Message";
             // 
-            // button6
+            // sendMessageButton
             // 
-            this.button6.Location = new System.Drawing.Point(253, 66);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(126, 23);
-            this.button6.TabIndex = 5;
-            this.button6.Text = "Send Message";
-            this.button6.UseVisualStyleBackColor = true;
+            this.sendMessageButton.Location = new System.Drawing.Point(253, 66);
+            this.sendMessageButton.Name = "sendMessageButton";
+            this.sendMessageButton.Size = new System.Drawing.Size(126, 23);
+            this.sendMessageButton.TabIndex = 5;
+            this.sendMessageButton.Text = "Send Message";
+            this.sendMessageButton.UseVisualStyleBackColor = true;
+            this.sendMessageButton.Click += new System.EventHandler(this.sendMessageButton_Click);
             // 
             // messageDurationUpDown
             // 
@@ -375,9 +396,11 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.showTimerButton);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(15, 15);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "TimerForm";
+            this.Text = "Bridge Timer";
             this.groupBox1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).EndInit();
@@ -393,11 +416,12 @@
             this.PerformLayout();
         }
 
+        private System.Windows.Forms.Button sendMessageButton;
+
         private System.Windows.Forms.ToolStripMenuItem aboutMenuItem;
         private System.Windows.Forms.Button addOneMinute;
         private System.Windows.Forms.TextBox breakTextBox;
         private System.Windows.Forms.NumericUpDown breakTimeUpDown;
-        private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ToolStripMenuItem closeMenuItem;
         private System.Windows.Forms.Label currentRoundLabel;
         private System.Windows.Forms.Label currentTime;

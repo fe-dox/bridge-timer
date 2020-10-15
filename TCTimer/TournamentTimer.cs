@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 namespace TCTimer
 {
     [DataContract]
-    public class TournamentTimer
+    public class TournamentTimer : IEquatable<TournamentTimer>
     {
         [DataMember] private readonly Timer _framesTimer;
         [DataMember] private int _currentRound = 1;
@@ -32,6 +32,9 @@ namespace TCTimer
         [DataMember] public string ResultsUrl { get; set; } = string.Empty;
         [DataMember] public bool Running { get; private set; }
         [DataMember] public bool IsBreak { get; private set; }
+        [DataMember] public string Message { get; set; }
+        [DataMember] public string MessageDuration { get; set; }
+        [DataMember] public DateTime MessageExpiration { get; set; }
 
         public float MinutesForRound
         {
@@ -65,6 +68,19 @@ namespace TCTimer
 
         public DateTime Target => _target;
         public int CurrentRound => _currentRound;
+
+        public bool Equals(TournamentTimer other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(_framesTimer, other._framesTimer) && _currentRound == other._currentRound &&
+                   _minutesForRound.Equals(other._minutesForRound) && _pausedAtTime.Equals(other._pausedAtTime) &&
+                   _secondsForBreak == other._secondsForBreak && _target.Equals(other._target) &&
+                   NumberOfRounds == other.NumberOfRounds && Finished == other.Finished &&
+                   BreakText == other.BreakText && ResultsUrl == other.ResultsUrl && Running == other.Running &&
+                   IsBreak == other.IsBreak && Message == other.Message && MessageDuration == other.MessageDuration &&
+                   MessageExpiration.Equals(other.MessageExpiration);
+        }
 
         public event EventHandler<DateTime> SettingsChanged;
         public event EventHandler<DateTime> Tick;
@@ -157,6 +173,39 @@ namespace TCTimer
             if (!Running)
             {
                 SettingsChanged?.Invoke(this, _target);
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((TournamentTimer) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                // ReSharper disable NonReadonlyMemberInGetHashCode
+                var hashCode = (_framesTimer != null ? _framesTimer.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ _currentRound;
+                hashCode = (hashCode * 397) ^ _minutesForRound.GetHashCode();
+                hashCode = (hashCode * 397) ^ _pausedAtTime.GetHashCode();
+                hashCode = (hashCode * 397) ^ _secondsForBreak;
+                hashCode = (hashCode * 397) ^ _target.GetHashCode();
+                hashCode = (hashCode * 397) ^ NumberOfRounds;
+                hashCode = (hashCode * 397) ^ Finished.GetHashCode();
+                hashCode = (hashCode * 397) ^ (BreakText != null ? BreakText.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (ResultsUrl != null ? ResultsUrl.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Running.GetHashCode();
+                hashCode = (hashCode * 397) ^ IsBreak.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Message != null ? Message.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (MessageDuration != null ? MessageDuration.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ MessageExpiration.GetHashCode();
+                return hashCode;
+                // ReSharper enable NonReadonlyMemberInGetHashCode
             }
         }
     }

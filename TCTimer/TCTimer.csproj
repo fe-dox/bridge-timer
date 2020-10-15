@@ -35,6 +35,7 @@
     <ItemGroup>
         <Reference Include="System" />
         <Reference Include="System.Core" />
+        <Reference Include="System.Runtime.Serialization" />
         <Reference Include="System.Xml.Linq" />
         <Reference Include="System.Data.DataSetExtensions" />
         <Reference Include="Microsoft.CSharp" />
@@ -88,6 +89,12 @@
     </ItemGroup>
     <ItemGroup>
         <None Include="App.config" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Utils\Utils.csproj">
+        <Project>{eeaf3518-abc6-457c-a230-81e86124cf27}</Project>
+        <Name>Utils</Name>
+      </ProjectReference>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

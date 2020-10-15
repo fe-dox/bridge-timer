@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TCTimer", "TCTimer\TCTimer.csproj", "{4887B379-47E8-4A87-85CC-C6AF590F00D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{EEAF3518-ABC6-457C-A230-81E86124CF27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{4887B379-47E8-4A87-85CC-C6AF590F00D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4887B379-47E8-4A87-85CC-C6AF590F00D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4887B379-47E8-4A87-85CC-C6AF590F00D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEAF3518-ABC6-457C-A230-81E86124CF27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEAF3518-ABC6-457C-A230-81E86124CF27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEAF3518-ABC6-457C-A230-81E86124CF27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEAF3518-ABC6-457C-A230-81E86124CF27}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

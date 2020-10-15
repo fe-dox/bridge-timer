@@ -251,7 +251,6 @@
             this.shortenUrlCheckBox.TabIndex = 3;
             this.shortenUrlCheckBox.Text = "Shorten URL";
             this.shortenUrlCheckBox.UseVisualStyleBackColor = true;
-            this.shortenUrlCheckBox.CheckedChanged += new System.EventHandler(this.shortenUrlCheckBox_CheckedChanged);
             // 
             // label6
             // 
@@ -267,7 +266,7 @@
             this.resultsUrlTextBox.Name = "resultsUrlTextBox";
             this.resultsUrlTextBox.Size = new System.Drawing.Size(368, 20);
             this.resultsUrlTextBox.TabIndex = 1;
-            this.resultsUrlTextBox.TextChanged += new System.EventHandler(this.resultsUrlTextBox_TextChanged);
+            this.resultsUrlTextBox.LostFocus += new System.EventHandler(this.resultsUrlTextBox_TextChanged);
             this.resultsUrlTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.resultsUrlTextBox_KeyPress);
             // 
             // label4

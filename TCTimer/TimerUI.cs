@@ -1,25 +1,37 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using Utils;
 
 namespace TCTimer
 {
     public partial class TimerForm : Form
     {
         private readonly ComponentResourceManager _resources;
+        private readonly ResultsUrlShortener _resultsUrlShortener;
         private readonly TournamentTimer _tournamentTimer;
+
 
         public TimerForm()
         {
+            _resultsUrlShortener = new ResultsUrlShortener();
             _resources = new ComponentResourceManager(typeof(TimerForm));
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
+            FormClosing += TimerForm_FormClosing;
             InitializeComponent();
             _tournamentTimer = new TournamentTimer((int) numberOfRoundsUpDown.Value,
                 (float) minutesPerRoundUpDown.Value, (int) breakTimeUpDown.Value);
             _tournamentTimer.Tick += UpdateTime;
             _tournamentTimer.SettingsChanged += UpdateTime;
+        }
+
+        private void TimerForm_FormClosing(object sender, FormClosingEventArgs formClosingEvent)
+        {
+            if (MessageBox.Show("Are you sure you want to close this window?", "Are you sure?",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) formClosingEvent.Cancel = true;
         }
 
         private void closeMenuItem_Click(object sender, EventArgs e)
@@ -57,14 +69,24 @@ namespace TCTimer
 
         private void breakTextBox_TextChanged(object sender, EventArgs e)
         {
+            _tournamentTimer.BreakText = breakTextBox.Text;
         }
 
-        private void resultsUrlTextBox_TextChanged(object sender, EventArgs e)
+        private async void resultsUrlTextBox_TextChanged(object sender, EventArgs e)
         {
-        }
-
-        private void shortenUrlCheckBox_CheckedChanged(object sender, EventArgs e)
-        {
+            if (!shortenUrlCheckBox.Checked) return;
+            if (!Uri.IsWellFormedUriString(resultsUrlTextBox.Text, UriKind.Absolute)) return;
+            try
+            {
+                var shortenedUrl = await
+                    Task.Factory.StartNew(() => _resultsUrlShortener.ShortenUrl(new Uri(resultsUrlTextBox.Text)));
+                _tournamentTimer.ResultsUrl = shortenedUrl.ToString();
+            }
+            catch
+            {
+                MessageBox.Show("Couldn't shorten URL", "Something went wrong", MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private void sendMessageButton_Click(object sender, EventArgs e)

@@ -32,13 +32,22 @@ namespace TCTimer
                 (float) minutesPerRoundUpDown.Value, (int) breakTimeUpDown.Value);
             _tournamentTimer.Tick += UpdateTime;
             _tournamentTimer.SettingsChanged += UpdateTime;
+            _tournamentTimer.OnFinished += OnFinished;
             _serializationTimer.Elapsed += WriteTournamentTimer;
             _serializationTimer.Start();
             if (!Directory.Exists(_timerPath))
             {
                 Directory.CreateDirectory(_timerPath);
             }
+
             _simpleHttpServer = new SimpleHttpServer(_timerPath);
+        }
+
+        private void OnFinished(object sender, EventArgs e)
+        {
+            currentTime.Text = DateTime.Now.ToString(@"HH\:mm\:ss");
+            currentRoundLabel.Text = "Finished";
+            stopStartButton.Image = (Image) _resources.GetObject("stopStartButton.Image");
         }
 
         private static void TimerForm_FormClosing(object sender, FormClosingEventArgs formClosingEvent)
@@ -68,7 +77,7 @@ namespace TCTimer
 
         private void UpdateTime(object obj, DateTime target)
         {
-            currentTime.Text = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
+            currentTime.Text = target.Subtract(DateTime.Now).ToString(@"HH\:mm\:ss");
             currentRoundLabel.Text =
                 _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRound.ToString()}";
         }
@@ -95,8 +104,12 @@ namespace TCTimer
 
         private async void resultsUrlTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (!shortenUrlCheckBox.Checked) return;
             if (!Uri.IsWellFormedUriString(resultsUrlTextBox.Text, UriKind.Absolute)) return;
+            if (!shortenUrlCheckBox.Checked)
+            {
+                _tournamentTimer.ResultsUrl = resultsUrlTextBox.Text;
+                return;
+            }
             try
             {
                 var shortenedUrl = await

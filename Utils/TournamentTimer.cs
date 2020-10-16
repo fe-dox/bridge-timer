@@ -7,8 +7,8 @@ namespace Utils
     [DataContract]
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
-        [DataMember] private readonly Timer _framesTimer;
         [DataMember] private int _currentRound = 1;
+        [DataMember] private Timer _framesTimer;
         [DataMember] private float _minutesForRound;
         [DataMember] private DateTime _pausedAtTime;
         [DataMember] private int _secondsForBreak;
@@ -87,6 +87,7 @@ namespace Utils
 
         public event EventHandler<DateTime> SettingsChanged;
         public event EventHandler<DateTime> Tick;
+        public event EventHandler OnFinished;
 
         private TimeSpan RoundTimeSpan()
         {
@@ -106,6 +107,7 @@ namespace Utils
                     if (_currentRound + 1 > NumberOfRounds)
                     {
                         Finished = true;
+                        OnFinished?.Invoke(this, null);
                         Pause();
                     }
                     else
@@ -158,6 +160,7 @@ namespace Utils
                 _target = DateTime.Now.Add(RoundTimeSpan());
                 IsBreak = false;
                 _currentRound++;
+                _pausedAtTime = DateTime.Now;
                 if (!Running)
                 {
                     SettingsChanged?.Invoke(this, _target);
@@ -173,8 +176,11 @@ namespace Utils
                 _currentRound--;
             }
 
+            IsBreak = false;
+
             if (!Running)
             {
+                _pausedAtTime = DateTime.Now;
                 SettingsChanged?.Invoke(this, _target);
             }
         }
@@ -215,6 +221,8 @@ namespace Utils
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context)
         {
+            _framesTimer = new Timer(50);
+            _framesTimer.Elapsed += OnTick;
             if (Running)
             {
                 _framesTimer.Start();

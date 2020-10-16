@@ -1,5 +1,7 @@
-﻿body {
+﻿html, body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  width: 99%;
+  height: 99%;
 }
 
 app {
@@ -16,13 +18,30 @@ app {
 }
 
 .clock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   align-self: center;
-  justify-self: center;
-  font-size: 3em;
+  margin: auto;
 }
 
-.round {
-  align-self: flex-end;
-  justify-self: flex-end;
-  font-size: 1.5em;
+.clock-time{
+  font-size: 12em;
+}
+.clock-label{
+  font-size: 6em;
+}
+
+.current-time {
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  font-size: 5em;
+}
+
+.results {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  font-size: 4em;
 }

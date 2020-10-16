@@ -3,35 +3,54 @@
 
 <div class="main">
     <div class="clock">
-        @_clockValue
-    </div>
-    @if (_tournamentTimer != null)
-    {
-        <div class="round">@_tournamentTimer.CurrentRound.ToString() / @_tournamentTimer.NumberOfRounds.ToString()</div>
-        @if (!string.IsNullOrEmpty(_tournamentTimer.ResultsUrl))
+        <div class="clock-time">@_clockValue</div>
+        @if (_tournamentTimer != null)
         {
-            <div class="results">@_tournamentTimer.ResultsUrl</div>
+            if (_tournamentTimer.IsBreak)
+            {
+                <div class="clock-label">@_tournamentTimer.BreakText</div>
+            }
+            else
+            {
+                <div class="clock-label">Round @_tournamentTimer.CurrentRound.ToString()/@_tournamentTimer.NumberOfRounds.ToString()</div>
+            }
         }
+    </div>
+    <div class="current-time">@_currentTimeValue</div>
+    @if (!string.IsNullOrEmpty(_tournamentTimer?.ResultsUrl))
+    {
+        <div class="results">@_tournamentTimer.ResultsUrl</div>
     }
 </div>
 
 
 @code{
     private readonly Timer _refreshTimer = new Timer(1000);
+    private readonly Timer _framesTimer = new Timer(200);
+    private string _currentTimeValue = string.Empty;
+    private int _connectionErrors = 0;
     private TournamentTimer _tournamentTimer;
     private readonly DataContractSerializer _serializer = new DataContractSerializer(typeof(TournamentTimer));
-    private string _clockValue = "00:00:00";
+    private string _clockValue = "00:00";
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         _refreshTimer.Elapsed += RefreshData;
-        using var httpClient = new HttpClient();
-        var timerDataStream =
-            await httpClient.GetStreamAsync(NavigationManager.BaseUri + "./timer.xml");
-        _tournamentTimer = _serializer.ReadObject(timerDataStream) as TournamentTimer;
+        try
+        {
+            using var httpClient = new HttpClient();
+            var timerDataStream =
+                await httpClient.GetStreamAsync(NavigationManager.BaseUri + "./timer.xml");
+            _tournamentTimer = _serializer.ReadObject(timerDataStream) as TournamentTimer;
+        }
+        catch (Exception e)
+        {
+            _clockValue = "Please Refresh Webpage";
+        }
         _refreshTimer.Start();
-        await RefreshData();
+        _framesTimer.Elapsed += UpdateUi;
+        _framesTimer.Start();
     }
 
     private async void RefreshData(object sender, ElapsedEventArgs elapsedEventArgs)
@@ -50,24 +69,31 @@
             if (!_tournamentTimer.Equals(tmpTimer) && tmpTimer != null)
             {
                 _tournamentTimer = tmpTimer;
-                _tournamentTimer.Tick += UpdateUi;
             }
-            if (!_tournamentTimer.Running && !_tournamentTimer.Finished)
-            {
-                _clockValue = _tournamentTimer.Target.Subtract(_tournamentTimer.PausedAtTime).ToString(@"hh\:mm\:ss");
-            }
+            _refreshTimer.Interval = 1000;
+            _connectionErrors = 0;
         }
-        catch (Exception e)
+        catch
         {
-            Console.WriteLine(e);
+            _connectionErrors++;
+            _refreshTimer.Interval = Math.Min(10000, (_connectionErrors + 1) * 1000);
         }
         StateHasChanged();
     }
 
-    private void UpdateUi(object sender, DateTime target)
+    private void UpdateUi(object sender, EventArgs e)
     {
-        Console.WriteLine("Updating UI");
-        _clockValue = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
+        if (_tournamentTimer.Running)
+        {
+            var time = _tournamentTimer.Target.Subtract(DateTime.Now);
+            _clockValue = time.Hours == 0 ? time.ToString(@"mm\:ss") : time.ToString(@"HH\:mm\:ss");
+        }
+        else
+        {
+            var time = _tournamentTimer.Target.Subtract(_tournamentTimer.PausedAtTime);
+            _clockValue = time.Hours == 0 ? time.ToString(@"mm\:ss") : time.ToString(@"HH\:mm\:ss");
+        }
+        _currentTimeValue = DateTime.Now.ToString(@"HH\:mm");
         StateHasChanged();
     }
 

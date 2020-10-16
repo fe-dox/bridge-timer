@@ -1,0 +1,55 @@
+﻿@page "/"
+
+<div class="main">
+    <div class="clock">
+        @_clockValue
+    </div>
+    <div class="round">Round @_tournamentTimer.CurrentRound.ToString() / @_tournamentTimer.NumberOfRounds.ToString()</div>
+    @if (!string.IsNullOrEmpty(_tournamentTimer.ResultsUrl))
+    {
+        <div class="results">@_tournamentTimer.ResultsUrl</div>
+    }
+</div>
+
+
+@code{
+    private readonly Timer _refreshTimer = new Timer(200);
+    private TournamentTimer _tournamentTimer;
+    private DataContractSerializer _serializer = new DataContractSerializer(typeof(TournamentTimer));
+    private string _clockValue = "00:00:00";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        _refreshTimer.Elapsed += RefreshData;
+        RefreshData();
+    }
+
+    private void RefreshData(object sender, ElapsedEventArgs elapsedEventArgs)
+    {
+        RefreshData();
+    }
+
+    private async void RefreshData()
+    {
+        using var httpClient = new HttpClient();
+        var timerDataStream =
+            await httpClient.GetStreamAsync("./timer.xml");
+        var tmpTimer = _serializer.ReadObject(timerDataStream) as TournamentTimer;
+        if (!_tournamentTimer.Equals(tmpTimer) && tmpTimer != null)
+        {
+            _tournamentTimer = tmpTimer;
+            _tournamentTimer.Tick += UpdateUi;
+        }
+        if (!_tournamentTimer.Running && !_tournamentTimer.Finished)
+        {
+            _clockValue = _tournamentTimer.Target.Subtract(_tournamentTimer.PausedAtTime).ToString(@"hh\:mm\:ss");
+        }
+    }
+
+    private void UpdateUi(object sender, DateTime target)
+    {
+        _clockValue = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
+    }
+
+}

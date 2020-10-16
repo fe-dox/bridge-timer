@@ -1,0 +1,25 @@
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+.main {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.clock {
+  align-self: center;
+  justify-self: center;
+  font-size: 3em;
+}
+
+.round {
+  align-self: flex-end;
+  justify-self: flex-end;
+  font-size: 1.5em;
+}
+
+/*# sourceMappingURL=main.css.map */

@@ -17,8 +17,8 @@ namespace TCTimer
             _numberOfClicks++;
             if (_numberOfClicks == 7)
                 MessageBox.Show(
-                    "Ale sobie kliknąłeś, no fajnie tak nie? Jakiś easter egg taki, co? Nie spodziwałeś się tego wcale",
-                    "Halo kartus", MessageBoxButtons.OK);
+                    "Klikajcie a będzie wam dane",
+                    "Amen", MessageBoxButtons.OK);
         }
     }
 }

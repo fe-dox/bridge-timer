@@ -14,7 +14,6 @@ namespace TCTimer
         [DataMember] private int _secondsForBreak;
         [DataMember] private DateTime _target;
 
-
         public TournamentTimer(int numberOfRounds, float minutesForRound, int secondsForBreak)
         {
             NumberOfRounds = numberOfRounds;
@@ -25,6 +24,7 @@ namespace TCTimer
             _target = DateTime.Now.Add(RoundTimeSpan());
             _pausedAtTime = DateTime.Now;
         }
+
 
         [DataMember] public int NumberOfRounds { get; set; }
         [DataMember] public bool Finished { get; private set; }
@@ -67,6 +67,9 @@ namespace TCTimer
 
 
         public DateTime Target => _target;
+
+        public DateTime PausedAtTime => _pausedAtTime;
+
         public int CurrentRound => _currentRound;
 
         public bool Equals(TournamentTimer other)

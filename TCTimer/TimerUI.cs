@@ -1,9 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
+using System.IO;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Forms;
 using Utils;
+using Timer = System.Timers.Timer;
 
 namespace TCTimer
 {
@@ -11,8 +15,10 @@ namespace TCTimer
     {
         private readonly ComponentResourceManager _resources;
         private readonly ResultsUrlShortener _resultsUrlShortener;
+        private readonly Timer _serializationTimer = new Timer(200);
+        private readonly SimpleHttpServer _simpleHttpServer;
+        private readonly string _timerPath = Path.GetTempPath() + "\\bridge_timer\\" + Path.GetRandomFileName();
         private readonly TournamentTimer _tournamentTimer;
-
 
         public TimerForm()
         {
@@ -26,9 +32,16 @@ namespace TCTimer
                 (float) minutesPerRoundUpDown.Value, (int) breakTimeUpDown.Value);
             _tournamentTimer.Tick += UpdateTime;
             _tournamentTimer.SettingsChanged += UpdateTime;
+            _serializationTimer.Elapsed += WriteTournamentTimer;
+            _serializationTimer.Start();
+            if (!Directory.Exists(_timerPath))
+            {
+                Directory.CreateDirectory(_timerPath);
+            }
+            _simpleHttpServer = new SimpleHttpServer(_timerPath);
         }
 
-        private void TimerForm_FormClosing(object sender, FormClosingEventArgs formClosingEvent)
+        private static void TimerForm_FormClosing(object sender, FormClosingEventArgs formClosingEvent)
         {
             if (MessageBox.Show("Are you sure you want to close this window?", "Are you sure?",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) formClosingEvent.Cancel = true;
@@ -43,6 +56,14 @@ namespace TCTimer
         {
             var about = new AboutForm();
             about.ShowDialog(this);
+        }
+
+        private void WriteTournamentTimer(object sender, ElapsedEventArgs elapsedEventArgs)
+        {
+            var serializer = new DataContractSerializer(typeof(TournamentTimer));
+            var writer = new FileStream(_timerPath + "\\timer.xml", FileMode.Create);
+            serializer.WriteObject(writer, _tournamentTimer);
+            writer.Close();
         }
 
         private void UpdateTime(object obj, DateTime target)
@@ -96,7 +117,7 @@ namespace TCTimer
 
         private void showTimerButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            System.Diagnostics.Process.Start($"http://localhost:{_simpleHttpServer.Port.ToString()}/");
         }
 
 

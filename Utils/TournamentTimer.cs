@@ -107,8 +107,8 @@ namespace Utils
                     if (_currentRound + 1 > NumberOfRounds)
                     {
                         Finished = true;
-                        OnFinished?.Invoke(this, null);
                         Pause();
+                        OnFinished?.Invoke(this, null);
                     }
                     else
                     {

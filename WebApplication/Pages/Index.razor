@@ -10,6 +10,10 @@
             {
                 <div class="clock-label">@_tournamentTimer.BreakText</div>
             }
+            else if (_tournamentTimer.Finished)
+            {
+                <div class="clock-label">Finished</div>
+            }
             else
             {
                 <div class="clock-label">Round @_tournamentTimer.CurrentRound.ToString()/@_tournamentTimer.NumberOfRounds.ToString()</div>
@@ -83,15 +87,23 @@
 
     private void UpdateUi(object sender, EventArgs e)
     {
-        if (_tournamentTimer.Running)
+        if (_tournamentTimer.Finished)
         {
-            var time = _tournamentTimer.Target.Subtract(DateTime.Now);
-            _clockValue = time.Hours == 0 ? time.ToString(@"mm\:ss") : time.ToString(@"HH\:mm\:ss");
+            _clockValue = DateTime.Now.ToString(@"HH\:mm");
+            //test
         }
         else
         {
-            var time = _tournamentTimer.Target.Subtract(_tournamentTimer.PausedAtTime);
-            _clockValue = time.Hours == 0 ? time.ToString(@"mm\:ss") : time.ToString(@"HH\:mm\:ss");
+            if (_tournamentTimer.Running)
+            {
+                var time = _tournamentTimer.Target.Subtract(DateTime.Now);
+                _clockValue = time.Hours == 0 ? time.ToString(@"mm\:ss") : time.ToString(@"HH\:mm\:ss");
+            }
+            else
+            {
+                var time = _tournamentTimer.Target.Subtract(_tournamentTimer.PausedAtTime);
+                _clockValue = time.Hours == 0 ? time.ToString(@"mm\:ss") : time.ToString(@"HH\:mm\:ss");
+            }
         }
         _currentTimeValue = DateTime.Now.ToString(@"HH\:mm");
         StateHasChanged();

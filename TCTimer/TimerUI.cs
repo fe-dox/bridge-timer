@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Timers;
@@ -39,14 +40,15 @@ namespace TCTimer
             {
                 Directory.CreateDirectory(_timerPath);
             }
-
+            new Task(() =>
+            {
+                ZipFile.ExtractToDirectory(Application.StartupPath + "\\WebApp.app", _timerPath);
+            }).Start();
             _simpleHttpServer = new SimpleHttpServer(_timerPath);
         }
 
         private void OnFinished(object sender, EventArgs e)
         {
-            currentTime.Text = DateTime.Now.ToString(@"HH\:mm\:ss");
-            currentRoundLabel.Text = "Finished";
             stopStartButton.Image = (Image) _resources.GetObject("stopStartButton.Image");
         }
 
@@ -77,7 +79,13 @@ namespace TCTimer
 
         private void UpdateTime(object obj, DateTime target)
         {
-            currentTime.Text = target.Subtract(DateTime.Now).ToString(@"HH\:mm\:ss");
+            if (_tournamentTimer.Finished)
+            {
+                currentTime.Text = DateTime.Now.ToString(@"HH\:mm");
+                currentRoundLabel.Text = "Finished";
+                return;
+            }
+            currentTime.Text = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
             currentRoundLabel.Text =
                 _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRound.ToString()}";
         }
@@ -110,6 +118,7 @@ namespace TCTimer
                 _tournamentTimer.ResultsUrl = resultsUrlTextBox.Text;
                 return;
             }
+
             try
             {
                 var shortenedUrl = await

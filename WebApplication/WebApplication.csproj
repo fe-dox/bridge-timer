@@ -15,10 +15,14 @@
     <ItemGroup>
       <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css" />
       <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css.map" />
+      <_ContentIncludedByDefault Remove="build\web.config" />
+      <_ContentIncludedByDefault Remove="build\wwwroot\_framework\blazor.boot.json" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\Utils\Utils.csproj" />
     </ItemGroup>
-
+    <PropertyGroup>
+        <PostBuildEvent>tar -cf "$(ProjectDir)build\WebApp.app" "$(ProjectDir)build\wwwroot\*"</PostBuildEvent>
+    </PropertyGroup>
 </Project>

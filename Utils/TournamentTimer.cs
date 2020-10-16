@@ -2,7 +2,7 @@
 using System.Timers;
 using System.Runtime.Serialization;
 
-namespace TCTimer
+namespace Utils
 {
     [DataContract]
     public class TournamentTimer : IEquatable<TournamentTimer>
@@ -209,6 +209,15 @@ namespace TCTimer
                 hashCode = (hashCode * 397) ^ MessageExpiration.GetHashCode();
                 return hashCode;
                 // ReSharper enable NonReadonlyMemberInGetHashCode
+            }
+        }
+
+        [OnDeserialized]
+        internal void OnDeserialized(StreamingContext context)
+        {
+            if (Running)
+            {
+                _framesTimer.Start();
             }
         }
     }

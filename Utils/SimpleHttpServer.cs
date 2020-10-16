@@ -180,7 +180,7 @@
                     //Adding permanent http response headers
                     context.Response.ContentType = MimeTypeMappings.TryGetValue(Path.GetExtension(filename), out var mime)
                         ? mime
-                        : "application/octet-stream";
+                        : "application/wasm";
                     context.Response.ContentLength64 = input.Length;
                     context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
                     context.Response.AddHeader("Last-Modified",

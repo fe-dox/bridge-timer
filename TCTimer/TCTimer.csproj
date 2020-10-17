@@ -50,6 +50,15 @@
   <PropertyGroup>
     <ApplicationIcon>timer_16xMD.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -96,6 +105,7 @@
     <EmbeddedResource Include="TimerUI.resx">
       <DependentUpon>TimerUI.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -129,8 +139,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>Xcopy /Y /E /I "$(ProjectDir)WebApp\wwwroot" "$(TargetDir)WebApp\"</PreBuildEvent>
-    <PostBuildEvent>"C:\Program Files\7-Zip\7z.exe" a -tzip "$(TargetDir)WebApp.app" "$(TargetDir)WebApp\*" </PostBuildEvent>
-    <PostBuildEvent>rmdir /s /q "$(TargetDir)WebApp"</PostBuildEvent>
+    <PreBuildEvent>rmdir /s /q "$(TargetDir)WebApp" &amp; Xcopy /Y /E /I "$(ProjectDir)WebApp\wwwroot" "$(TargetDir)WebApp\"</PreBuildEvent>
+    <PostBuildEvent>"C:\Program Files\7-Zip\7z.exe" a -tzip "$(TargetDir)WebApp.app" "$(TargetDir)WebApp\*" &amp; rmdir /s /q "$(TargetDir)WebApp"</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -405,7 +405,7 @@
             // 
             this.aboutToolStripMenuItem.Image = ((System.Drawing.Image) (resources.GetObject("aboutToolStripMenuItem.Image")));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
             // 
@@ -413,7 +413,7 @@
             // 
             this.gitHubToolStripMenuItem.Image = ((System.Drawing.Image) (resources.GetObject("gitHubToolStripMenuItem.Image")));
             this.gitHubToolStripMenuItem.Name = "gitHubToolStripMenuItem";
-            this.gitHubToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gitHubToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.gitHubToolStripMenuItem.Text = "GitHub";
             this.gitHubToolStripMenuItem.Click += new System.EventHandler(this.gitHubToolStripMenuItem_Click);
             // 

@@ -40,6 +40,14 @@ app {
   font-size: 5em;
 }
 
+.timer-name {
+  position: absolute;
+  text-align: center;
+  top: 5%;
+  font-size: 3em;
+  width: 99%;
+}
+
 .results {
   position: absolute;
   bottom: 5%;

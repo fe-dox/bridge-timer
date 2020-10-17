@@ -23,6 +23,5 @@
       <ProjectReference Include="..\Utils\Utils.csproj" />
     </ItemGroup>
     <PropertyGroup>
-        <PostBuildEvent>tar -cf "$(ProjectDir)build\WebApp.app" "$(ProjectDir)build\wwwroot\*"</PostBuildEvent>
     </PropertyGroup>
 </Project>

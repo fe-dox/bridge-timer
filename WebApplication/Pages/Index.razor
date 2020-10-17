@@ -2,6 +2,10 @@
 @inject NavigationManager NavigationManager
 
 <div class="main">
+    @if (_tournamentTimer != null)
+    {
+        <div class="timer-name">@_tournamentTimer.TimerName</div>
+    }
     <div class="clock">
         <div class="clock-time">@_clockValue</div>
         @if (_tournamentTimer != null)
@@ -48,7 +52,7 @@
                 await httpClient.GetStreamAsync(NavigationManager.BaseUri + "./timer.xml");
             _tournamentTimer = _serializer.ReadObject(timerDataStream) as TournamentTimer;
         }
-        catch (Exception e)
+        catch
         {
             _clockValue = "Please Refresh Webpage";
         }
@@ -90,7 +94,6 @@
         if (_tournamentTimer.Finished)
         {
             _clockValue = DateTime.Now.ToString(@"HH\:mm");
-            //test
         }
         else
         {

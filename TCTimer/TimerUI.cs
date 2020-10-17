@@ -15,7 +15,6 @@ namespace TCTimer
 {
     public partial class TimerForm : Form
     {
-        private readonly ComponentResourceManager _resources;
         private readonly ResultsUrlShortener _resultsUrlShortener;
         private readonly Timer _serializationTimer = new Timer(200);
         private readonly SimpleHttpServer _simpleHttpServer;
@@ -148,12 +147,12 @@ namespace TCTimer
             if (_tournamentTimer.Running)
             {
                 _tournamentTimer.Pause();
-                stopStartButton.Image = Resources.Pause_16x;
+                stopStartButton.Image = Resources.StartWithoutDebug_16x;
             }
             else
             {
                 _tournamentTimer.Start();
-                stopStartButton.Image = Resources.StartWithoutDebug_16x;
+                stopStartButton.Image = Resources.Pause_16x;
             }
         }
 
@@ -192,7 +191,7 @@ namespace TCTimer
 
         private void tournamentNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            
+            _tournamentTimer.TimerName = tournamentNameTextBox.Text;
         }
     }
 }

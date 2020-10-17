@@ -25,10 +25,11 @@ app {
   margin: auto;
 }
 
-.clock-time{
+.clock-time {
   font-size: 12em;
 }
-.clock-label{
+
+.clock-label {
   font-size: 6em;
 }
 
@@ -37,6 +38,14 @@ app {
   bottom: 5%;
   left: 5%;
   font-size: 5em;
+}
+
+.timer-name {
+  position: absolute;
+  text-align: center;
+  top: 5%;
+  font-size: 3em;
+  width:99%;
 }
 
 .results {

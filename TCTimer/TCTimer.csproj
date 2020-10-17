@@ -129,6 +129,7 @@
     <None Include="Resources\StartWithoutDebug_16x.png" />
     <None Include="Resources\Pause_16x.png" />
     <Content Include="TCTimer.wxs" />
+    <Content Include="timer.xml"/>
     <Content Include="timer_16xMD.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

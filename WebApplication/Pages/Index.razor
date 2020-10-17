@@ -7,22 +7,34 @@
         <div class="timer-name">@_tournamentTimer.TimerName</div>
     }
     <div class="clock">
-        <div class="clock-time">@_clockValue</div>
-        @if (_tournamentTimer != null)
+        @if (_tournamentTimer != null && _showingMessage && _tournamentTimer.TimerMessage.ShowFullScreen)
         {
-            if (_tournamentTimer.IsBreak)
+            <p>@_tournamentTimer.TimerMessage.Text</p>
+        }
+        else
+        {
+            <div class="clock-time">@_clockValue</div>
+            @if (_tournamentTimer != null)
             {
-                <div class="clock-label">@_tournamentTimer.BreakText</div>
-            }
-            else if (_tournamentTimer.Finished)
-            {
-                <div class="clock-label">Finished</div>
-            }
-            else
-            {
-                <div class="clock-label">Round @_tournamentTimer.CurrentRound.ToString()/@_tournamentTimer.NumberOfRounds.ToString()</div>
+                if (_showingMessage)
+                {
+                    <div class="clock-label">@_tournamentTimer.TimerMessage.Text</div>
+                }
+                else if (_tournamentTimer.IsBreak)
+                {
+                    <div class="clock-label">@_tournamentTimer.BreakText</div>
+                }
+                else if (_tournamentTimer.Finished)
+                {
+                    <div class="clock-label">Finished</div>
+                }
+                else
+                {
+                    <div class="clock-label">Round @_tournamentTimer.CurrentRound.ToString()/@_tournamentTimer.NumberOfRounds.ToString()</div>
+                }
             }
         }
+
     </div>
     <div class="current-time">@_currentTimeValue</div>
     @if (!string.IsNullOrEmpty(_tournamentTimer?.ResultsUrl))
@@ -36,6 +48,9 @@
     private readonly Timer _refreshTimer = new Timer(1000);
     private readonly Timer _framesTimer = new Timer(200);
     private string _currentTimeValue = string.Empty;
+    private bool _showingMessage;
+    private TimerMessage _currentOrLastMessage;
+    private DateTime _showingMessageTarget;
     private int _connectionErrors = 0;
     private TournamentTimer _tournamentTimer;
     private readonly DataContractSerializer _serializer = new DataContractSerializer(typeof(TournamentTimer));
@@ -78,6 +93,14 @@
             {
                 _tournamentTimer = tmpTimer;
             }
+            if (!_tournamentTimer.TimerMessage.Equals(_currentOrLastMessage) &&
+                _tournamentTimer.TimerMessage.Expiration.Subtract(DateTime.Now).CompareTo(new TimeSpan(0, 0, 0)) > 0)
+            {
+                Console.WriteLine("jej");
+                _currentOrLastMessage = _tournamentTimer.TimerMessage;
+                _showingMessage = true;
+                _showingMessageTarget = DateTime.Now.Add(_tournamentTimer.TimerMessage.Duration);
+            }
             _refreshTimer.Interval = 1000;
             _connectionErrors = 0;
         }
@@ -109,6 +132,10 @@
             }
         }
         _currentTimeValue = DateTime.Now.ToString(@"HH\:mm");
+        if (_showingMessageTarget.Subtract(DateTime.Now).CompareTo(new TimeSpan(0, 0, 0)) < 0)
+        {
+            _showingMessage = false;
+        }
         StateHasChanged();
     }
 

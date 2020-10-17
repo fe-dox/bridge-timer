@@ -366,7 +366,6 @@
             this.messageTextBox.Location = new System.Drawing.Point(6, 19);
             this.messageTextBox.Multiline = true;
             this.messageTextBox.Name = "messageTextBox";
-            this.messageTextBox.PasswordChar = '$';
             this.messageTextBox.Size = new System.Drawing.Size(241, 74);
             this.messageTextBox.TabIndex = 1;
             // 

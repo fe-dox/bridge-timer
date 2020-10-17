@@ -20,6 +20,11 @@ namespace Utils
 
         public bool Equals(TimerMessage other)
         {
+            if (other == null)
+            {
+                return false;
+            }
+
             return Text == other.Text && Expiration.Equals(other.Expiration) && Duration.Equals(other.Duration) &&
                    _id == other._id && _showFullScreen == other._showFullScreen;
         }

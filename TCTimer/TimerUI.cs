@@ -39,6 +39,7 @@ namespace TCTimer
             {
                 Directory.CreateDirectory(_timerPath);
             }
+
             new Task(() =>
             {
                 ZipFile.ExtractToDirectory(Application.StartupPath + "\\WebApp.app", _timerPath);
@@ -84,6 +85,7 @@ namespace TCTimer
                 currentRoundLabel.Text = "Finished";
                 return;
             }
+
             currentTime.Text = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
             currentRoundLabel.Text =
                 _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRound.ToString()}";
@@ -133,7 +135,13 @@ namespace TCTimer
 
         private void sendMessageButton_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(messageTextBox.Text)) return;
+            _tournamentTimer.TimerMessage = new TimerMessage(messageTextBox.Text,
+                new TimeSpan(0, 0, (int) messageDurationUpDown.Value),
+                DateTime.Now.Add(new TimeSpan(0, 0, 45)), showMessageFullscreenCheckBox.Checked);
+            messageTextBox.Text = "";
+            messageDurationUpDown.Value = 15;
+            showMessageFullscreenCheckBox.Checked = false;
         }
 
         private void showTimerButton_Click(object sender, EventArgs e)

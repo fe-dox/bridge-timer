@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 namespace Utils
 {
     [DataContract]
+    [KnownType(typeof(TimerMessage))]
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
         [DataMember] private int _currentRound = 1;
@@ -32,11 +33,8 @@ namespace Utils
         [DataMember] public string ResultsUrl { get; set; } = string.Empty;
         [DataMember] public bool Running { get; private set; }
         [DataMember] public bool IsBreak { get; private set; }
-        [DataMember] public string Message { get; set; }
-        [DataMember] public string MessageDuration { get; set; }
-        [DataMember] public DateTime MessageExpiration { get; set; }
-
         [DataMember] public string TimerName { get; set; }
+        [DataMember] public TimerMessage TimerMessage { get; set; }
 
         public float MinutesForRound
         {
@@ -67,28 +65,9 @@ namespace Utils
             }
         }
 
-
         public DateTime Target => _target;
-
         public DateTime PausedAtTime => _pausedAtTime;
-
         public int CurrentRound => _currentRound;
-
-
-        public bool Equals(TournamentTimer other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return Equals(_framesTimer, other._framesTimer) && _currentRound == other._currentRound &&
-                   _minutesForRound.Equals(other._minutesForRound) && _pausedAtTime.Equals(other._pausedAtTime) &&
-                   _secondsForBreak == other._secondsForBreak && _target.Equals(other._target) &&
-                   NumberOfRounds == other.NumberOfRounds && Finished == other.Finished &&
-                   BreakText == other.BreakText && ResultsUrl == other.ResultsUrl && Running == other.Running &&
-                   IsBreak == other.IsBreak && Message == other.Message && MessageDuration == other.MessageDuration &&
-                   TimerName == other.TimerName &&
-                   MessageExpiration.Equals(other.MessageExpiration);
-        }
-
         public event EventHandler<DateTime> SettingsChanged;
         public event EventHandler<DateTime> Tick;
         public event EventHandler OnFinished;
@@ -189,6 +168,29 @@ namespace Utils
             }
         }
 
+        [OnDeserialized]
+        internal void OnDeserialized(StreamingContext context)
+        {
+            _framesTimer = new Timer(50);
+            _framesTimer.Elapsed += OnTick;
+            if (Running)
+            {
+                _framesTimer.Start();
+            }
+        }
+
+        public bool Equals(TournamentTimer other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return _currentRound == other._currentRound && Equals(_framesTimer, other._framesTimer) &&
+                   _minutesForRound.Equals(other._minutesForRound) && _pausedAtTime.Equals(other._pausedAtTime) &&
+                   _secondsForBreak == other._secondsForBreak && _target.Equals(other._target) &&
+                   NumberOfRounds == other.NumberOfRounds && Finished == other.Finished &&
+                   BreakText == other.BreakText && ResultsUrl == other.ResultsUrl && Running == other.Running &&
+                   IsBreak == other.IsBreak && TimerName == other.TimerName && Equals(TimerMessage, other.TimerMessage);
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -202,8 +204,8 @@ namespace Utils
             unchecked
             {
                 // ReSharper disable NonReadonlyMemberInGetHashCode
-                var hashCode = (_framesTimer != null ? _framesTimer.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ _currentRound;
+                var hashCode = _currentRound;
+                hashCode = (hashCode * 397) ^ (_framesTimer != null ? _framesTimer.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ _minutesForRound.GetHashCode();
                 hashCode = (hashCode * 397) ^ _pausedAtTime.GetHashCode();
                 hashCode = (hashCode * 397) ^ _secondsForBreak;
@@ -214,22 +216,10 @@ namespace Utils
                 hashCode = (hashCode * 397) ^ (ResultsUrl != null ? ResultsUrl.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ Running.GetHashCode();
                 hashCode = (hashCode * 397) ^ IsBreak.GetHashCode();
-                hashCode = (hashCode * 397) ^ (Message != null ? Message.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (MessageDuration != null ? MessageDuration.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ MessageExpiration.GetHashCode();
+                hashCode = (hashCode * 397) ^ (TimerName != null ? TimerName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (TimerMessage != null ? TimerMessage.GetHashCode() : 0);
                 return hashCode;
                 // ReSharper enable NonReadonlyMemberInGetHashCode
-            }
-        }
-
-        [OnDeserialized]
-        internal void OnDeserialized(StreamingContext context)
-        {
-            _framesTimer = new Timer(50);
-            _framesTimer.Elapsed += OnTick;
-            if (Running)
-            {
-                _framesTimer.Start();
             }
         }
     }

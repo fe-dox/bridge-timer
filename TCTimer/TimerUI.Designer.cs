@@ -341,7 +341,7 @@
             this.messageDurationUpDown.Name = "messageDurationUpDown";
             this.messageDurationUpDown.Size = new System.Drawing.Size(62, 20);
             this.messageDurationUpDown.TabIndex = 4;
-            this.messageDurationUpDown.Value = new decimal(new int[] {5, 0, 0, 0});
+            this.messageDurationUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
             // 
             // label5
             // 

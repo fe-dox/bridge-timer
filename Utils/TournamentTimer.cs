@@ -36,6 +36,8 @@ namespace Utils
         [DataMember] public string MessageDuration { get; set; }
         [DataMember] public DateTime MessageExpiration { get; set; }
 
+        [DataMember] public string TimerName { get; set; }
+
         public float MinutesForRound
         {
             get => _minutesForRound;
@@ -72,6 +74,7 @@ namespace Utils
 
         public int CurrentRound => _currentRound;
 
+
         public bool Equals(TournamentTimer other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -82,6 +85,7 @@ namespace Utils
                    NumberOfRounds == other.NumberOfRounds && Finished == other.Finished &&
                    BreakText == other.BreakText && ResultsUrl == other.ResultsUrl && Running == other.Running &&
                    IsBreak == other.IsBreak && Message == other.Message && MessageDuration == other.MessageDuration &&
+                   TimerName == other.TimerName &&
                    MessageExpiration.Equals(other.MessageExpiration);
         }
 

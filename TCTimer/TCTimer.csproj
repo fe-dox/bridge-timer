@@ -91,6 +91,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="TimerUI.resx">
       <DependentUpon>TimerUI.cs</DependentUpon>
@@ -115,6 +116,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\StartWithoutDebug_16x.png" />
+    <None Include="Resources\Pause_16x.png" />
     <Content Include="timer_16xMD.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -128,5 +131,6 @@
   <PropertyGroup>
     <PreBuildEvent>Xcopy /Y /E /I "$(ProjectDir)WebApp\wwwroot" "$(TargetDir)WebApp\"</PreBuildEvent>
     <PostBuildEvent>"C:\Program Files\7-Zip\7z.exe" a -tzip "$(TargetDir)WebApp.app" "$(TargetDir)WebApp\*" </PostBuildEvent>
+    <PostBuildEvent>rmdir /s /q "$(TargetDir)WebApp"</PostBuildEvent>
   </PropertyGroup>
 </Project>

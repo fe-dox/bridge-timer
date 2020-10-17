@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows.Forms;
+using TCTimer.Properties;
 using Utils;
 using Timer = System.Timers.Timer;
 
@@ -24,7 +25,6 @@ namespace TCTimer
         public TimerForm()
         {
             _resultsUrlShortener = new ResultsUrlShortener();
-            _resources = new ComponentResourceManager(typeof(TimerForm));
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             FormClosing += TimerForm_FormClosing;
@@ -49,7 +49,7 @@ namespace TCTimer
 
         private void OnFinished(object sender, EventArgs e)
         {
-            stopStartButton.Image = (Image) _resources.GetObject("stopStartButton.Image");
+            stopStartButton.Image = Resources.StartWithoutDebug_16x;
         }
 
         private static void TimerForm_FormClosing(object sender, FormClosingEventArgs formClosingEvent)
@@ -148,12 +148,12 @@ namespace TCTimer
             if (_tournamentTimer.Running)
             {
                 _tournamentTimer.Pause();
-                stopStartButton.Image = (Image) _resources.GetObject("stopStartButton.Image");
+                stopStartButton.Image = Resources.Pause_16x;
             }
             else
             {
                 _tournamentTimer.Start();
-                stopStartButton.Image = (Image) _resources.GetObject("stopButtonImage");
+                stopStartButton.Image = Resources.StartWithoutDebug_16x;
             }
         }
 
@@ -183,6 +183,16 @@ namespace TCTimer
         private void previousRoundButton_Click(object sender, EventArgs e)
         {
             _tournamentTimer.PreviousRound();
+        }
+
+        private void gitHubToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/fe-dox/bridge-timer");
+        }
+
+        private void tournamentNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }

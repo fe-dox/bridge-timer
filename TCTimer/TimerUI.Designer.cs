@@ -46,6 +46,8 @@
             this.substractOneMinute = new System.Windows.Forms.Button();
             this.stopStartButton = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.tournamentNameTextBox = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.shortenUrlCheckBox = new System.Windows.Forms.CheckBox();
             this.label6 = new System.Windows.Forms.Label();
             this.resultsUrlTextBox = new System.Windows.Forms.TextBox();
@@ -61,6 +63,8 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.gitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).BeginInit();
@@ -162,7 +166,7 @@
             this.currentRoundLabel.Name = "currentRoundLabel";
             this.currentRoundLabel.Size = new System.Drawing.Size(114, 23);
             this.currentRoundLabel.TabIndex = 1;
-            this.currentRoundLabel.Text = "Runda 0";
+            this.currentRoundLabel.Text = "Runda 1";
             this.currentRoundLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // currentTime
@@ -172,7 +176,7 @@
             this.currentTime.Name = "currentTime";
             this.currentTime.Size = new System.Drawing.Size(112, 25);
             this.currentTime.TabIndex = 0;
-            this.currentTime.Text = "00:00";
+            this.currentTime.Text = "16:30";
             this.currentTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // previousRoundButton
@@ -229,6 +233,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.tournamentNameTextBox);
+            this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.shortenUrlCheckBox);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.resultsUrlTextBox);
@@ -236,10 +242,27 @@
             this.groupBox2.Controls.Add(this.breakTextBox);
             this.groupBox2.Location = new System.Drawing.Point(12, 192);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(581, 74);
+            this.groupBox2.Size = new System.Drawing.Size(581, 100);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Additional Settings";
+            // 
+            // tournamentNameTextBox
+            // 
+            this.tournamentNameTextBox.Location = new System.Drawing.Point(91, 71);
+            this.tournamentNameTextBox.Name = "tournamentNameTextBox";
+            this.tournamentNameTextBox.Size = new System.Drawing.Size(474, 20);
+            this.tournamentNameTextBox.TabIndex = 5;
+            this.tournamentNameTextBox.TextChanged += new System.EventHandler(this.tournamentNameTextBox_TextChanged);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(7, 74);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(64, 13);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "Timer Name";
             // 
             // shortenUrlCheckBox
             // 
@@ -266,8 +289,8 @@
             this.resultsUrlTextBox.Name = "resultsUrlTextBox";
             this.resultsUrlTextBox.Size = new System.Drawing.Size(368, 20);
             this.resultsUrlTextBox.TabIndex = 1;
-            this.resultsUrlTextBox.LostFocus += new System.EventHandler(this.resultsUrlTextBox_TextChanged);
             this.resultsUrlTextBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.resultsUrlTextBox_KeyPress);
+            this.resultsUrlTextBox.LostFocus += new System.EventHandler(this.resultsUrlTextBox_TextChanged);
             // 
             // label4
             // 
@@ -365,6 +388,7 @@
             // 
             // closeMenuItem
             // 
+            this.closeMenuItem.Image = ((System.Drawing.Image) (resources.GetObject("closeMenuItem.Image")));
             this.closeMenuItem.Name = "closeMenuItem";
             this.closeMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeMenuItem.Text = "Close";
@@ -372,17 +396,33 @@
             // 
             // aboutMenuItem
             // 
+            this.aboutMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.aboutToolStripMenuItem, this.gitHubToolStripMenuItem});
             this.aboutMenuItem.Name = "aboutMenuItem";
             this.aboutMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutMenuItem.Text = "About";
-            this.aboutMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Image = ((System.Drawing.Image) (resources.GetObject("aboutToolStripMenuItem.Image")));
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
+            // 
+            // gitHubToolStripMenuItem
+            // 
+            this.gitHubToolStripMenuItem.Image = ((System.Drawing.Image) (resources.GetObject("gitHubToolStripMenuItem.Image")));
+            this.gitHubToolStripMenuItem.Name = "gitHubToolStripMenuItem";
+            this.gitHubToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gitHubToolStripMenuItem.Text = "GitHub";
+            this.gitHubToolStripMenuItem.Click += new System.EventHandler(this.gitHubToolStripMenuItem_Click);
             // 
             // TimerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(605, 276);
+            this.ClientSize = new System.Drawing.Size(605, 301);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.stopStartButton);
@@ -449,5 +489,10 @@
         private System.Windows.Forms.Button substractOneMinute;
 
         #endregion
+
+        private System.Windows.Forms.TextBox tournamentNameTextBox;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem gitHubToolStripMenuItem;
     }
 }

@@ -1,0 +1,75 @@
+﻿<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
+    <Product Name='TCTimer' Manufacturer='Mikolaj Bogucki'
+             Id='562DBFC1-752C-478F-8446-F8BC36F3FD5A'
+             UpgradeCode='FB92D70E-4301-44FD-A9B8-7CB28BF9F4E1'
+             Language='1033' Codepage='1252' Version='1.0.0'>
+        <Package Id='*' Keywords='Installer' Description="TCTimer 1.0 Installer" Manufacturer='Mikolaj Bogucki'
+                 InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252'/>
+        <Condition Message="You need to be an administrator to install this product.">
+            Privileged
+        </Condition>
+<!--        <Upgrade Id='FB92D70E-4301-44FD-A9B8-7CB28BF9F4E1'>-->
+<!--            <UpgradeVersion OnlyDetect='no' Property='PREVIOUSFOUND'-->
+<!--                            Minimum='1.0.0' IncludeMinimum='yes'-->
+<!--                            Maximum='1.1.0' IncludeMaximum='no' />-->
+<!--        </Upgrade>-->
+<!--        -->
+<!--        <InstallExecuteSequence>-->
+<!--            <RemoveExistingProducts After="InstallInitialize"/>-->
+<!--        </InstallExecuteSequence>-->
+        
+        <Media Id='1' Cabinet='Sample.cab' EmbedCab='yes'/>
+        <Directory Id='TARGETDIR' Name='SourceDir'>
+            <Directory Id='ProgramFilesFolder' Name='PFiles'>
+                <Directory Id='Fedox' Name='Fedox'>
+                    <Directory Id='INSTALLDIR' Name='TCTimer'>
+
+                        <Component Id='MainExecutable' Guid='D75EE82C-CD56-4E25-9637-EC13E9613AEA'>
+                            <File Id='TCTimer.exe' Name='TCTimer.exe' DiskId='1' Source='./bin/Release/TCTimer.exe' KeyPath='yes'>
+                                <Shortcut Id="startMenuTCTimerShortcut" Directory="ProgramMenuDir" Name="TCTimer"
+                                          WorkingDirectory='INSTALLDIR' Icon="Icon.exe" IconIndex="0"
+                                          Advertise="yes"/>
+                                <Shortcut Id="desktopTCTimerShortcut" Directory="DesktopFolder" Name="TCTimer"
+                                          WorkingDirectory='INSTALLDIR' Icon="Icon.exe" IconIndex="0"
+                                          Advertise="yes"/>
+                            </File>
+                            <File Id="TCTimerConfig" Name="TCTimer.exe.config" DiskId="1" Source="./bin/Release/TCTimer.exe.config"/>
+                        </Component>
+
+                        <Component Id="WebApp" Guid="C51E993F-CC63-49B4-844D-0CAE7D8D36B6">
+                            <File Id="WebApp.app" Name="WebApp.app" DiskId="1" Source="./bin/Release/WebApp.app" KeyPath="yes"/>
+                        </Component>
+
+                        <Component Id="Utils" Guid="45CD6DE7-DB00-4344-B85B-C3E662C2974B">
+                            <File Id="Utils.dll" Name="Utils.dll" DiskId="1" Source="./bin/Release/Utils.dll" KeyPath="yes"/>
+                        </Component>
+
+                    </Directory>
+                </Directory>
+            </Directory>
+
+            <Directory Id="ProgramMenuFolder" Name="Programs">
+                <Directory Id="ProgramMenuDir" Name="TCTimer">
+                    <Component Id="ProgramMenuDir" Guid="886D5E4B-FEAE-4576-A807-664D5BFA736D">
+                        <RemoveFolder Id='ProgramMenuDir' On='uninstall'/>
+                        <RegistryValue Root='HKCU' Key='Software\[Manufacturer]\[ProductName]' Type='string' Value=''
+                                       KeyPath='yes'/>
+                    </Component>
+                </Directory>
+            </Directory>
+
+            <Directory Id="DesktopFolder" Name="Desktop"/>
+
+        </Directory>
+
+        <Feature Id='Complete' Level='1'>
+            <ComponentRef Id='MainExecutable'/>
+            <ComponentRef Id='WebApp'/>
+            <ComponentRef Id='Utils'/>
+            <ComponentRef Id='ProgramMenuDir'/>
+        </Feature>
+        <Property Id="ARPPRODUCTICON" Value="Icon.exe" />
+        <Icon Id="Icon.exe" SourceFile="./bin/Release/timer_16xMD.ico"/>
+
+    </Product>
+</Wix>

@@ -128,7 +128,11 @@
   <ItemGroup>
     <None Include="Resources\StartWithoutDebug_16x.png" />
     <None Include="Resources\Pause_16x.png" />
-    <Content Include="timer_16xMD.ico" />
+    <Content Include="TCTimer.wixobj" />
+    <Content Include="TCTimer.wxs" />
+    <Content Include="timer_16xMD.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">

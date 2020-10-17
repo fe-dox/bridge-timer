@@ -435,3 +435,5 @@ fabric.properties
 
 /WebApplication/build/
 /TCTimer/WebApp/
+/TCTimer/TCTimer.wixobj
+/TCTimer/TCTimer.msi

@@ -1,4 +1,8 @@
-﻿# Licencja
+﻿# TCTimer
+![Ekran Programu](/Screenshots/program.png)
+
+![Na Rzutnik](/Screenshots/rzutnik.png)
+# Licencja
 ```
 MIT License
 

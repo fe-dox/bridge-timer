@@ -1,5 +1,5 @@
 ﻿using System;
-using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
@@ -18,12 +18,16 @@ namespace TCTimer
         private readonly ResultsUrlShortener _resultsUrlShortener;
         private readonly Timer _serializationTimer = new Timer(200);
         private readonly SimpleHttpServer _simpleHttpServer;
+
         private readonly string _timerPath = Path.GetTempPath() + "\\bridge_timer\\" + Path.GetRandomFileName();
+
+        // TODO W calym programie uzywasz jednego [TournamentTimer], nie lepiej aby byla to klasa statyczna?
         private readonly TournamentTimer _tournamentTimer;
 
         public TimerForm()
         {
             _resultsUrlShortener = new ResultsUrlShortener();
+            // TODO latwiej to po prostu ustawic w edytorze UI i nie bedziesz mial tego w kodzie. To sie tyczy kolejnych 3 linii.
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             FormClosing += TimerForm_FormClosing;
@@ -54,6 +58,7 @@ namespace TCTimer
 
         private static void TimerForm_FormClosing(object sender, FormClosingEventArgs formClosingEvent)
         {
+            // TODO lokalizacja, nie zbyt wazne obecnie, ale kiedys do zrobienia
             if (MessageBox.Show("Are you sure you want to close this window?", "Are you sure?",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) formClosingEvent.Cancel = true;
         }
@@ -66,6 +71,7 @@ namespace TCTimer
         private void aboutMenuItem_Click(object sender, EventArgs e)
         {
             var about = new AboutForm();
+            // TODO Nigdy nie ustawialem [owner]a, raczej nie jest potrzebny. Wiesz co to zmienia?
             about.ShowDialog(this);
         }
 
@@ -79,6 +85,7 @@ namespace TCTimer
 
         private void UpdateTime(object obj, DateTime target)
         {
+            // TODO Czy to nie powinno byc w OnFinished?
             if (_tournamentTimer.Finished)
             {
                 currentTime.Text = DateTime.Now.ToString(@"HH\:mm");
@@ -88,7 +95,7 @@ namespace TCTimer
 
             currentTime.Text = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
             currentRoundLabel.Text =
-                _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRound.ToString()}";
+                _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRound}";
         }
 
         private void numberOfRoundsUpDown_ValueChanged(object sender, EventArgs e)
@@ -120,6 +127,9 @@ namespace TCTimer
                 return;
             }
 
+            // TODO To nie bedzie tak (nie moge odpalic, nie umiem sprawdzic), ze jak masz poprawnie sformatowany URL i nie mozesz sie polaczyc ze skracaczem to dostaniesz duzo bledow?
+            // Wpisalem np. http://abc.com i teraz zaczynam rozszerzac "abc" - przy kazdym nacisnieciu klawisza ta metoda jest wywolana.
+            // Wiec jak wpisalem 10 nowych literek to dostane 10 bledow?
             try
             {
                 var shortenedUrl = await
@@ -135,10 +145,12 @@ namespace TCTimer
 
         private void sendMessageButton_Click(object sender, EventArgs e)
         {
+            // TODO IsNullOrWhiteSpace
             if (string.IsNullOrEmpty(messageTextBox.Text)) return;
             _tournamentTimer.TimerMessage = new TimerMessage(messageTextBox.Text,
                 new TimeSpan(0, 0, (int) messageDurationUpDown.Value),
                 DateTime.Now.Add(new TimeSpan(0, 0, 45)), showMessageFullscreenCheckBox.Checked);
+            // TODO czesto mozesz chciec pokazac wiecej niz jedna taka samo wiadomosc, wiec moze lepiej nie usuwac?
             messageTextBox.Text = "";
             messageDurationUpDown.Value = 15;
             showMessageFullscreenCheckBox.Checked = false;
@@ -146,7 +158,7 @@ namespace TCTimer
 
         private void showTimerButton_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start($"http://localhost:{_simpleHttpServer.Port.ToString()}/");
+            Process.Start($"http://localhost:{_simpleHttpServer.Port}/");
         }
 
 
@@ -164,11 +176,12 @@ namespace TCTimer
             }
         }
 
+        // TODO Dlaczego nie w textChanged?
         private void resultsUrlTextBox_KeyPress(object sender, KeyEventArgs e)
         {
             resultsUrlTextBox.BackColor = !Uri.IsWellFormedUriString(resultsUrlTextBox.Text, UriKind.Absolute) &&
                                           !string.IsNullOrEmpty(resultsUrlTextBox.Text)
-                ? Color.Coral
+                ? Color.LightCoral
                 : Color.White;
         }
 
@@ -194,7 +207,7 @@ namespace TCTimer
 
         private void gitHubToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/fe-dox/bridge-timer");
+            Process.Start("https://github.com/fe-dox/bridge-timer");
         }
 
         private void tournamentNameTextBox_TextChanged(object sender, EventArgs e)

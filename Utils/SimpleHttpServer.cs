@@ -1,16 +1,15 @@
-﻿namespace Utils
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading;
+
+namespace Utils
 {
     // MIT License - Copyright (c) 2016 Can Güney Aksakalli
     // https://aksakalli.github.io/2014/02/24/simple-http-server-with-csparp.html
-
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Sockets;
-    using System.Net;
-    using System.IO;
-    using System.Threading;
-
-
+    // TODO To jest skopiowane z TC, nie? Jaki w ogole jest dlugoterminowy plan na intergracje z TC?
     public class SimpleHttpServer
     {
         private static readonly IDictionary<string, string> MimeTypeMappings =
@@ -88,7 +87,7 @@
 
         private readonly string[] _indexFiles =
         {
-            "index.html",
+            "index.html"
         };
 
         private HttpListener _listener;
@@ -98,7 +97,7 @@
         private Thread _serverThread;
 
         /// <summary>
-        /// Construct server with given port.
+        ///     Construct server with given port.
         /// </summary>
         /// <param name="path">Directory path to serve.</param>
         /// <param name="port">Port of the server.</param>
@@ -108,15 +107,15 @@
         }
 
         /// <summary>
-        /// Construct server with suitable port.
+        ///     Construct server with suitable port.
         /// </summary>
         /// <param name="path">Directory path to serve.</param>
         public SimpleHttpServer(string path)
         {
             //get an empty port
-            TcpListener l = new TcpListener(IPAddress.Loopback, 0);
+            var l = new TcpListener(IPAddress.Loopback, 0);
             l.Start();
-            int port = ((IPEndPoint) l.LocalEndpoint).Port;
+            var port = ((IPEndPoint) l.LocalEndpoint).Port;
             l.Stop();
             Initialize(path, port);
         }
@@ -124,7 +123,7 @@
         public int Port => _port;
 
         /// <summary>
-        /// Stop server and dispose all functions.
+        ///     Stop server and dispose all functions.
         /// </summary>
         public void Stop()
         {
@@ -135,13 +134,13 @@
         private void Listen()
         {
             _listener = new HttpListener();
-            _listener.Prefixes.Add("http://*:" + _port.ToString() + "/");
+            _listener.Prefixes.Add("http://*:" + _port + "/");
             _listener.Start();
             while (true)
             {
                 try
                 {
-                    HttpListenerContext context = _listener.GetContext();
+                    var context = _listener.GetContext();
                     Process(context);
                 }
                 catch (Exception)
@@ -153,13 +152,13 @@
 
         private void Process(HttpListenerContext context)
         {
-            string filename = context.Request.Url.AbsolutePath;
+            var filename = context.Request.Url.AbsolutePath;
             Console.WriteLine(filename);
             filename = filename.Substring(1);
 
             if (string.IsNullOrEmpty(filename))
             {
-                foreach (string indexFile in _indexFiles)
+                foreach (var indexFile in _indexFiles)
                 {
                     if (File.Exists(Path.Combine(_rootDirectory, indexFile)))
                     {
@@ -178,15 +177,16 @@
                     Stream input = new FileStream(filename, FileMode.Open);
 
                     //Adding permanent http response headers
-                    context.Response.ContentType = MimeTypeMappings.TryGetValue(Path.GetExtension(filename), out var mime)
-                        ? mime
-                        : "application/wasm";
+                    context.Response.ContentType =
+                        MimeTypeMappings.TryGetValue(Path.GetExtension(filename), out var mime)
+                            ? mime
+                            : "application/wasm";
                     context.Response.ContentLength64 = input.Length;
                     context.Response.AddHeader("Date", DateTime.Now.ToString("r"));
                     context.Response.AddHeader("Last-Modified",
                         File.GetLastWriteTime(filename).ToString("r"));
 
-                    byte[] buffer = new byte[1024 * 16];
+                    var buffer = new byte[1024 * 16];
                     int nbytes;
                     while ((nbytes = input.Read(buffer, 0, buffer.Length)) > 0)
                         context.Response.OutputStream.Write(buffer, 0, nbytes);

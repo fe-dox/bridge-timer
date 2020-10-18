@@ -1,10 +1,11 @@
 ﻿using System;
-using System.Timers;
 using System.Runtime.Serialization;
+using System.Timers;
 
 namespace Utils
 {
     [DataContract]
+    // TODO Czemu tu jest to [KnownType]? [TimerMessage] nie dziedziczy po [TournamentTimer].
     [KnownType(typeof(TimerMessage))]
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
@@ -12,7 +13,10 @@ namespace Utils
         [DataMember] private Timer _framesTimer;
         [DataMember] private float _minutesForRound;
         [DataMember] private DateTime _pausedAtTime;
+
         [DataMember] private int _secondsForBreak;
+
+        // TODO Chyba nazwalbym to inaczej, np. _nextEventAt, ale nie upieram sie
         [DataMember] private DateTime _target;
 
         public TournamentTimer(int numberOfRounds, float minutesForRound, int secondsForBreak)
@@ -43,6 +47,7 @@ namespace Utils
             {
                 if (!IsBreak)
                 {
+                    // TODO dodawaj minuty zamiast konwertowac do sekund
                     _target = _target.Add(
                         new TimeSpan(0, 0, (int) ((value - _minutesForRound) * 60)));
                 }
@@ -65,20 +70,39 @@ namespace Utils
             }
         }
 
+        // TODO mozesz z tego chyba zrobic auto-property
         public DateTime Target => _target;
         public DateTime PausedAtTime => _pausedAtTime;
         public int CurrentRound => _currentRound;
+
+        // TODO dlaczego to jest potrzebne/do czego to uzywasz? Razor tego wymaga?
+        public bool Equals(TournamentTimer other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return _currentRound == other._currentRound && Equals(_framesTimer, other._framesTimer) &&
+                   _minutesForRound.Equals(other._minutesForRound) && _pausedAtTime.Equals(other._pausedAtTime) &&
+                   _secondsForBreak == other._secondsForBreak && _target.Equals(other._target) &&
+                   NumberOfRounds == other.NumberOfRounds && Finished == other.Finished &&
+                   BreakText == other.BreakText && ResultsUrl == other.ResultsUrl && Running == other.Running &&
+                   IsBreak == other.IsBreak && TimerName == other.TimerName && Equals(TimerMessage, other.TimerMessage);
+        }
+
         public event EventHandler<DateTime> SettingsChanged;
+
+        // TODO [Ticked]
         public event EventHandler<DateTime> Tick;
         public event EventHandler OnFinished;
 
         private TimeSpan RoundTimeSpan()
         {
+            // TODO zamiast konwertowac na sekundy, uzyj minut
             return new TimeSpan(0, 0, (int) (MinutesForRound * 60));
         }
 
         private void OnTick(object sender, EventArgs e)
         {
+            // TODO po prostu [_target < DateTime.Now]
             if (_target.Subtract(DateTime.Now).CompareTo(new TimeSpan(0, 0, 0)) < 0)
             {
                 if (IsBreak)
@@ -87,6 +111,7 @@ namespace Utils
                 }
                 else
                 {
+                    // TODO [_currentRound >= NumberOfRounds]
                     if (_currentRound + 1 > NumberOfRounds)
                     {
                         Finished = true;
@@ -106,6 +131,7 @@ namespace Utils
 
         public void Start()
         {
+            // TODO Generalnie + i - beda dzialac tak jak chcesz. Wiec zamiast Add, Substract i takich tam wszedzie lepiej uzywaz znakow.
             _target = _target.Add(DateTime.Now.Subtract(_pausedAtTime));
             Running = true;
             Finished = false;
@@ -133,6 +159,7 @@ namespace Utils
 
         public void NextRound()
         {
+            // TODO ten if jest w duzej mierze podobny do tego w linii 111. W szczegolnosci tam jest OnFinished a tu nie - zgaduje ze tu zapomniales. Czy mozesz zreducowac powtorzenie aby tego uniknac?
             if (_currentRound + 1 > NumberOfRounds)
             {
                 Finished = true;
@@ -154,6 +181,7 @@ namespace Utils
         public void PreviousRound()
         {
             _target = DateTime.Now.Add(RoundTimeSpan());
+            // TODO [>= 1]? Wydaje mi sie ze latwiej widac o co chodzi
             if (_currentRound - 1 > 0)
             {
                 _currentRound--;
@@ -179,23 +207,11 @@ namespace Utils
             }
         }
 
-        public bool Equals(TournamentTimer other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return _currentRound == other._currentRound && Equals(_framesTimer, other._framesTimer) &&
-                   _minutesForRound.Equals(other._minutesForRound) && _pausedAtTime.Equals(other._pausedAtTime) &&
-                   _secondsForBreak == other._secondsForBreak && _target.Equals(other._target) &&
-                   NumberOfRounds == other.NumberOfRounds && Finished == other.Finished &&
-                   BreakText == other.BreakText && ResultsUrl == other.ResultsUrl && Running == other.Running &&
-                   IsBreak == other.IsBreak && TimerName == other.TimerName && Equals(TimerMessage, other.TimerMessage);
-        }
-
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((TournamentTimer) obj);
         }
 

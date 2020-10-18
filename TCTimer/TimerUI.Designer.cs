@@ -66,18 +66,18 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.breakTimeUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minutesPerRoundUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberOfRoundsUpDown)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.messageDurationUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.messageDurationUpDown)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // showTimerButton
             // 
-            this.showTimerButton.Image = ((System.Drawing.Image) (resources.GetObject("showTimerButton.Image")));
+            this.showTimerButton.Image = ((System.Drawing.Image)(resources.GetObject("showTimerButton.Image")));
             this.showTimerButton.Location = new System.Drawing.Point(12, 27);
             this.showTimerButton.Name = "showTimerButton";
             this.showTimerButton.Size = new System.Drawing.Size(134, 54);
@@ -106,33 +106,61 @@
             // breakTimeUpDown
             // 
             this.breakTimeUpDown.Location = new System.Drawing.Point(130, 66);
-            this.breakTimeUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
+            this.breakTimeUpDown.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
             this.breakTimeUpDown.Name = "breakTimeUpDown";
             this.breakTimeUpDown.Size = new System.Drawing.Size(54, 20);
             this.breakTimeUpDown.TabIndex = 5;
-            this.breakTimeUpDown.Value = new decimal(new int[] {30, 0, 0, 0});
+            this.breakTimeUpDown.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             this.breakTimeUpDown.ValueChanged += new System.EventHandler(this.breakTimeUpDown_ValueChanged);
             // 
             // minutesPerRoundUpDown
             // 
             this.minutesPerRoundUpDown.DecimalPlaces = 1;
             this.minutesPerRoundUpDown.Location = new System.Drawing.Point(130, 40);
-            this.minutesPerRoundUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
-            this.minutesPerRoundUpDown.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.minutesPerRoundUpDown.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.minutesPerRoundUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.minutesPerRoundUpDown.Name = "minutesPerRoundUpDown";
             this.minutesPerRoundUpDown.Size = new System.Drawing.Size(54, 20);
             this.minutesPerRoundUpDown.TabIndex = 4;
-            this.minutesPerRoundUpDown.Value = new decimal(new int[] {165, 0, 0, 65536});
+            this.minutesPerRoundUpDown.Value = new decimal(new int[] {
+            165,
+            0,
+            0,
+            65536});
             this.minutesPerRoundUpDown.ValueChanged += new System.EventHandler(this.minutesPerRoundUpDown_ValueChanged);
             // 
             // numberOfRoundsUpDown
             // 
             this.numberOfRoundsUpDown.Location = new System.Drawing.Point(130, 14);
-            this.numberOfRoundsUpDown.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numberOfRoundsUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numberOfRoundsUpDown.Name = "numberOfRoundsUpDown";
             this.numberOfRoundsUpDown.Size = new System.Drawing.Size(54, 20);
             this.numberOfRoundsUpDown.TabIndex = 3;
-            this.numberOfRoundsUpDown.Value = new decimal(new int[] {12, 0, 0, 0});
+            this.numberOfRoundsUpDown.Value = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
             this.numberOfRoundsUpDown.ValueChanged += new System.EventHandler(this.numberOfRoundsUpDown_ValueChanged);
             // 
             // label1
@@ -161,7 +189,7 @@
             // 
             // currentRoundLabel
             // 
-            this.currentRoundLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.currentRoundLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.currentRoundLabel.Location = new System.Drawing.Point(479, 58);
             this.currentRoundLabel.Name = "currentRoundLabel";
             this.currentRoundLabel.Size = new System.Drawing.Size(114, 23);
@@ -171,7 +199,7 @@
             // 
             // currentTime
             // 
-            this.currentTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.currentTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.currentTime.Location = new System.Drawing.Point(481, 33);
             this.currentTime.Name = "currentTime";
             this.currentTime.Size = new System.Drawing.Size(112, 25);
@@ -181,7 +209,7 @@
             // 
             // previousRoundButton
             // 
-            this.previousRoundButton.Image = ((System.Drawing.Image) (resources.GetObject("previousRoundButton.Image")));
+            this.previousRoundButton.Image = ((System.Drawing.Image)(resources.GetObject("previousRoundButton.Image")));
             this.previousRoundButton.Location = new System.Drawing.Point(237, 27);
             this.previousRoundButton.Name = "previousRoundButton";
             this.previousRoundButton.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -192,7 +220,7 @@
             // 
             // nextRoundButton
             // 
-            this.nextRoundButton.Image = ((System.Drawing.Image) (resources.GetObject("nextRoundButton.Image")));
+            this.nextRoundButton.Image = ((System.Drawing.Image)(resources.GetObject("nextRoundButton.Image")));
             this.nextRoundButton.Location = new System.Drawing.Point(297, 27);
             this.nextRoundButton.Name = "nextRoundButton";
             this.nextRoundButton.Size = new System.Drawing.Size(54, 54);
@@ -202,7 +230,7 @@
             // 
             // addOneMinute
             // 
-            this.addOneMinute.Image = ((System.Drawing.Image) (resources.GetObject("addOneMinute.Image")));
+            this.addOneMinute.Image = ((System.Drawing.Image)(resources.GetObject("addOneMinute.Image")));
             this.addOneMinute.Location = new System.Drawing.Point(357, 27);
             this.addOneMinute.Name = "addOneMinute";
             this.addOneMinute.Size = new System.Drawing.Size(54, 54);
@@ -212,7 +240,7 @@
             // 
             // substractOneMinute
             // 
-            this.substractOneMinute.Image = ((System.Drawing.Image) (resources.GetObject("substractOneMinute.Image")));
+            this.substractOneMinute.Image = ((System.Drawing.Image)(resources.GetObject("substractOneMinute.Image")));
             this.substractOneMinute.Location = new System.Drawing.Point(417, 27);
             this.substractOneMinute.Name = "substractOneMinute";
             this.substractOneMinute.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -223,7 +251,7 @@
             // 
             // stopStartButton
             // 
-            this.stopStartButton.Image = ((System.Drawing.Image) (resources.GetObject("stopStartButton.Image")));
+            this.stopStartButton.Image = ((System.Drawing.Image)(resources.GetObject("stopStartButton.Image")));
             this.stopStartButton.Location = new System.Drawing.Point(177, 27);
             this.stopStartButton.Name = "stopStartButton";
             this.stopStartButton.Size = new System.Drawing.Size(54, 54);
@@ -336,12 +364,24 @@
             // messageDurationUpDown
             // 
             this.messageDurationUpDown.Location = new System.Drawing.Point(317, 40);
-            this.messageDurationUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
-            this.messageDurationUpDown.Minimum = new decimal(new int[] {5, 0, 0, 0});
+            this.messageDurationUpDown.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.messageDurationUpDown.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.messageDurationUpDown.Name = "messageDurationUpDown";
             this.messageDurationUpDown.Size = new System.Drawing.Size(62, 20);
             this.messageDurationUpDown.TabIndex = 4;
-            this.messageDurationUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
+            this.messageDurationUpDown.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
             // 
             // label5
             // 
@@ -371,7 +411,9 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.fileToolStripMenuItem, this.aboutMenuItem});
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.aboutMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(605, 24);
@@ -380,14 +422,15 @@
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.closeMenuItem});
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.closeMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // closeMenuItem
             // 
-            this.closeMenuItem.Image = ((System.Drawing.Image) (resources.GetObject("closeMenuItem.Image")));
+            this.closeMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("closeMenuItem.Image")));
             this.closeMenuItem.Name = "closeMenuItem";
             this.closeMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeMenuItem.Text = "Close";
@@ -395,14 +438,16 @@
             // 
             // aboutMenuItem
             // 
-            this.aboutMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.aboutToolStripMenuItem, this.gitHubToolStripMenuItem});
+            this.aboutMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem,
+            this.gitHubToolStripMenuItem});
             this.aboutMenuItem.Name = "aboutMenuItem";
             this.aboutMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutMenuItem.Text = "About";
             // 
             // aboutToolStripMenuItem
             // 
-            this.aboutToolStripMenuItem.Image = ((System.Drawing.Image) (resources.GetObject("aboutToolStripMenuItem.Image")));
+            this.aboutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("aboutToolStripMenuItem.Image")));
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.aboutToolStripMenuItem.Text = "About";
@@ -410,7 +455,7 @@
             // 
             // gitHubToolStripMenuItem
             // 
-            this.gitHubToolStripMenuItem.Image = ((System.Drawing.Image) (resources.GetObject("gitHubToolStripMenuItem.Image")));
+            this.gitHubToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("gitHubToolStripMenuItem.Image")));
             this.gitHubToolStripMenuItem.Name = "gitHubToolStripMenuItem";
             this.gitHubToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
             this.gitHubToolStripMenuItem.Text = "GitHub";
@@ -434,24 +479,25 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.showTimerButton);
             this.Controls.Add(this.menuStrip1);
-            this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Location = new System.Drawing.Point(15, 15);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "TimerForm";
             this.Text = "Bridge Timer";
             this.groupBox1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.breakTimeUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minutesPerRoundUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberOfRoundsUpDown)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.messageDurationUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.messageDurationUpDown)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.Button sendMessageButton;

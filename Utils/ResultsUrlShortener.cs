@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Net;
-
+using System.Net.Http;
 
 namespace Utils
 {
     public class ResultsUrlShortener
     {
-        private Dictionary<Uri, Uri> _shortenedUrls = new Dictionary<Uri, Uri>();
+        // TODO readonly
+        private readonly Dictionary<Uri, Uri> _shortenedUrls = new Dictionary<Uri, Uri>();
 
         public Uri ShortenUrl(Uri uri)
         {
@@ -18,7 +18,7 @@ namespace Utils
             {
                 return shortenedUri;
             }
-            
+
             using (var httpClient = new HttpClient())
             {
                 var shortenedUrlTask =

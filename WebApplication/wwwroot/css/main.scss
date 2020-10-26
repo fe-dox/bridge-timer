@@ -1,7 +1,18 @@
-﻿html, body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+﻿@mixin prefix($declarations, $prefixes: ()) {
+  @each $property, $value in $declarations {
+    @each $prefix in $prefixes {
+      #{'-' + $prefix + '-' + $property}: $value;
+    }
+
+    #{$property}: $value;
+  }
+}
+
+html, body {
+  font-family: -apple-systrem, BlinkMacSystremFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color remoji", "Segoe UI remoji", "Segoe UI Symbol";
   width: 99%;
   height: 99%;
+  font-size: 1vw;
 }
 
 app {
@@ -12,7 +23,7 @@ app {
 .main {
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 80%;
   padding: 0;
   margin: 0;
 }
@@ -24,35 +35,149 @@ app {
   align-items: center;
   align-self: center;
   margin: auto;
-  font-size: 5em;
+  font-size: 5rem;
 }
 
 .clock-time {
-  font-size: 12rem;
+  font-size: 28rem;
+  margin-top: -5vw;
 }
 
 .clock-label {
   font-size: 6rem;
+  margin-top: -5vw;
 }
 
 .current-time {
-  position: absolute;
-  bottom: 5%;
-  left: 5%;
   font-size: 5rem;
 }
 
 .timer-name {
   position: absolute;
   text-align: center;
-  top: 5%;
-  font-size: 3rem;
+  top: 1%;
+  font-size: 5rem;
   width: 99%;
 }
 
-.results {
+.bottom {
+  display: flex;
   position: absolute;
   bottom: 5%;
-  right: 5%;
+  right: 0;
+  width: 100%;
+  align-items: normal;
+  justify-content: space-around;
+}
+
+.round {
+  font-size: 5rem;
+}
+
+.results {
+  text-align: center;
   font-size: 4rem;
+  align-self: center;
+}
+
+.is-blinking {
+  @include prefix((
+          animation-name: blinking,
+          animation-duration: 1s,
+          animation-iteration-count: infinite,
+          animation-timing-function: steps(5, start),
+  ), moz webkit);
+}
+
+@keyframes blinking {
+  0% {
+    color: black;
+  }
+  49% {
+    color: black;
+  }
+  50% {
+    color: red;
+  }
+  100% {
+    color: red;
+  }
+}
+
+@media screen and (max-width: 1500px) {
+  .clock {
+    font-size: 7rem;
+  }
+  .current-time {
+    font-size: 7rem;
+  }
+  .clock-time {
+    font-size: 33rem;
+    margin-top: -5vw;
+  }
+  .round {
+    font-size: 7rem;
+  }
+  .clock-label {
+    font-size: 6rem;
+    margin-top: -5vw;
+  }
+  .results {
+    font-size: 5rem;
+  }
+  .timer-name {
+    font-size: 7rem;
+  }
+}
+
+@media screen and (max-width: 1400px) {
+  .clock {
+    font-size: 8rem;
+  }
+  .clock-time {
+    font-size: 33rem;
+    margin-top: -5vw;
+  }
+  .current-time {
+    font-size: 7rem;
+  }
+  .round {
+    font-size: 7rem;
+  }
+  .results {
+    font-size: 5rem;
+  }
+  .clock-label {
+    font-size: 6rem;
+    margin-top: -5vw;
+  }
+  .timer-name {
+    font-size: 7rem;
+  }
+}
+
+@media screen and (max-width: 1036px) {
+  .clock {
+    font-size: 9rem;
+  }
+  .current-time {
+    font-size: 9rem;
+  }
+  .clock-time {
+    font-size: 37rem;
+    margin-top: -5vw;
+  }
+  .round {
+    font-size: 9rem;
+  }
+  .clock-label {
+    font-size: 7rem;
+    margin-top: -5vw;
+  }
+  .results {
+    font-size: 6rem;
+  }
+  .timer-name {
+    font-size: 7rem;
+  }
 }

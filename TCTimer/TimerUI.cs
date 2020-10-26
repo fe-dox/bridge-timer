@@ -18,23 +18,20 @@ namespace TCTimer
         private readonly ResultsUrlShortener _resultsUrlShortener;
         private readonly Timer _serializationTimer = new Timer(200);
         private readonly SimpleHttpServer _simpleHttpServer;
-
+#if !DEBUG
         private readonly string _timerPath = Path.GetTempPath() + "\\bridge_timer\\" + Path.GetRandomFileName();
-
-        // TODO W calym programie uzywasz jednego [TournamentTimer], nie lepiej aby byla to klasa statyczna?
+#else
+        private readonly string _timerPath = "..\\..\\WebApp\\wwwroot";
+#endif
         private readonly TournamentTimer _tournamentTimer;
 
         public TimerForm()
         {
-            _resultsUrlShortener = new ResultsUrlShortener();
-            // TODO latwiej to po prostu ustawic w edytorze UI i nie bedziesz mial tego w kodzie. To sie tyczy kolejnych 3 linii.
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
-            FormClosing += TimerForm_FormClosing;
             InitializeComponent();
+            _resultsUrlShortener = new ResultsUrlShortener();
             _tournamentTimer = new TournamentTimer((int) numberOfRoundsUpDown.Value,
                 (float) minutesPerRoundUpDown.Value, (int) breakTimeUpDown.Value);
-            _tournamentTimer.Tick += UpdateTime;
+            _tournamentTimer.Ticked += UpdateTime;
             _tournamentTimer.SettingsChanged += UpdateTime;
             _tournamentTimer.OnFinished += OnFinished;
             _serializationTimer.Elapsed += WriteTournamentTimer;
@@ -43,24 +40,31 @@ namespace TCTimer
             {
                 Directory.CreateDirectory(_timerPath);
             }
-
+#if !DEBUG
             new Task(() =>
             {
                 ZipFile.ExtractToDirectory(Application.StartupPath + "\\WebApp.app", _timerPath);
             }).Start();
+#endif
             _simpleHttpServer = new SimpleHttpServer(_timerPath);
         }
 
         private void OnFinished(object sender, EventArgs e)
         {
-            stopStartButton.Image = Resources.StartWithoutDebug_16x;
+            RunAction(() =>
+            {
+                stopStartButton.Image = Resources.StartWithoutDebug_16x;
+                currentTime.Text = DateTime.Now.ToString(@"HH\:mm");
+                currentRoundLabel.Text = "Finished";
+            });
         }
 
-        private static void TimerForm_FormClosing(object sender, FormClosingEventArgs formClosingEvent)
+        private void TimerForm_FormClosing(object sender, FormClosingEventArgs formClosingEvent)
         {
             // TODO lokalizacja, nie zbyt wazne obecnie, ale kiedys do zrobienia
             if (MessageBox.Show("Are you sure you want to close this window?", "Are you sure?",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) formClosingEvent.Cancel = true;
+            _simpleHttpServer.Stop();
         }
 
         private void closeMenuItem_Click(object sender, EventArgs e)
@@ -71,7 +75,6 @@ namespace TCTimer
         private void aboutMenuItem_Click(object sender, EventArgs e)
         {
             var about = new AboutForm();
-            // TODO Nigdy nie ustawialem [owner]a, raczej nie jest potrzebny. Wiesz co to zmienia?
             about.ShowDialog(this);
         }
 
@@ -79,23 +82,41 @@ namespace TCTimer
         {
             var serializer = new DataContractSerializer(typeof(TournamentTimer));
             var writer = new FileStream(_timerPath + "\\timer.xml", FileMode.Create);
-            serializer.WriteObject(writer, _tournamentTimer);
-            writer.Close();
+            try
+            {
+                serializer.WriteObject(writer, _tournamentTimer);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+                throw;
+            }
+            finally
+            {
+                writer.Close();
+            }
         }
 
         private void UpdateTime(object obj, DateTime target)
         {
-            // TODO Czy to nie powinno byc w OnFinished?
-            if (_tournamentTimer.Finished)
+            RunAction(() =>
             {
-                currentTime.Text = DateTime.Now.ToString(@"HH\:mm");
-                currentRoundLabel.Text = "Finished";
-                return;
-            }
+                currentTime.Text = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
+                currentRoundLabel.Text =
+                    _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRound.ToString()}";
+            });
+        }
 
-            currentTime.Text = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
-            currentRoundLabel.Text =
-                _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRound}";
+        private void RunAction(Action action)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(action);
+            }
+            else
+            {
+                action();
+            }
         }
 
         private void numberOfRoundsUpDown_ValueChanged(object sender, EventArgs e)
@@ -127,14 +148,11 @@ namespace TCTimer
                 return;
             }
 
-            // TODO To nie bedzie tak (nie moge odpalic, nie umiem sprawdzic), ze jak masz poprawnie sformatowany URL i nie mozesz sie polaczyc ze skracaczem to dostaniesz duzo bledow?
-            // Wpisalem np. http://abc.com i teraz zaczynam rozszerzac "abc" - przy kazdym nacisnieciu klawisza ta metoda jest wywolana.
-            // Wiec jak wpisalem 10 nowych literek to dostane 10 bledow?
             try
             {
                 var shortenedUrl = await
                     Task.Factory.StartNew(() => _resultsUrlShortener.ShortenUrl(new Uri(resultsUrlTextBox.Text)));
-                _tournamentTimer.ResultsUrl = shortenedUrl.ToString();
+                _tournamentTimer.ResultsUrl = shortenedUrl.ToString().Replace("https://", "");
             }
             catch
             {
@@ -145,22 +163,16 @@ namespace TCTimer
 
         private void sendMessageButton_Click(object sender, EventArgs e)
         {
-            // TODO IsNullOrWhiteSpace
-            if (string.IsNullOrEmpty(messageTextBox.Text)) return;
+            if (string.IsNullOrWhiteSpace(messageTextBox.Text)) return;
             _tournamentTimer.TimerMessage = new TimerMessage(messageTextBox.Text,
                 new TimeSpan(0, 0, (int) messageDurationUpDown.Value),
-                DateTime.Now.Add(new TimeSpan(0, 0, 45)), showMessageFullscreenCheckBox.Checked);
-            // TODO czesto mozesz chciec pokazac wiecej niz jedna taka samo wiadomosc, wiec moze lepiej nie usuwac?
-            messageTextBox.Text = "";
-            messageDurationUpDown.Value = 15;
-            showMessageFullscreenCheckBox.Checked = false;
+                DateTime.Now + new TimeSpan(0, 0, 45), showMessageFullscreenCheckBox.Checked);
         }
 
         private void showTimerButton_Click(object sender, EventArgs e)
         {
             Process.Start($"http://localhost:{_simpleHttpServer.Port}/");
         }
-
 
         private void stopStartButton_Click(object sender, EventArgs e)
         {
@@ -176,11 +188,10 @@ namespace TCTimer
             }
         }
 
-        // TODO Dlaczego nie w textChanged?
         private void resultsUrlTextBox_KeyPress(object sender, KeyEventArgs e)
         {
             resultsUrlTextBox.BackColor = !Uri.IsWellFormedUriString(resultsUrlTextBox.Text, UriKind.Absolute) &&
-                                          !string.IsNullOrEmpty(resultsUrlTextBox.Text)
+                                          !string.IsNullOrWhiteSpace(resultsUrlTextBox.Text)
                 ? Color.LightCoral
                 : Color.White;
         }

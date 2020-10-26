@@ -6,29 +6,20 @@ namespace Utils
     [DataContract]
     public class TimerMessage : IEquatable<TimerMessage>
     {
-        [DataMember] private TimeSpan _duration;
-        [DataMember] private DateTime _expiration;
+        [DataMember] public string Text { get; private set; }
+        [DataMember] public TimeSpan Duration { get; private set; }
+        [DataMember] public DateTime Expiration { get; private set; }
+        [DataMember] public bool ShowFullScreen { get; private set; }
         [DataMember] private Guid _id;
-        [DataMember] private bool _showFullScreen;
-
-        [DataMember] private string _text;
 
         public TimerMessage(string text, TimeSpan duration, DateTime expiration, bool showFullScreen)
         {
-            _text = text;
-            _duration = duration;
-            _expiration = expiration;
-            _showFullScreen = showFullScreen;
+            Text = text;
+            Duration = duration;
+            Expiration = expiration;
+            ShowFullScreen = showFullScreen;
             _id = Guid.NewGuid();
         }
-
-        // TODO auto-properties?
-        // [field: DataMember] public string Text { get; }
-        public string Text => _text;
-        public TimeSpan Duration => _duration;
-        public DateTime Expiration => _expiration;
-
-        public bool ShowFullScreen => _showFullScreen;
 
         public bool Equals(TimerMessage other)
         {
@@ -38,7 +29,7 @@ namespace Utils
             }
 
             return Text == other.Text && Expiration.Equals(other.Expiration) && Duration.Equals(other.Duration) &&
-                   _id == other._id && _showFullScreen == other._showFullScreen;
+                   _id == other._id && ShowFullScreen == other.ShowFullScreen;
         }
     }
 }

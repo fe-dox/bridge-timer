@@ -13,7 +13,7 @@
         }
         else
         {
-            <div class="clock-time">@_clockValue</div>
+            <div class="clock-time @_blinking">@_clockValue</div>
             @if (_tournamentTimer != null)
             {
                 if (_showingMessage)
@@ -28,19 +28,21 @@
                 {
                     <div class="clock-label">Finished</div>
                 }
-                else
-                {
-                    <div class="clock-label">Round @_tournamentTimer.CurrentRound.ToString()/@_tournamentTimer.NumberOfRounds.ToString()</div>
-                }
             }
         }
 
     </div>
-    <div class="current-time">@_currentTimeValue</div>
-    @if (!string.IsNullOrEmpty(_tournamentTimer?.ResultsUrl))
-    {
-        <div class="results">@_tournamentTimer.ResultsUrl</div>
-    }
+    <div class="bottom">
+        <div class="current-time">@_currentTimeValue</div>
+        @if (!string.IsNullOrWhiteSpace(_tournamentTimer?.ResultsUrl))
+        {
+            <div class="results">@_tournamentTimer.ResultsUrl</div>
+        }
+        @if (_tournamentTimer != null)
+        {
+            <div class="round">@_tournamentTimer.CurrentRound.ToString()/@_tournamentTimer.NumberOfRounds.ToString()</div>
+        }
+    </div>
 </div>
 
 
@@ -55,6 +57,8 @@
     private TournamentTimer _tournamentTimer;
     private readonly DataContractSerializer _serializer = new DataContractSerializer(typeof(TournamentTimer));
     private string _clockValue = "00:00";
+    private readonly HttpClient _httpClient = new HttpClient();
+    private string _blinking = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -62,9 +66,8 @@
         _refreshTimer.Elapsed += RefreshData;
         try
         {
-            using var httpClient = new HttpClient();
             var timerDataStream =
-                await httpClient.GetStreamAsync(NavigationManager.BaseUri + "./timer.xml");
+                await _httpClient.GetStreamAsync(NavigationManager.BaseUri + "./timer.xml");
             _tournamentTimer = _serializer.ReadObject(timerDataStream) as TournamentTimer;
         }
         catch
@@ -89,25 +92,32 @@
             var timerDataStream =
                 await httpClient.GetStreamAsync(NavigationManager.BaseUri + "/timer.xml");
             var tmpTimer = _serializer.ReadObject(timerDataStream) as TournamentTimer;
+            Console.WriteLine("Refreshing Timer ...");
             if (!_tournamentTimer.Equals(tmpTimer) && tmpTimer != null)
             {
                 _tournamentTimer = tmpTimer;
             }
-            if (!_tournamentTimer.TimerMessage.Equals(_currentOrLastMessage) &&
+            if (_tournamentTimer.TimerMessage != null && !_tournamentTimer.TimerMessage.Equals(_currentOrLastMessage) &&
                 _tournamentTimer.TimerMessage.Expiration.Subtract(DateTime.Now).CompareTo(new TimeSpan(0, 0, 0)) > 0)
             {
-                Console.WriteLine("jej");
                 _currentOrLastMessage = _tournamentTimer.TimerMessage;
                 _showingMessage = true;
                 _showingMessageTarget = DateTime.Now.Add(_tournamentTimer.TimerMessage.Duration);
             }
-            _refreshTimer.Interval = 1000;
-            _connectionErrors = 0;
+
+            if (_connectionErrors != 0)
+            {
+                _connectionErrors = 0;
+                _refreshTimer.Interval = 1000;
+            }
         }
-        catch
+        catch (Exception e)
         {
-            _connectionErrors++;
-            _refreshTimer.Interval = Math.Min(10000, (_connectionErrors + 1) * 1000);
+            if (e.Message == "TypeError: Failed to fetch")
+            {
+                _connectionErrors++;
+                _refreshTimer.Interval = Math.Min(10000, (_connectionErrors + 1) * 1000);
+            }
         }
         StateHasChanged();
     }
@@ -130,6 +140,7 @@
                 var time = _tournamentTimer.Target.Subtract(_tournamentTimer.PausedAtTime);
                 _clockValue = time.Hours == 0 ? time.ToString(@"mm\:ss") : time.ToString(@"HH\:mm\:ss");
             }
+            _blinking = DateTime.Now + new TimeSpan(0, 0, 30) > _tournamentTimer.Target ? "is-blinking" : "";
         }
         _currentTimeValue = DateTime.Now.ToString(@"HH\:mm");
         if (_showingMessageTarget.Subtract(DateTime.Now).CompareTo(new TimeSpan(0, 0, 0)) < 0)

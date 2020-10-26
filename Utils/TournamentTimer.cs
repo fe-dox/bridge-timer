@@ -5,19 +5,11 @@ using System.Timers;
 namespace Utils
 {
     [DataContract]
-    // TODO Czemu tu jest to [KnownType]? [TimerMessage] nie dziedziczy po [TournamentTimer].
-    [KnownType(typeof(TimerMessage))]
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
-        [DataMember] private int _currentRound = 1;
         [DataMember] private Timer _framesTimer;
         [DataMember] private float _minutesForRound;
-        [DataMember] private DateTime _pausedAtTime;
-
         [DataMember] private int _secondsForBreak;
-
-        // TODO Chyba nazwalbym to inaczej, np. _nextEventAt, ale nie upieram sie
-        [DataMember] private DateTime _target;
 
         public TournamentTimer(int numberOfRounds, float minutesForRound, int secondsForBreak)
         {
@@ -26,8 +18,8 @@ namespace Utils
             SecondsForBreak = secondsForBreak;
             _framesTimer = new Timer(50);
             _framesTimer.Elapsed += OnTick;
-            _target = DateTime.Now.Add(RoundTimeSpan());
-            _pausedAtTime = DateTime.Now;
+            Target = DateTime.Now + RoundTimeSpan();
+            PausedAtTime = DateTime.Now;
         }
 
 
@@ -47,9 +39,8 @@ namespace Utils
             {
                 if (!IsBreak)
                 {
-                    // TODO dodawaj minuty zamiast konwertowac do sekund
-                    _target = _target.Add(
-                        new TimeSpan(0, 0, (int) ((value - _minutesForRound) * 60)));
+                    Target +=
+                        new TimeSpan(0, 0, (int) ((value - _minutesForRound) * 60));
                 }
 
                 _minutesForRound = value;
@@ -63,47 +54,41 @@ namespace Utils
             {
                 if (IsBreak)
                 {
-                    _target = _target.Add(new TimeSpan(0, 0, value - _secondsForBreak));
+                    Target += new TimeSpan(0, 0, value - _secondsForBreak);
                 }
 
                 _secondsForBreak = value;
             }
         }
 
-        // TODO mozesz z tego chyba zrobic auto-property
-        public DateTime Target => _target;
-        public DateTime PausedAtTime => _pausedAtTime;
-        public int CurrentRound => _currentRound;
+        [DataMember] public DateTime Target { get; private set; }
+        [DataMember] public DateTime PausedAtTime { get; private set; }
+        [DataMember] public int CurrentRound { get; private set; } = 1;
 
-        // TODO dlaczego to jest potrzebne/do czego to uzywasz? Razor tego wymaga?
         public bool Equals(TournamentTimer other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _currentRound == other._currentRound && Equals(_framesTimer, other._framesTimer) &&
-                   _minutesForRound.Equals(other._minutesForRound) && _pausedAtTime.Equals(other._pausedAtTime) &&
-                   _secondsForBreak == other._secondsForBreak && _target.Equals(other._target) &&
+            return CurrentRound == other.CurrentRound && Equals(_framesTimer, other._framesTimer) &&
+                   _minutesForRound.Equals(other._minutesForRound) && PausedAtTime.Equals(other.PausedAtTime) &&
+                   _secondsForBreak == other._secondsForBreak && Target.Equals(other.Target) &&
                    NumberOfRounds == other.NumberOfRounds && Finished == other.Finished &&
                    BreakText == other.BreakText && ResultsUrl == other.ResultsUrl && Running == other.Running &&
                    IsBreak == other.IsBreak && TimerName == other.TimerName && Equals(TimerMessage, other.TimerMessage);
         }
 
         public event EventHandler<DateTime> SettingsChanged;
-
-        // TODO [Ticked]
-        public event EventHandler<DateTime> Tick;
+        public event EventHandler<DateTime> Ticked;
         public event EventHandler OnFinished;
 
         private TimeSpan RoundTimeSpan()
         {
-            // TODO zamiast konwertowac na sekundy, uzyj minut
             return new TimeSpan(0, 0, (int) (MinutesForRound * 60));
         }
 
         private void OnTick(object sender, EventArgs e)
         {
-            // TODO po prostu [_target < DateTime.Now]
-            if (_target.Subtract(DateTime.Now).CompareTo(new TimeSpan(0, 0, 0)) < 0)
+            if (Target < DateTime.Now)
             {
                 if (IsBreak)
                 {
@@ -111,8 +96,7 @@ namespace Utils
                 }
                 else
                 {
-                    // TODO [_currentRound >= NumberOfRounds]
-                    if (_currentRound + 1 > NumberOfRounds)
+                    if (CurrentRound >= NumberOfRounds)
                     {
                         Finished = true;
                         Pause();
@@ -120,19 +104,18 @@ namespace Utils
                     }
                     else
                     {
-                        _target = DateTime.Now.Add(new TimeSpan(0, 0, SecondsForBreak));
+                        Target = DateTime.Now + new TimeSpan(0, 0, SecondsForBreak);
                         IsBreak = true;
                     }
                 }
             }
 
-            Tick?.Invoke(this, _target);
+            Ticked?.Invoke(this, Target);
         }
 
         public void Start()
         {
-            // TODO Generalnie + i - beda dzialac tak jak chcesz. Wiec zamiast Add, Substract i takich tam wszedzie lepiej uzywaz znakow.
-            _target = _target.Add(DateTime.Now.Subtract(_pausedAtTime));
+            Target += DateTime.Now - PausedAtTime;
             Running = true;
             Finished = false;
             _framesTimer.Start();
@@ -140,59 +123,58 @@ namespace Utils
 
         public void Pause()
         {
-            _pausedAtTime = DateTime.Now;
+            PausedAtTime = DateTime.Now;
             Running = false;
             _framesTimer.Stop();
         }
 
         public void AddMinute()
         {
-            _target = _target.Add(new TimeSpan(0, 1, 0));
-            SettingsChanged?.Invoke(this, Running ? _target : _target.Add(DateTime.Now.Subtract(_pausedAtTime)));
+            Target += +new TimeSpan(0, 1, 0);
+            SettingsChanged?.Invoke(this, Running ? Target : Target.Add(DateTime.Now.Subtract(PausedAtTime)));
         }
 
         public void SubtractMinute()
         {
-            _target = _target.Subtract(new TimeSpan(0, 1, 0));
-            SettingsChanged?.Invoke(this, Running ? _target : _target.Add(DateTime.Now.Subtract(_pausedAtTime)));
+            Target = Target.Subtract(new TimeSpan(0, 1, 0));
+            SettingsChanged?.Invoke(this, Running ? Target : Target.Add(DateTime.Now.Subtract(PausedAtTime)));
         }
 
         public void NextRound()
         {
             // TODO ten if jest w duzej mierze podobny do tego w linii 111. W szczegolnosci tam jest OnFinished a tu nie - zgaduje ze tu zapomniales. Czy mozesz zreducowac powtorzenie aby tego uniknac?
-            if (_currentRound + 1 > NumberOfRounds)
+            if (CurrentRound >= NumberOfRounds)
             {
                 Finished = true;
                 Pause();
             }
             else
             {
-                _target = DateTime.Now.Add(RoundTimeSpan());
+                Target = DateTime.Now.Add(RoundTimeSpan());
                 IsBreak = false;
-                _currentRound++;
-                _pausedAtTime = DateTime.Now;
+                CurrentRound++;
+                PausedAtTime = DateTime.Now;
                 if (!Running)
                 {
-                    SettingsChanged?.Invoke(this, _target);
+                    SettingsChanged?.Invoke(this, Target);
                 }
             }
         }
 
         public void PreviousRound()
         {
-            _target = DateTime.Now.Add(RoundTimeSpan());
-            // TODO [>= 1]? Wydaje mi sie ze latwiej widac o co chodzi
-            if (_currentRound - 1 > 0)
+            Target = DateTime.Now + RoundTimeSpan();
+            if (CurrentRound > 1)
             {
-                _currentRound--;
+                CurrentRound--;
             }
 
             IsBreak = false;
 
             if (!Running)
             {
-                _pausedAtTime = DateTime.Now;
-                SettingsChanged?.Invoke(this, _target);
+                PausedAtTime = DateTime.Now;
+                SettingsChanged?.Invoke(this, Target);
             }
         }
 
@@ -220,12 +202,12 @@ namespace Utils
             unchecked
             {
                 // ReSharper disable NonReadonlyMemberInGetHashCode
-                var hashCode = _currentRound;
+                var hashCode = CurrentRound;
                 hashCode = (hashCode * 397) ^ (_framesTimer != null ? _framesTimer.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ _minutesForRound.GetHashCode();
-                hashCode = (hashCode * 397) ^ _pausedAtTime.GetHashCode();
+                hashCode = (hashCode * 397) ^ PausedAtTime.GetHashCode();
                 hashCode = (hashCode * 397) ^ _secondsForBreak;
-                hashCode = (hashCode * 397) ^ _target.GetHashCode();
+                hashCode = (hashCode * 397) ^ Target.GetHashCode();
                 hashCode = (hashCode * 397) ^ NumberOfRounds;
                 hashCode = (hashCode * 397) ^ Finished.GetHashCode();
                 hashCode = (hashCode * 397) ^ (BreakText != null ? BreakText.GetHashCode() : 0);

@@ -9,7 +9,6 @@ namespace Utils
 {
     // MIT License - Copyright (c) 2016 Can Güney Aksakalli
     // https://aksakalli.github.io/2014/02/24/simple-http-server-with-csparp.html
-    // TODO To jest skopiowane z TC, nie? Jaki w ogole jest dlugoterminowy plan na intergracje z TC?
     public class SimpleHttpServer
     {
         private static readonly IDictionary<string, string> MimeTypeMappings =

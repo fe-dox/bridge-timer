@@ -7,7 +7,6 @@ namespace Utils
 {
     public class ResultsUrlShortener
     {
-        // TODO readonly
         private readonly Dictionary<Uri, Uri> _shortenedUrls = new Dictionary<Uri, Uri>();
 
         public Uri ShortenUrl(Uri uri)

@@ -64,6 +64,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web"/>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -81,14 +82,20 @@
     <Compile Include="AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RoundsManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RoundsManager.Designer.cs">
+      <DependentUpon>RoundsManager.cs</DependentUpon>
+    </Compile>
     <Compile Include="TimerUI.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="TimerUI.Designer.cs">
       <DependentUpon>TimerUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Program.cs"/>
+    <Compile Include="Properties\AssemblyInfo.cs"/>
     <EmbeddedResource Include="AboutForm.resx">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -102,10 +109,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="RoundsManager.resx">
+      <DependentUpon>RoundsManager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TimerUI.resx">
       <DependentUpon>TimerUI.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.manifest" />
+    <None Include="app.manifest"/>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

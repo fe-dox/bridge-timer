@@ -11,6 +11,8 @@
         <AssemblyName>Utils</AssemblyName>
         <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
         <FileAlignment>512</FileAlignment>
+        <LangVersion>8</LangVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -40,11 +42,12 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="Round.cs"/>
         <Compile Include="TimerMessage.cs"/>
-        <Compile Include="ResultsUrlShortener.cs" />
-        <Compile Include="Properties\AssemblyInfo.cs" />
-        <Compile Include="SimpleHttpServer.cs" />
-        <Compile Include="TournamentTimer.cs" />
+        <Compile Include="ResultsUrlShortener.cs"/>
+        <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="SimpleHttpServer.cs"/>
+        <Compile Include="TournamentTimer.cs"/>
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

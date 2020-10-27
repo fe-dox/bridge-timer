@@ -108,16 +108,21 @@
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
   </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <assembly alias="System.Drawing"
+              name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
     <data name="showTimerButton.Image" type="System.Drawing.Bitmap, System.Drawing"
           mimetype="application/x-microsoft.net.object.bytearray.base64">
         <value>
@@ -162,6 +167,30 @@
     <data name="&gt;&gt;showTimerButton.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
+    <data name="advancedRoundEditor.Location" type="System.Drawing.Point, System.Drawing">
+        <value>7, 92</value>
+    </data>
+    <data name="advancedRoundEditor.Size" type="System.Drawing.Size, System.Drawing">
+        <value>177, 26</value>
+    </data>
+    <data name="advancedRoundEditor.TabIndex" type="System.Int32, mscorlib">
+        <value>6</value>
+    </data>
+    <data name="advancedRoundEditor.Text" xml:space="preserve">
+    <value>Advanced Rounds Settings</value>
+  </data>
+    <data name="&gt;&gt;advancedRoundEditor.Name" xml:space="preserve">
+    <value>advancedRoundEditor</value>
+  </data>
+    <data name="&gt;&gt;advancedRoundEditor.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;advancedRoundEditor.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+    <data name="&gt;&gt;advancedRoundEditor.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
     <data name="breakTimeUpDown.Location" type="System.Drawing.Point, System.Drawing">
         <value>130, 66</value>
     </data>
@@ -181,7 +210,7 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;breakTimeUpDown.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>1</value>
   </data>
     <data name="minutesPerRoundUpDown.Location" type="System.Drawing.Point, System.Drawing">
         <value>130, 40</value>
@@ -202,7 +231,7 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;minutesPerRoundUpDown.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
     <data name="numberOfRoundsUpDown.Location" type="System.Drawing.Point, System.Drawing">
         <value>130, 14</value>
@@ -223,7 +252,7 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;numberOfRoundsUpDown.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
     <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
         <value>6, 16</value>
@@ -247,7 +276,7 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>3</value>
+    <value>4</value>
   </data>
     <data name="label2.Location" type="System.Drawing.Point, System.Drawing">
         <value>6, 42</value>
@@ -271,7 +300,7 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>5</value>
   </data>
     <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
         <value>6, 68</value>
@@ -295,13 +324,13 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>5</value>
+    <value>6</value>
   </data>
     <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
         <value>12, 87</value>
     </data>
     <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-        <value>190, 99</value>
+        <value>190, 128</value>
     </data>
     <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
         <value>3</value>
@@ -704,7 +733,7 @@
     <value>6</value>
   </data>
     <data name="groupBox2.Location" type="System.Drawing.Point, System.Drawing">
-        <value>12, 192</value>
+        <value>12, 221</value>
     </data>
     <data name="groupBox2.Size" type="System.Drawing.Size, System.Drawing">
         <value>581, 100</value>
@@ -728,7 +757,7 @@
     <value>1</value>
   </data>
     <data name="sendMessageButton.Location" type="System.Drawing.Point, System.Drawing">
-        <value>253, 66</value>
+        <value>253, 63</value>
     </data>
     <data name="sendMessageButton.Size" type="System.Drawing.Size, System.Drawing">
         <value>126, 23</value>
@@ -827,7 +856,7 @@
         <value>True</value>
     </data>
     <data name="messageTextBox.Size" type="System.Drawing.Size, System.Drawing">
-        <value>241, 74</value>
+        <value>241, 103</value>
     </data>
     <data name="messageTextBox.TabIndex" type="System.Int32, mscorlib">
         <value>1</value>
@@ -848,7 +877,7 @@
         <value>208, 87</value>
     </data>
     <data name="groupBox3.Size" type="System.Drawing.Size, System.Drawing">
-        <value>385, 99</value>
+        <value>385, 128</value>
     </data>
     <data name="groupBox3.TabIndex" type="System.Int32, mscorlib">
         <value>11</value>
@@ -961,7 +990,7 @@
         <value>6, 13</value>
     </data>
     <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-        <value>605, 301</value>
+        <value>605, 332</value>
     </data>
     <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing"
           mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -974,16 +1003,16 @@
             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
-        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
+            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
@@ -2629,16 +2658,16 @@
         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
-        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
+            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

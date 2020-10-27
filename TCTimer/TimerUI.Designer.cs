@@ -32,6 +32,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimerForm));
             this.showTimerButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.advancedRoundEditor = new System.Windows.Forms.Button();
             this.breakTimeUpDown = new System.Windows.Forms.NumericUpDown();
             this.minutesPerRoundUpDown = new System.Windows.Forms.NumericUpDown();
             this.numberOfRoundsUpDown = new System.Windows.Forms.NumericUpDown();
@@ -84,6 +85,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.advancedRoundEditor);
             this.groupBox1.Controls.Add(this.breakTimeUpDown);
             this.groupBox1.Controls.Add(this.minutesPerRoundUpDown);
             this.groupBox1.Controls.Add(this.numberOfRoundsUpDown);
@@ -93,6 +95,12 @@
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // advancedRoundEditor
+            // 
+            resources.ApplyResources(this.advancedRoundEditor, "advancedRoundEditor");
+            this.advancedRoundEditor.Name = "advancedRoundEditor";
+            this.advancedRoundEditor.UseVisualStyleBackColor = true;
             // 
             // breakTimeUpDown
             // 
@@ -351,6 +359,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Button advancedRoundEditor;
 
         private System.Windows.Forms.Button sendMessageButton;
 

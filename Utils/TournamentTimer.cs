@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Timers;
 
@@ -31,6 +33,7 @@ namespace Utils
         [DataMember] public bool IsBreak { get; private set; }
         [DataMember] public string TimerName { get; set; }
         [DataMember] public TimerMessage TimerMessage { get; set; }
+        [DataMember] private List<Round> RoundsList { get; set; }
 
         public float MinutesForRound
         {

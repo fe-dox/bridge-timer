@@ -106,6 +106,7 @@ namespace TCTimer
                 currentTime.Text = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
                 currentRoundLabel.Text =
                     _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRound.ToString()}";
+                numberOfRoundsUpDown.Minimum = _tournamentTimer.CurrentRound;
             });
         }
 

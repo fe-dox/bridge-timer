@@ -2,7 +2,9 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+#if !DEBUG
 using System.IO.Compression;
+#endif
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Timers;

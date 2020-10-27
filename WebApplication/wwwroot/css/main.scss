@@ -22,8 +22,9 @@ app {
 
 .main {
   display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 80%;
+  height: 100%;
   padding: 0;
   margin: 0;
 }
@@ -39,24 +40,26 @@ app {
 }
 
 .clock-time {
-  font-size: 28rem;
+  font-size: 29rem;
   margin-top: -5vw;
 }
 
 .clock-label {
   font-size: 6rem;
   margin-top: -5vw;
+  margin-bottom: 9vw;
 }
 
 .current-time {
-  font-size: 5rem;
+  font-size: 7rem;
 }
 
 .timer-name {
   position: absolute;
   text-align: center;
   top: 1%;
-  font-size: 5rem;
+  left: 1%;
+  font-size: 4rem;
   width: 99%;
 }
 
@@ -71,12 +74,12 @@ app {
 }
 
 .round {
-  font-size: 5rem;
+  font-size: 7rem;
 }
 
 .results {
   text-align: center;
-  font-size: 4rem;
+  font-size: 5rem;
   align-self: center;
 }
 
@@ -85,7 +88,6 @@ app {
           animation-name: blinking,
           animation-duration: 1s,
           animation-iteration-count: infinite,
-          animation-timing-function: steps(5, start),
   ), moz webkit);
 }
 
@@ -93,10 +95,10 @@ app {
   0% {
     color: black;
   }
-  49% {
+  50% {
     color: black;
   }
-  50% {
+  51% {
     color: red;
   }
   100% {
@@ -112,7 +114,7 @@ app {
     font-size: 7rem;
   }
   .clock-time {
-    font-size: 33rem;
+    font-size: 36rem;
     margin-top: -5vw;
   }
   .round {
@@ -135,17 +137,17 @@ app {
     font-size: 8rem;
   }
   .clock-time {
-    font-size: 33rem;
+    font-size: 36rem;
     margin-top: -5vw;
   }
   .current-time {
-    font-size: 7rem;
+    font-size: 8rem;
   }
   .round {
-    font-size: 7rem;
+    font-size: 8rem;
   }
   .results {
-    font-size: 5rem;
+    font-size: 6rem;
   }
   .clock-label {
     font-size: 6rem;
@@ -156,7 +158,7 @@ app {
   }
 }
 
-@media screen and (max-width: 1036px) {
+@media screen and (max-width: 1100px) {
   .clock {
     font-size: 9rem;
   }
@@ -164,18 +166,18 @@ app {
     font-size: 9rem;
   }
   .clock-time {
-    font-size: 37rem;
+    font-size: 40rem;
     margin-top: -5vw;
   }
   .round {
     font-size: 9rem;
   }
   .clock-label {
-    font-size: 7rem;
+    font-size: 8rem;
     margin-top: -5vw;
   }
   .results {
-    font-size: 6rem;
+    font-size: 7rem;
   }
   .timer-name {
     font-size: 7rem;

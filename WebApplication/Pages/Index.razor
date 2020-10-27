@@ -140,7 +140,7 @@
                 var time = _tournamentTimer.Target.Subtract(_tournamentTimer.PausedAtTime);
                 _clockValue = time.Hours == 0 ? time.ToString(@"mm\:ss") : time.ToString(@"HH\:mm\:ss");
             }
-            _blinking = DateTime.Now + new TimeSpan(0, 0, 30) > _tournamentTimer.Target ? "is-blinking" : "";
+            _blinking = DateTime.Now + new TimeSpan(0, 1, 30) > _tournamentTimer.Target && !_tournamentTimer.IsBreak ? "is-blinking" : "";
         }
         _currentTimeValue = DateTime.Now.ToString(@"HH\:mm");
         if (_showingMessageTarget.Subtract(DateTime.Now).CompareTo(new TimeSpan(0, 0, 0)) < 0)

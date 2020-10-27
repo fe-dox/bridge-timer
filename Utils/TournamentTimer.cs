@@ -9,6 +9,8 @@ namespace Utils
     [DataContract]
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
+        //TODO Podział na domyślne ustawienia rundy, oraz na listę rund
+        //TODO Obsługa zmian RoundsList 
         [DataMember] private Timer _framesTimer;
         [DataMember] private float _minutesForRound;
         [DataMember] private int _secondsForBreak;
@@ -25,7 +27,13 @@ namespace Utils
         }
 
 
-        [DataMember] public int NumberOfRounds { get; set; }
+        [DataMember]
+        public int NumberOfRounds
+        {
+            get => RoundsList.Count;
+            set => ; //TODO: Dodawanie rundy jeśli NumberOfRounds jest mniejszy niż RoundsList.Count
+        }
+
         [DataMember] public bool Finished { get; private set; }
         [DataMember] public string BreakText { get; set; } = string.Empty;
         [DataMember] public string ResultsUrl { get; set; } = string.Empty;

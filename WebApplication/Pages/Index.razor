@@ -4,7 +4,7 @@
 <div class="main">
     @if (_tournamentTimer != null)
     {
-        <div class="timer-name">@_tournamentTimer.TimerName</div>
+        <div class="timer-name">@_tournamentTimer.DefaultTimerName</div>
     }
     <div class="clock">
         @if (_tournamentTimer != null && _showingMessage && _tournamentTimer.TimerMessage.ShowFullScreen)
@@ -22,7 +22,7 @@
                 }
                 else if (_tournamentTimer.IsBreak)
                 {
-                    <div class="clock-label">@_tournamentTimer.BreakText</div>
+                    <div class="clock-label">@_tournamentTimer.DefaultBreakText</div>
                 }
                 else if (_tournamentTimer.Finished)
                 {
@@ -40,7 +40,7 @@
         }
         @if (_tournamentTimer != null)
         {
-            <div class="round">@_tournamentTimer.CurrentRound.ToString()/@_tournamentTimer.NumberOfRounds.ToString()</div>
+            <div class="round">@_tournamentTimer.CurrentRoundId.ToString()/@_tournamentTimer.NumberOfRounds.ToString()</div>
         }
     </div>
 </div>

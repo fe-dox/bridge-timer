@@ -1,101 +1,107 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Timers;
+using Utils.Annotations;
 
 namespace Utils
 {
     [DataContract]
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
-        //TODO Podział na domyślne ustawienia rundy, oraz na listę rund
         //TODO Obsługa zmian RoundsList 
         [DataMember] private Timer _framesTimer;
-        [DataMember] private float _minutesForRound;
-        [DataMember] private int _secondsForBreak;
 
-        public TournamentTimer(int numberOfRounds, float minutesForRound, int secondsForBreak)
+        public TournamentTimer(int numberOfRounds, float defaultRoundDuration, int defaultBreakDuration,
+            int defaultBlinkingDuration)
         {
             NumberOfRounds = numberOfRounds;
-            MinutesForRound = minutesForRound;
-            SecondsForBreak = secondsForBreak;
+            DefaultRoundDuration = defaultRoundDuration;
+            DefaultBreakDuration = defaultBreakDuration;
+            DefaultBlinkingDuration = defaultBlinkingDuration;
+            RoundsList.CollectionChanged += OnRoundsListChanged;
             _framesTimer = new Timer(50);
             _framesTimer.Elapsed += OnTick;
-            Target = DateTime.Now + RoundTimeSpan();
+            Target = DateTime.Now + CurrentRound.Duration;
             PausedAtTime = DateTime.Now;
         }
 
+        private void OnRoundsListChanged(object sender,
+            NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
+            {
+                foreach (Round newRound in notifyCollectionChangedEventArgs.NewItems)
+                {
+                    void OnRoundPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+                    {
+                        Console.WriteLine(newRound);
+                    }
 
-        [DataMember]
+                    newRound.PropertyChanged += OnRoundPropertyChanged;
+                }
+            }
+            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
+            {
+            }
+        }
+
+
         public int NumberOfRounds
         {
             get => RoundsList.Count;
-            set => ; //TODO: Dodawanie rundy jeśli NumberOfRounds jest mniejszy niż RoundsList.Count
+            set
+            {
+                while (value > RoundsList.Count)
+                {
+                    RoundsList.Add(CreateDefaultRound());
+                }
+
+                while (value < RoundsList.Count && value > CurrentRoundId + 1)
+                {
+                    RoundsList.RemoveAt(RoundsList.Count - 1);
+                }
+            }
         }
 
         [DataMember] public bool Finished { get; private set; }
-        [DataMember] public string BreakText { get; set; } = string.Empty;
+        [DataMember] public string DefaultBreakText { get; set; } = string.Empty;
+        [DataMember] public string DefaultTimerName { get; set; }
+        [DataMember] public bool DefaultOvertimeAfterRound { get; set; }
         [DataMember] public string ResultsUrl { get; set; } = string.Empty;
         [DataMember] public bool Running { get; private set; }
         [DataMember] public bool IsBreak { get; private set; }
-        [DataMember] public string TimerName { get; set; }
         [DataMember] public TimerMessage TimerMessage { get; set; }
-        [DataMember] private List<Round> RoundsList { get; set; }
 
-        public float MinutesForRound
-        {
-            get => _minutesForRound;
-            set
-            {
-                if (!IsBreak)
-                {
-                    Target +=
-                        new TimeSpan(0, 0, (int) ((value - _minutesForRound) * 60));
-                }
+        [DataMember] private ObservableCollection<Round> RoundsList { get; set; }
 
-                _minutesForRound = value;
-            }
-        }
+        public string BreakText => RoundsList[CurrentRoundId].BreakText;
+        public string TimerName => RoundsList[CurrentRoundId].TimerName;
+        public TimeSpan BlinkingDuration => RoundsList[CurrentRoundId].BlinkingDuration;
 
-        public int SecondsForBreak
-        {
-            get => _secondsForBreak;
-            set
-            {
-                if (IsBreak)
-                {
-                    Target += new TimeSpan(0, 0, value - _secondsForBreak);
-                }
+        private TimeSpan DefaultRoundDurationTimeSpanMethod() => new TimeSpan(0, 0, (int) (DefaultRoundDuration * 60));
+        private TimeSpan DefaultBreakDurationTimeSpanMethod() => new TimeSpan(0, 0, DefaultBreakDuration);
+        private TimeSpan DefaultBlinkingDurationTimeSpanMethod() => new TimeSpan(0, 0, DefaultBlinkingDuration);
+        private bool DefaultOvertimeAfterRoundMethod() => DefaultOvertimeAfterRound;
+        private string DefaultBreakTextMethod() => DefaultBreakText;
+        private string DefaultTimerNameMethod() => DefaultTimerName;
 
-                _secondsForBreak = value;
-            }
-        }
+        private Round CurrentRound => RoundsList[CurrentRoundId];
 
+        [DataMember] public int DefaultBlinkingDuration { get; set; }
+        [DataMember] public float DefaultRoundDuration { get; set; }
+        [DataMember] public int DefaultBreakDuration { get; set; }
         [DataMember] public DateTime Target { get; private set; }
         [DataMember] public DateTime PausedAtTime { get; private set; }
-        [DataMember] public int CurrentRound { get; private set; } = 1;
-
-        public bool Equals(TournamentTimer other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return CurrentRound == other.CurrentRound && Equals(_framesTimer, other._framesTimer) &&
-                   _minutesForRound.Equals(other._minutesForRound) && PausedAtTime.Equals(other.PausedAtTime) &&
-                   _secondsForBreak == other._secondsForBreak && Target.Equals(other.Target) &&
-                   NumberOfRounds == other.NumberOfRounds && Finished == other.Finished &&
-                   BreakText == other.BreakText && ResultsUrl == other.ResultsUrl && Running == other.Running &&
-                   IsBreak == other.IsBreak && TimerName == other.TimerName && Equals(TimerMessage, other.TimerMessage);
-        }
+        [DataMember] public int CurrentRoundId { get; private set; } = 0;
 
         public event EventHandler<DateTime> SettingsChanged;
         public event EventHandler<DateTime> Ticked;
         public event EventHandler OnFinished;
-
-        private TimeSpan RoundTimeSpan()
-        {
-            return new TimeSpan(0, 0, (int) (MinutesForRound * 60));
-        }
 
         private void OnTick(object sender, EventArgs e)
         {
@@ -103,21 +109,13 @@ namespace Utils
             {
                 if (IsBreak)
                 {
-                    NextRound();
+                    GoToNextRound();
                 }
                 else
                 {
-                    if (CurrentRound >= NumberOfRounds)
-                    {
-                        Finished = true;
-                        Pause();
-                        OnFinished?.Invoke(this, null);
-                    }
-                    else
-                    {
-                        Target = DateTime.Now + new TimeSpan(0, 0, SecondsForBreak);
-                        IsBreak = true;
-                    }
+                    if (IsFinished()) return;
+                    Target = DateTime.Now + new TimeSpan(0, 0, DefaultBreakDuration);
+                    IsBreak = true;
                 }
             }
 
@@ -141,52 +139,54 @@ namespace Utils
 
         public void AddMinute()
         {
-            Target += +new TimeSpan(0, 1, 0);
-            SettingsChanged?.Invoke(this, Running ? Target : Target.Add(DateTime.Now.Subtract(PausedAtTime)));
+            Target += new TimeSpan(0, 1, 0);
+            SettingsChanged?.Invoke(this, Running ? Target : Target + (DateTime.Now - PausedAtTime));
         }
 
         public void SubtractMinute()
         {
-            Target = Target.Subtract(new TimeSpan(0, 1, 0));
-            SettingsChanged?.Invoke(this, Running ? Target : Target.Add(DateTime.Now.Subtract(PausedAtTime)));
+            Target -= new TimeSpan(0, 1, 0);
+            SettingsChanged?.Invoke(this, Running ? Target : Target + (DateTime.Now - PausedAtTime));
         }
 
-        public void NextRound()
+        private bool IsFinished()
         {
-            // TODO ten if jest w duzej mierze podobny do tego w linii 111. W szczegolnosci tam jest OnFinished a tu nie - zgaduje ze tu zapomniales. Czy mozesz zreducowac powtorzenie aby tego uniknac?
-            if (CurrentRound >= NumberOfRounds)
+            if (CurrentRoundId < NumberOfRounds) return false;
+
+            Finished = true;
+            OnFinished?.Invoke(this, null);
+            Pause();
+
+            return true;
+        }
+
+        public void GoToNextRound()
+        {
+            if (IsFinished()) return;
+            IsBreak = false;
+            CurrentRoundId++;
+            Target = DateTime.Now + CurrentRound.Duration;
+            PausedAtTime = DateTime.Now;
+            if (!Running)
             {
-                Finished = true;
-                Pause();
-            }
-            else
-            {
-                Target = DateTime.Now.Add(RoundTimeSpan());
-                IsBreak = false;
-                CurrentRound++;
-                PausedAtTime = DateTime.Now;
-                if (!Running)
-                {
-                    SettingsChanged?.Invoke(this, Target);
-                }
+                SettingsChanged?.Invoke(this, Target);
             }
         }
 
-        public void PreviousRound()
+        public void GoToPreviousRound()
         {
-            Target = DateTime.Now + RoundTimeSpan();
-            if (CurrentRound > 1)
+            if (CurrentRoundId > 0)
             {
-                CurrentRound--;
+                CurrentRoundId--;
             }
+
+            Target = DateTime.Now + CurrentRound.Duration;
 
             IsBreak = false;
 
-            if (!Running)
-            {
-                PausedAtTime = DateTime.Now;
-                SettingsChanged?.Invoke(this, Target);
-            }
+            if (Running) return;
+            PausedAtTime = DateTime.Now;
+            SettingsChanged?.Invoke(this, Target);
         }
 
         [OnDeserialized]
@@ -200,11 +200,34 @@ namespace Utils
             }
         }
 
-        public override bool Equals(object obj)
+        private Round CreateDefaultRound()
+        {
+            // ReSharper disable HeapView.DelegateAllocation
+            return new Round(DefaultRoundDurationTimeSpanMethod, DefaultBreakDurationTimeSpanMethod,
+                DefaultBlinkingDurationTimeSpanMethod, DefaultOvertimeAfterRoundMethod,
+                DefaultBreakTextMethod, DefaultTimerNameMethod, false);
+            // ReSharper enable HeapView.DelegateAllocation
+        }
+
+        public bool Equals(TournamentTimer? other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return _framesTimer.Equals(other._framesTimer) && Finished == other.Finished &&
+                   DefaultBreakText == other.DefaultBreakText && DefaultTimerName == other.DefaultTimerName &&
+                   DefaultOvertimeAfterRound == other.DefaultOvertimeAfterRound && ResultsUrl == other.ResultsUrl &&
+                   Running == other.Running && IsBreak == other.IsBreak && TimerMessage.Equals(other.TimerMessage) &&
+                   RoundsList.Equals(other.RoundsList) && DefaultBlinkingDuration == other.DefaultBlinkingDuration &&
+                   DefaultRoundDuration.Equals(other.DefaultRoundDuration) &&
+                   DefaultBreakDuration == other.DefaultBreakDuration && Target.Equals(other.Target) &&
+                   PausedAtTime.Equals(other.PausedAtTime) && CurrentRoundId == other.CurrentRoundId;
+        }
+
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
+            if (obj.GetType() != this.GetType()) return false;
             return Equals((TournamentTimer) obj);
         }
 
@@ -212,23 +235,23 @@ namespace Utils
         {
             unchecked
             {
-                // ReSharper disable NonReadonlyMemberInGetHashCode
-                var hashCode = CurrentRound;
-                hashCode = (hashCode * 397) ^ (_framesTimer != null ? _framesTimer.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ _minutesForRound.GetHashCode();
-                hashCode = (hashCode * 397) ^ PausedAtTime.GetHashCode();
-                hashCode = (hashCode * 397) ^ _secondsForBreak;
-                hashCode = (hashCode * 397) ^ Target.GetHashCode();
-                hashCode = (hashCode * 397) ^ NumberOfRounds;
+                var hashCode = _framesTimer.GetHashCode();
                 hashCode = (hashCode * 397) ^ Finished.GetHashCode();
-                hashCode = (hashCode * 397) ^ (BreakText != null ? BreakText.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (ResultsUrl != null ? ResultsUrl.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ DefaultBreakText.GetHashCode();
+                hashCode = (hashCode * 397) ^ DefaultTimerName.GetHashCode();
+                hashCode = (hashCode * 397) ^ DefaultOvertimeAfterRound.GetHashCode();
+                hashCode = (hashCode * 397) ^ ResultsUrl.GetHashCode();
                 hashCode = (hashCode * 397) ^ Running.GetHashCode();
                 hashCode = (hashCode * 397) ^ IsBreak.GetHashCode();
-                hashCode = (hashCode * 397) ^ (TimerName != null ? TimerName.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (TimerMessage != null ? TimerMessage.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ TimerMessage.GetHashCode();
+                hashCode = (hashCode * 397) ^ RoundsList.GetHashCode();
+                hashCode = (hashCode * 397) ^ DefaultBlinkingDuration;
+                hashCode = (hashCode * 397) ^ DefaultRoundDuration.GetHashCode();
+                hashCode = (hashCode * 397) ^ DefaultBreakDuration;
+                hashCode = (hashCode * 397) ^ Target.GetHashCode();
+                hashCode = (hashCode * 397) ^ PausedAtTime.GetHashCode();
+                hashCode = (hashCode * 397) ^ CurrentRoundId;
                 return hashCode;
-                // ReSharper enable NonReadonlyMemberInGetHashCode
             }
         }
     }

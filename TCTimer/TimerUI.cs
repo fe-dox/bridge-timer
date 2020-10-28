@@ -105,8 +105,8 @@ namespace TCTimer
             {
                 currentTime.Text = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
                 currentRoundLabel.Text =
-                    _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRound.ToString()}";
-                numberOfRoundsUpDown.Minimum = _tournamentTimer.CurrentRound;
+                    _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRoundId.ToString()}";
+                numberOfRoundsUpDown.Minimum = _tournamentTimer.CurrentRoundId;
             });
         }
 
@@ -129,17 +129,17 @@ namespace TCTimer
 
         private void minutesPerRoundUpDown_ValueChanged(object sender, EventArgs e)
         {
-            _tournamentTimer.MinutesForRound = (float) minutesPerRoundUpDown.Value;
+            _tournamentTimer.DefaultRoundDuration = (float) minutesPerRoundUpDown.Value;
         }
 
         private void breakTimeUpDown_ValueChanged(object sender, EventArgs e)
         {
-            _tournamentTimer.SecondsForBreak = (int) breakTimeUpDown.Value;
+            _tournamentTimer.DefaultBreakDuration = (int) breakTimeUpDown.Value;
         }
 
         private void breakTextBox_TextChanged(object sender, EventArgs e)
         {
-            _tournamentTimer.BreakText = breakTextBox.Text;
+            _tournamentTimer.DefaultBreakText = breakTextBox.Text;
         }
 
         private async void resultsUrlTextBox_TextChanged(object sender, EventArgs e)
@@ -211,12 +211,12 @@ namespace TCTimer
 
         private void nextRoundButton_Click(object sender, EventArgs e)
         {
-            _tournamentTimer.NextRound();
+            _tournamentTimer.GoToNextRound();
         }
 
         private void previousRoundButton_Click(object sender, EventArgs e)
         {
-            _tournamentTimer.PreviousRound();
+            _tournamentTimer.GoToPreviousRound();
         }
 
         private void gitHubToolStripMenuItem_Click(object sender, EventArgs e)
@@ -226,7 +226,7 @@ namespace TCTimer
 
         private void tournamentNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            _tournamentTimer.TimerName = tournamentNameTextBox.Text;
+            _tournamentTimer.DefaultTimerName = tournamentNameTextBox.Text;
         }
     }
 }

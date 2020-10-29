@@ -4,10 +4,10 @@
 <div class="main">
     @if (_tournamentTimer != null)
     {
-        <div class="timer-name">@_tournamentTimer.DefaultTimerName</div>
+        <div class="timer-name">@_tournamentTimer.TimerName</div>
     }
     <div class="clock">
-        @if (_tournamentTimer != null && _showingMessage && _tournamentTimer.TimerMessage.ShowFullScreen)
+        @if (_tournamentTimer != null && _showingMessage && _tournamentTimer.TimerMessage != null && _tournamentTimer.TimerMessage.ShowFullScreen)
         {
             <p>@_tournamentTimer.TimerMessage.Text</p>
         }
@@ -16,13 +16,13 @@
             <div class="clock-time @_blinking">@_clockValue</div>
             @if (_tournamentTimer != null)
             {
-                if (_showingMessage)
+                if (_showingMessage && _tournamentTimer.TimerMessage != null)
                 {
                     <div class="clock-label">@_tournamentTimer.TimerMessage.Text</div>
                 }
                 else if (_tournamentTimer.IsBreak)
                 {
-                    <div class="clock-label">@_tournamentTimer.DefaultBreakText</div>
+                    <div class="clock-label">@_tournamentTimer.BreakText</div>
                 }
                 else if (_tournamentTimer.Finished)
                 {
@@ -38,9 +38,10 @@
         {
             <div class="results">@_tournamentTimer.ResultsUrl</div>
         }
+        @* ReSharper disable once HeapView.BoxingAllocation *@
         @if (_tournamentTimer != null)
         {
-            <div class="round">@_tournamentTimer.CurrentRoundId.ToString()/@_tournamentTimer.NumberOfRounds.ToString()</div>
+            <div class="round">@((_tournamentTimer.CurrentRoundId + 1).ToString())/@_tournamentTimer.NumberOfRounds.ToString()</div>
         }
     </div>
 </div>
@@ -140,7 +141,7 @@
                 var time = _tournamentTimer.Target.Subtract(_tournamentTimer.PausedAtTime);
                 _clockValue = time.Hours == 0 ? time.ToString(@"mm\:ss") : time.ToString(@"HH\:mm\:ss");
             }
-            _blinking = DateTime.Now + new TimeSpan(0, 1, 30) > _tournamentTimer.Target && !_tournamentTimer.IsBreak ? "is-blinking" : "";
+            _blinking = DateTime.Now + _tournamentTimer.BlinkingDuration > _tournamentTimer.Target && !_tournamentTimer.IsBreak && !_tournamentTimer.Finished ? "is-blinking" : "";
         }
         _currentTimeValue = DateTime.Now.ToString(@"HH\:mm");
         if (_showingMessageTarget.Subtract(DateTime.Now).CompareTo(new TimeSpan(0, 0, 0)) < 0)

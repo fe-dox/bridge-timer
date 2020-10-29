@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -32,7 +33,7 @@ namespace TCTimer
             InitializeComponent();
             _resultsUrlShortener = new ResultsUrlShortener();
             _tournamentTimer = new TournamentTimer((int) numberOfRoundsUpDown.Value,
-                (float) minutesPerRoundUpDown.Value, (int) breakTimeUpDown.Value);
+                (float) minutesPerRoundUpDown.Value, (int) breakTimeUpDown.Value, 90);
             _tournamentTimer.Ticked += UpdateTime;
             _tournamentTimer.SettingsChanged += UpdateTime;
             _tournamentTimer.OnFinished += OnFinished;
@@ -91,7 +92,6 @@ namespace TCTimer
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
-                throw;
             }
             finally
             {
@@ -103,10 +103,10 @@ namespace TCTimer
         {
             RunAction(() =>
             {
-                currentTime.Text = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
+                currentTime.Text = target.Subtract(DateTime.Now).ToString();
                 currentRoundLabel.Text =
-                    _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRoundId.ToString()}";
-                numberOfRoundsUpDown.Minimum = _tournamentTimer.CurrentRoundId;
+                    _tournamentTimer.IsBreak ? "Break" : $@"Round {(_tournamentTimer.CurrentRoundId + 1).ToString()}";
+                numberOfRoundsUpDown.Minimum = _tournamentTimer.CurrentRoundId + 1;
             });
         }
 

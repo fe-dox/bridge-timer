@@ -33,7 +33,7 @@ namespace TCTimer
             InitializeComponent();
             _resultsUrlShortener = new ResultsUrlShortener();
             _tournamentTimer = new TournamentTimer((int) numberOfRoundsUpDown.Value,
-                (float) minutesPerRoundUpDown.Value, (int) breakTimeUpDown.Value, 90);
+                minutesPerRoundUpDown.Value, (int) breakTimeUpDown.Value, 90);
             _tournamentTimer.Ticked += UpdateTime;
             _tournamentTimer.SettingsChanged += UpdateTime;
             _tournamentTimer.OnFinished += OnFinished;
@@ -129,7 +129,7 @@ namespace TCTimer
 
         private void minutesPerRoundUpDown_ValueChanged(object sender, EventArgs e)
         {
-            _tournamentTimer.DefaultRoundDuration = (float) minutesPerRoundUpDown.Value;
+            _tournamentTimer.DefaultRoundDuration = minutesPerRoundUpDown.Value;
         }
 
         private void breakTimeUpDown_ValueChanged(object sender, EventArgs e)
@@ -227,6 +227,12 @@ namespace TCTimer
         private void tournamentNameTextBox_TextChanged(object sender, EventArgs e)
         {
             _tournamentTimer.DefaultTimerName = tournamentNameTextBox.Text;
+        }
+
+        private void advancedRoundEditor_Click(object sender, EventArgs e)
+        {
+            var roundsManager = new RoundsManager(_tournamentTimer);
+            roundsManager.ShowDialog();
         }
     }
 }

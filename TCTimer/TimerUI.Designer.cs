@@ -101,6 +101,7 @@
             resources.ApplyResources(this.advancedRoundEditor, "advancedRoundEditor");
             this.advancedRoundEditor.Name = "advancedRoundEditor";
             this.advancedRoundEditor.UseVisualStyleBackColor = true;
+            this.advancedRoundEditor.Click += new System.EventHandler(this.advancedRoundEditor_Click);
             // 
             // breakTimeUpDown
             // 

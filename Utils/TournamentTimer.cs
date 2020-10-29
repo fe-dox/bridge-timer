@@ -11,7 +11,7 @@ namespace Utils
     {
         [DataMember] private Timer _framesTimer;
 
-        public TournamentTimer(int numberOfRounds, float defaultRoundDuration, int defaultBreakDuration,
+        public TournamentTimer(int numberOfRounds, decimal defaultRoundDuration, int defaultBreakDuration,
             int defaultBlinkingDuration)
         {
             NumberOfRounds = numberOfRounds;
@@ -142,7 +142,7 @@ namespace Utils
         [DataMember] public bool IsBreak { get; private set; }
         [DataMember] public TimerMessage? TimerMessage { get; set; }
 
-        [DataMember] private ObservableCollection<Round> RoundsList { get; set; } = new ObservableCollection<Round>();
+        [DataMember] public ObservableCollection<Round> RoundsList { get; set; } = new ObservableCollection<Round>();
 
         public string BreakText => RoundsList[CurrentRoundId].BreakText ?? DefaultBreakText;
         public string TimerName => RoundsList[CurrentRoundId].TimerName ?? DefaultTimerName;
@@ -155,7 +155,7 @@ namespace Utils
         private TimeSpan DefaultBlinkingDurationTimeSpan => new TimeSpan(0, 0, DefaultBlinkingDuration);
         private Round CurrentRound => RoundsList[CurrentRoundId];
         [DataMember] public int DefaultBlinkingDuration { get; set; }
-        [DataMember] public float DefaultRoundDuration { get; set; }
+        [DataMember] public decimal DefaultRoundDuration { get; set; }
         [DataMember] public int DefaultBreakDuration { get; set; }
         [DataMember] public DateTime Target { get; private set; }
         [DataMember] public DateTime PausedAtTime { get; private set; }

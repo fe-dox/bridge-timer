@@ -31,43 +31,54 @@ namespace TCTimer
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(RoundsManager));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.timerNameTextBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.everythingOvertime = new System.Windows.Forms.CheckBox();
-            this.roundOvertime = new System.Windows.Forms.CheckBox();
+            this.breakTextTextBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.breakTimeUpDown = new System.Windows.Forms.NumericUpDown();
+            this.roundOvertimeCheckBox = new System.Windows.Forms.CheckBox();
+            this.blinkingDurationUpDown = new System.Windows.Forms.NumericUpDown();
+            this.breakDurationUpDown = new System.Windows.Forms.NumericUpDown();
             this.minutesPerRoundUpDown = new System.Windows.Forms.NumericUpDown();
             this.numberOfRoundsUpDown = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.roundsDataGridView = new System.Windows.Forms.DataGridView();
             this.Duration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BlinkingDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Overtime = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.BreakDuration = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BrakText = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TimerName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.roundContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setValueToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button1 = new System.Windows.Forms.Button();
+            this.resetAllToDefaultButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.breakDurationUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.roundsDataGridView)).BeginInit();
+            this.roundContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label6);
+            this.groupBox1.Controls.Add(this.timerNameTextBox);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.breakTextTextBox);
             this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.everythingOvertime);
-            this.groupBox1.Controls.Add(this.roundOvertime);
-            this.groupBox1.Controls.Add(this.numericUpDown1);
-            this.groupBox1.Controls.Add(this.breakTimeUpDown);
+            this.groupBox1.Controls.Add(this.roundOvertimeCheckBox);
+            this.groupBox1.Controls.Add(this.blinkingDurationUpDown);
+            this.groupBox1.Controls.Add(this.breakDurationUpDown);
             this.groupBox1.Controls.Add(this.minutesPerRoundUpDown);
             this.groupBox1.Controls.Add(this.numberOfRoundsUpDown);
             this.groupBox1.Controls.Add(this.label1);
@@ -77,46 +88,50 @@ namespace TCTimer
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
+            // label6
+            // 
+            resources.ApplyResources(this.label6, "label6");
+            this.label6.Name = "label6";
+            // 
+            // timerNameTextBox
+            // 
+            resources.ApplyResources(this.timerNameTextBox, "timerNameTextBox");
+            this.timerNameTextBox.Name = "timerNameTextBox";
+            // 
             // label5
             // 
             resources.ApplyResources(this.label5, "label5");
             this.label5.Name = "label5";
             // 
-            // textBox1
+            // breakTextTextBox
             // 
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.Name = "textBox1";
-            // 
-            // everythingOvertime
-            // 
-            resources.ApplyResources(this.everythingOvertime, "everythingOvertime");
-            this.everythingOvertime.Name = "everythingOvertime";
-            this.everythingOvertime.UseVisualStyleBackColor = true;
-            // 
-            // roundOvertime
-            // 
-            resources.ApplyResources(this.roundOvertime, "roundOvertime");
-            this.roundOvertime.Name = "roundOvertime";
-            this.roundOvertime.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.breakTextTextBox, "breakTextTextBox");
+            this.breakTextTextBox.Name = "breakTextTextBox";
             // 
             // label4
             // 
             resources.ApplyResources(this.label4, "label4");
             this.label4.Name = "label4";
             // 
-            // numericUpDown1
+            // roundOvertimeCheckBox
             // 
-            resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
-            this.numericUpDown1.Maximum = new decimal(new int[] {300, 0, 0, 0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Value = new decimal(new int[] {30, 0, 0, 0});
+            resources.ApplyResources(this.roundOvertimeCheckBox, "roundOvertimeCheckBox");
+            this.roundOvertimeCheckBox.Name = "roundOvertimeCheckBox";
+            this.roundOvertimeCheckBox.UseVisualStyleBackColor = true;
             // 
-            // breakTimeUpDown
+            // blinkingDurationUpDown
             // 
-            resources.ApplyResources(this.breakTimeUpDown, "breakTimeUpDown");
-            this.breakTimeUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
-            this.breakTimeUpDown.Name = "breakTimeUpDown";
-            this.breakTimeUpDown.Value = new decimal(new int[] {30, 0, 0, 0});
+            resources.ApplyResources(this.blinkingDurationUpDown, "blinkingDurationUpDown");
+            this.blinkingDurationUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
+            this.blinkingDurationUpDown.Name = "blinkingDurationUpDown";
+            this.blinkingDurationUpDown.Value = new decimal(new int[] {90, 0, 0, 0});
+            // 
+            // breakDurationUpDown
+            // 
+            resources.ApplyResources(this.breakDurationUpDown, "breakDurationUpDown");
+            this.breakDurationUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
+            this.breakDurationUpDown.Name = "breakDurationUpDown";
+            this.breakDurationUpDown.Value = new decimal(new int[] {30, 0, 0, 0});
             // 
             // minutesPerRoundUpDown
             // 
@@ -149,13 +164,14 @@ namespace TCTimer
             resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
             // 
-            // dataGridView1
+            // roundsDataGridView
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.Duration, this.BlinkingDuration, this.Overtime, this.BreakDuration, this.BrakText});
-            resources.ApplyResources(this.dataGridView1, "dataGridView1");
-            this.dataGridView1.Name = "dataGridView1";
+            this.roundsDataGridView.AllowUserToAddRows = false;
+            this.roundsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.roundsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.Duration, this.BlinkingDuration, this.Overtime, this.BreakDuration, this.BrakText, this.TimerName});
+            resources.ApplyResources(this.roundsDataGridView, "roundsDataGridView");
+            this.roundsDataGridView.Name = "roundsDataGridView";
+            this.roundsDataGridView.RowTemplate.ContextMenuStrip = this.roundContextMenuStrip;
             // 
             // Duration
             // 
@@ -182,23 +198,92 @@ namespace TCTimer
             resources.ApplyResources(this.BrakText, "BrakText");
             this.BrakText.Name = "BrakText";
             // 
+            // TimerName
+            // 
+            resources.ApplyResources(this.TimerName, "TimerName");
+            this.TimerName.Name = "TimerName";
+            // 
+            // roundContextMenuStrip
+            // 
+            this.roundContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.deleteToolStripMenuItem, this.setToDefaultToolStripMenuItem, this.setValueToDefaultToolStripMenuItem});
+            this.roundContextMenuStrip.Name = "roundContextMenuStrip";
+            resources.ApplyResources(this.roundContextMenuStrip, "roundContextMenuStrip");
+            // 
+            // deleteToolStripMenuItem
+            // 
+            resources.ApplyResources(this.deleteToolStripMenuItem, "deleteToolStripMenuItem");
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.deleteToolStripMenuItem_Click);
+            // 
+            // setToDefaultToolStripMenuItem
+            // 
+            resources.ApplyResources(this.setToDefaultToolStripMenuItem, "setToDefaultToolStripMenuItem");
+            this.setToDefaultToolStripMenuItem.Name = "setToDefaultToolStripMenuItem";
+            this.setToDefaultToolStripMenuItem.Click += new System.EventHandler(this.setToDefaultToolStripMenuItem_Click);
+            // 
+            // setValueToDefaultToolStripMenuItem
+            // 
+            resources.ApplyResources(this.setValueToDefaultToolStripMenuItem, "setValueToDefaultToolStripMenuItem");
+            this.setValueToDefaultToolStripMenuItem.Name = "setValueToDefaultToolStripMenuItem";
+            this.setValueToDefaultToolStripMenuItem.Click += new System.EventHandler(this.setValueToDefaultToolStripMenuItem_Click);
+            // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // resetAllToDefaultButton
+            // 
+            resources.ApplyResources(this.resetAllToDefaultButton, "resetAllToDefaultButton");
+            this.resetAllToDefaultButton.Name = "resetAllToDefaultButton";
+            this.resetAllToDefaultButton.UseVisualStyleBackColor = true;
+            // 
             // RoundsManager
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.resetAllToDefaultButton);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.roundsDataGridView);
             this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
             this.Name = "RoundsManager";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.breakDurationUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.roundsDataGridView)).EndInit();
+            this.roundContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.ToolStripMenuItem setValueToDefaultToolStripMenuItem;
+
+        private System.Windows.Forms.TextBox breakTextTextBox;
+
+        private System.Windows.Forms.NumericUpDown blinkingDurationUpDown;
+
+        private System.Windows.Forms.NumericUpDown breakDurationUpDown;
+
+        private System.Windows.Forms.Button resetAllToDefaultButton;
+
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox timerNameTextBox;
+
+        private System.Windows.Forms.DataGridViewTextBoxColumn TimerName;
+
+        private System.Windows.Forms.DataGridView roundsDataGridView;
+
+        private System.Windows.Forms.ContextMenuStrip roundContextMenuStrip;
+
+        private System.Windows.Forms.ToolStripMenuItem setToDefaultToolStripMenuItem;
+
+        private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
+
+        private System.Windows.Forms.Button button1;
 
         private System.Windows.Forms.DataGridViewTextBoxColumn BlinkingDuration;
         private System.Windows.Forms.DataGridViewTextBoxColumn BrakText;
@@ -206,16 +291,10 @@ namespace TCTimer
         private System.Windows.Forms.DataGridViewTextBoxColumn Duration;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Overtime;
 
-        private System.Windows.Forms.DataGridView dataGridView1;
-
-        private System.Windows.Forms.CheckBox everythingOvertime;
-        private System.Windows.Forms.CheckBox roundOvertime;
+        private System.Windows.Forms.CheckBox roundOvertimeCheckBox;
 
         private System.Windows.Forms.Label label4;
 
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-
-        private System.Windows.Forms.NumericUpDown breakTimeUpDown;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
@@ -226,6 +305,5 @@ namespace TCTimer
         #endregion
 
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox textBox1;
     }
 }

@@ -51,6 +51,12 @@ namespace Utils
 
         public Round()
         {
+            Duration = null;
+            BreakDuration = null;
+            BlinkingDuration = null;
+            OvertimeAfterRound = null;
+            BreakText = null;
+            TimerName = null;
         }
 
         public event EventHandler<(string, TimeSpan?)>? PropertyChanged;

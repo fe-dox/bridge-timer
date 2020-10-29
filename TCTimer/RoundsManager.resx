@@ -123,11 +123,64 @@
         </value>
     </resheader>
     <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
-    <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+    <data name="label6.AutoSize" type="System.Boolean, mscorlib">
         <value>True</value>
+    </data>
+    <assembly alias="System.Windows.Forms"
+              name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+    <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
+        <value>NoControl</value>
     </data>
     <assembly alias="System.Drawing"
               name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+    <data name="label6.Location" type="System.Drawing.Point, System.Drawing">
+        <value>283, 43</value>
+    </data>
+    <data name="label6.Size" type="System.Drawing.Size, System.Drawing">
+        <value>64, 13</value>
+    </data>
+    <data name="label6.TabIndex" type="System.Int32, mscorlib">
+        <value>13</value>
+    </data>
+    <data name="label6.Text" xml:space="preserve">
+    <value>Timer Name</value>
+  </data>
+    <data name="&gt;&gt;label6.Name" xml:space="preserve">
+    <value>label6</value>
+  </data>
+    <data name="&gt;&gt;label6.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;label6.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+    <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+    <data name="timerNameTextBox.Location" type="System.Drawing.Point, System.Drawing">
+        <value>353, 39</value>
+    </data>
+    <data name="timerNameTextBox.Size" type="System.Drawing.Size, System.Drawing">
+        <value>447, 20</value>
+    </data>
+    <data name="timerNameTextBox.TabIndex" type="System.Int32, mscorlib">
+        <value>12</value>
+    </data>
+    <data name="&gt;&gt;timerNameTextBox.Name" xml:space="preserve">
+    <value>timerNameTextBox</value>
+  </data>
+    <data name="&gt;&gt;timerNameTextBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;timerNameTextBox.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+    <data name="&gt;&gt;timerNameTextBox.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+    <data name="label5.AutoSize" type="System.Boolean, mscorlib">
+        <value>True</value>
+    </data>
     <data name="label5.Location" type="System.Drawing.Point, System.Drawing">
         <value>283, 17</value>
     </data>
@@ -150,34 +203,37 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <value>2</value>
   </data>
-    <data name="textBox1.Location" type="System.Drawing.Point, System.Drawing">
+    <data name="breakTextTextBox.Location" type="System.Drawing.Point, System.Drawing">
         <value>344, 13</value>
     </data>
-    <data name="textBox1.Size" type="System.Drawing.Size, System.Drawing">
-        <value>328, 20</value>
+    <data name="breakTextTextBox.Size" type="System.Drawing.Size, System.Drawing">
+        <value>456, 20</value>
     </data>
-    <data name="textBox1.TabIndex" type="System.Int32, mscorlib">
+    <data name="breakTextTextBox.TabIndex" type="System.Int32, mscorlib">
         <value>10</value>
     </data>
-    <data name="&gt;&gt;textBox1.Name" xml:space="preserve">
-    <value>textBox1</value>
+    <data name="&gt;&gt;breakTextTextBox.Name" xml:space="preserve">
+    <value>breakTextTextBox</value>
   </data>
-    <data name="&gt;&gt;textBox1.Type" xml:space="preserve">
+    <data name="&gt;&gt;breakTextTextBox.Type" xml:space="preserve">
     <value>System.Windows.Forms.TextBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-    <data name="&gt;&gt;textBox1.Parent" xml:space="preserve">
+    <data name="&gt;&gt;breakTextTextBox.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-    <data name="&gt;&gt;textBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <data name="&gt;&gt;breakTextTextBox.ZOrder" xml:space="preserve">
+    <value>3</value>
   </data>
+    <data name="label4.AutoSize" type="System.Boolean, mscorlib">
+        <value>True</value>
+    </data>
     <data name="label4.Location" type="System.Drawing.Point, System.Drawing">
-        <value>6, 94</value>
+        <value>283, 68</value>
     </data>
     <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-        <value>90, 18</value>
+        <value>66, 13</value>
     </data>
     <data name="label4.TabIndex" type="System.Int32, mscorlib">
         <value>7</value>
@@ -195,102 +251,73 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-    <assembly alias="System.Windows.Forms"
-              name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
-    <data name="everythingOvertime.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
-        <value>NoControl</value>
-    </data>
-    <data name="everythingOvertime.Location" type="System.Drawing.Point, System.Drawing">
-        <value>190, 14</value>
-    </data>
-    <data name="everythingOvertime.Size" type="System.Drawing.Size, System.Drawing">
-        <value>69, 20</value>
-    </data>
-    <data name="everythingOvertime.TabIndex" type="System.Int32, mscorlib">
-        <value>9</value>
-    </data>
-    <data name="everythingOvertime.Text" xml:space="preserve">
-    <value>Overtime</value>
-  </data>
-    <data name="&gt;&gt;everythingOvertime.Name" xml:space="preserve">
-    <value>everythingOvertime</value>
-  </data>
-    <data name="&gt;&gt;everythingOvertime.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-    <data name="&gt;&gt;everythingOvertime.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-    <data name="&gt;&gt;everythingOvertime.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-    <data name="roundOvertime.Location" type="System.Drawing.Point, System.Drawing">
-        <value>190, 40</value>
-    </data>
-    <data name="roundOvertime.Size" type="System.Drawing.Size, System.Drawing">
-        <value>69, 20</value>
-    </data>
-    <data name="roundOvertime.TabIndex" type="System.Int32, mscorlib">
-        <value>8</value>
-    </data>
-    <data name="roundOvertime.Text" xml:space="preserve">
-    <value>Overtime</value>
-  </data>
-    <data name="&gt;&gt;roundOvertime.Name" xml:space="preserve">
-    <value>roundOvertime</value>
-  </data>
-    <data name="&gt;&gt;roundOvertime.Type" xml:space="preserve">
-    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-    <data name="&gt;&gt;roundOvertime.Parent" xml:space="preserve">
-    <value>groupBox1</value>
-  </data>
-    <data name="&gt;&gt;roundOvertime.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
-    <data name="numericUpDown1.Location" type="System.Drawing.Point, System.Drawing">
-        <value>130, 92</value>
+    <data name="roundOvertimeCheckBox.Location" type="System.Drawing.Point, System.Drawing">
+        <value>190, 40</value>
     </data>
-    <data name="numericUpDown1.Size" type="System.Drawing.Size, System.Drawing">
-        <value>54, 20</value>
+    <data name="roundOvertimeCheckBox.Size" type="System.Drawing.Size, System.Drawing">
+        <value>69, 20</value>
     </data>
-    <data name="numericUpDown1.TabIndex" type="System.Int32, mscorlib">
-        <value>6</value>
+    <data name="roundOvertimeCheckBox.TabIndex" type="System.Int32, mscorlib">
+        <value>8</value>
     </data>
-    <data name="&gt;&gt;numericUpDown1.Name" xml:space="preserve">
-    <value>numericUpDown1</value>
+    <data name="roundOvertimeCheckBox.Text" xml:space="preserve">
+    <value>Overtime</value>
   </data>
-    <data name="&gt;&gt;numericUpDown1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <data name="&gt;&gt;roundOvertimeCheckBox.Name" xml:space="preserve">
+    <value>roundOvertimeCheckBox</value>
   </data>
-    <data name="&gt;&gt;numericUpDown1.Parent" xml:space="preserve">
+    <data name="&gt;&gt;roundOvertimeCheckBox.Type" xml:space="preserve">
+    <value>System.Windows.Forms.CheckBox, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;roundOvertimeCheckBox.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-    <data name="&gt;&gt;numericUpDown1.ZOrder" xml:space="preserve">
+    <data name="&gt;&gt;roundOvertimeCheckBox.ZOrder" xml:space="preserve">
     <value>5</value>
   </data>
-    <data name="breakTimeUpDown.Location" type="System.Drawing.Point, System.Drawing">
-        <value>130, 66</value>
+    <data name="blinkingDurationUpDown.Location" type="System.Drawing.Point, System.Drawing">
+        <value>355, 66</value>
     </data>
-    <data name="breakTimeUpDown.Size" type="System.Drawing.Size, System.Drawing">
+    <data name="blinkingDurationUpDown.Size" type="System.Drawing.Size, System.Drawing">
         <value>54, 20</value>
     </data>
-    <data name="breakTimeUpDown.TabIndex" type="System.Int32, mscorlib">
-        <value>5</value>
+    <data name="blinkingDurationUpDown.TabIndex" type="System.Int32, mscorlib">
+        <value>6</value>
     </data>
-    <data name="&gt;&gt;breakTimeUpDown.Name" xml:space="preserve">
-    <value>breakTimeUpDown</value>
+    <data name="&gt;&gt;blinkingDurationUpDown.Name" xml:space="preserve">
+    <value>blinkingDurationUpDown</value>
   </data>
-    <data name="&gt;&gt;breakTimeUpDown.Type" xml:space="preserve">
+    <data name="&gt;&gt;blinkingDurationUpDown.Type" xml:space="preserve">
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-    <data name="&gt;&gt;breakTimeUpDown.Parent" xml:space="preserve">
+    <data name="&gt;&gt;blinkingDurationUpDown.Parent" xml:space="preserve">
     <value>groupBox1</value>
   </data>
-    <data name="&gt;&gt;breakTimeUpDown.ZOrder" xml:space="preserve">
+    <data name="&gt;&gt;blinkingDurationUpDown.ZOrder" xml:space="preserve">
     <value>6</value>
+  </data>
+    <data name="breakDurationUpDown.Location" type="System.Drawing.Point, System.Drawing">
+        <value>130, 66</value>
+    </data>
+    <data name="breakDurationUpDown.Size" type="System.Drawing.Size, System.Drawing">
+        <value>54, 20</value>
+    </data>
+    <data name="breakDurationUpDown.TabIndex" type="System.Int32, mscorlib">
+        <value>5</value>
+    </data>
+    <data name="&gt;&gt;breakDurationUpDown.Name" xml:space="preserve">
+    <value>breakDurationUpDown</value>
+  </data>
+    <data name="&gt;&gt;breakDurationUpDown.Type" xml:space="preserve">
+    <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;breakDurationUpDown.Parent" xml:space="preserve">
+    <value>groupBox1</value>
+  </data>
+    <data name="&gt;&gt;breakDurationUpDown.ZOrder" xml:space="preserve">
+    <value>7</value>
   </data>
     <data name="minutesPerRoundUpDown.Location" type="System.Drawing.Point, System.Drawing">
         <value>130, 40</value>
@@ -311,7 +338,7 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;minutesPerRoundUpDown.ZOrder" xml:space="preserve">
-    <value>7</value>
+    <value>8</value>
   </data>
     <data name="numberOfRoundsUpDown.Location" type="System.Drawing.Point, System.Drawing">
         <value>130, 14</value>
@@ -332,7 +359,7 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;numberOfRoundsUpDown.ZOrder" xml:space="preserve">
-    <value>8</value>
+    <value>9</value>
   </data>
     <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
         <value>NoControl</value>
@@ -359,7 +386,7 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
-    <value>9</value>
+    <value>10</value>
   </data>
     <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
         <value>NoControl</value>
@@ -386,7 +413,7 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
-    <value>10</value>
+    <value>11</value>
   </data>
     <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
         <value>NoControl</value>
@@ -413,13 +440,13 @@
     <value>groupBox1</value>
   </data>
     <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
-    <value>11</value>
+    <value>12</value>
   </data>
     <data name="groupBox1.Location" type="System.Drawing.Point, System.Drawing">
         <value>12, 12</value>
     </data>
     <data name="groupBox1.Size" type="System.Drawing.Size, System.Drawing">
-        <value>678, 119</value>
+        <value>806, 93</value>
     </data>
     <data name="groupBox1.TabIndex" type="System.Int32, mscorlib">
         <value>4</value>
@@ -437,49 +464,213 @@
     <value>$this</value>
   </data>
     <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>4</value>
   </data>
     <data name="Duration.HeaderText" xml:space="preserve">
     <value>Duration</value>
   </data>
+    <data name="Duration.Width" type="System.Int32, mscorlib">
+        <value>60</value>
+    </data>
     <data name="BlinkingDuration.HeaderText" xml:space="preserve">
     <value>Blinking Duration</value>
   </data>
+    <data name="BlinkingDuration.Width" type="System.Int32, mscorlib">
+        <value>60</value>
+    </data>
     <data name="Overtime.HeaderText" xml:space="preserve">
     <value>Overtime</value>
   </data>
     <data name="Overtime.Width" type="System.Int32, mscorlib">
-        <value>65</value>
+        <value>60</value>
     </data>
     <data name="BreakDuration.HeaderText" xml:space="preserve">
     <value>Break Duration</value>
   </data>
+    <data name="BreakDuration.Width" type="System.Int32, mscorlib">
+        <value>60</value>
+    </data>
     <data name="BrakText.HeaderText" xml:space="preserve">
     <value>BrakText</value>
   </data>
     <data name="BrakText.Width" type="System.Int32, mscorlib">
-        <value>270</value>
+        <value>261</value>
     </data>
-    <data name="dataGridView1.Location" type="System.Drawing.Point, System.Drawing">
-        <value>12, 137</value>
+    <metadata name="TimerName.UserAddedColumn"
+              type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+        <value>True</value>
+    </metadata>
+    <data name="TimerName.HeaderText" xml:space="preserve">
+    <value>Timer Name</value>
+  </data>
+    <data name="TimerName.Width" type="System.Int32, mscorlib">
+        <value>261</value>
     </data>
-    <data name="dataGridView1.Size" type="System.Drawing.Size, System.Drawing">
-        <value>678, 464</value>
+    <data name="roundsDataGridView.Location" type="System.Drawing.Point, System.Drawing">
+        <value>12, 147</value>
     </data>
-    <data name="dataGridView1.TabIndex" type="System.Int32, mscorlib">
+    <metadata name="roundContextMenuStrip.TrayLocation"
+              type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <value>46, 22</value>
+    </metadata>
+    <data name="deleteToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing"
+          mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>
+            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+            xAAADsQBlSsOGwAAAGxJREFUOE/NkMENgDAIRV3ANRyETZ1QvXDFfhMabcGWNCaSvAs/vFImERmiajCz
+            RGgOEJEL8kuwLrMJsn07HnwjeKMpQOnx7mEPpqB8USmHwU8FESqBgtDaArgCkJqhr2SBVmqMCaK3cAX9
+            sJzi6791dNfJzwAAAABJRU5ErkJggg==
+        </value>
+    </data>
+    <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+        <value>179, 22</value>
+    </data>
+    <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
+    <value>Delete Round</value>
+  </data>
+    <data name="setToDefaultToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing"
+          mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>
+            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+            xAAADsQBlSsOGwAAAZVJREFUOE+Fkj9LQlEYxm9DEIHSEtkaRZ/AIZLGaA+iCNvDIWisPkNTQ1lagoQG
+            DRlBzWbgFmGLUpoYQli0eAeX0/s7nnMTvdELD57zPn/Oe47XcV1X/YMxx5Ssx83ytxA5yye+aLa+vQD5
+            DQrqgowgoM2UbHzNoC/g+PC2pA5unugVvRACEO5fPf4ZIFisNb9UYD2l+ybk3AYsvbx/qtG1M01uJx/8
+            AiLttlu33MjqqXqufcDNEZDYShQ0EdnNKREOBJiDQsI15ndymovF83ApiNeZWFY3s/kyTd8AStYbF/dl
+            zU1tZuDqNNXwSlI3q3JP9hgB0/QFTKKxB6Cl2bEBPJTsZzH1YMj40YbQoMUj+w7N6rS5wmWhQjNq9AMF
+            hwYtHrw04/YRF/auGftNehPG4xU9ODRo8eCFCFcaLf3XWMKERAUhgyg9exBaPHhtevrorqRJOwmjcl/A
+            2p4M0OLRZko2fOdFCDuJH+CMmU85aOzdMiFpRmNUHomXBqzpmbHTA+beEjIsiAuqgo4Ba3rdO3vlOD8d
+            UGVZXX4W9gAAAABJRU5ErkJggg==
+        </value>
+    </data>
+    <data name="setToDefaultToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+        <value>179, 22</value>
+    </data>
+    <data name="setToDefaultToolStripMenuItem.Text" xml:space="preserve">
+    <value>Set round to default</value>
+  </data>
+    <data name="setValueToDefaultToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing"
+          mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>
+            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+            xAAADsQBlSsOGwAAAX9JREFUOE+Fkk9qwkAUxtMDVLoptSfoCVwUunIREjyCSW8QvYogbixdFEIpWbjw
+            AOLWS0QaEjeudZHN9P3GN6loSh98OPP9m0mMdzwezT+483Rkfa/L38HU7/dbsd/vmwL57QgKwZfg1oYZ
+            2bSGwUXB23K5NIvFAm7TlFCAMcuyPwsE/m63M4PBwPJa8ukKgrIsTRiGVpzNZm0FL4fDoXBaEAQmz3O0
+            Zwrep9OpFUajkRHjVYEe1BWtTJLEapPJBO0DIY/j2JKr1QqytYCR9SsetOFwiFZAGt/3LVlVlS0gCLjN
+            RcEjHncAXsjaFfCiZP9E6Aw3msfbxYOXjOxryG0URZZcr9eQsfqvBg0PXjJkIefuJY7HY679LdyDZpqB
+            Q8ODlwxZhF5RFPavcYKWxIKuIoZzB+ElQ9a1p3xliO4mXJXnBazdyQAvGRtmZMN3vkFwN2kDmob5lDsa
+            P42WpFyNq/KSeNOANZxeO70Kn4+IPcFcsBXUCtZwp2duxvN+AFwMV+KqpemtAAAAAElFTkSuQmCC
+        </value>
+    </data>
+    <data name="setValueToDefaultToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+        <value>179, 22</value>
+    </data>
+    <data name="setValueToDefaultToolStripMenuItem.Text" xml:space="preserve">
+    <value>Set value to default</value>
+  </data>
+    <data name="roundContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+        <value>180, 70</value>
+    </data>
+    <data name="&gt;&gt;roundContextMenuStrip.Name" xml:space="preserve">
+    <value>roundContextMenuStrip</value>
+  </data>
+    <data name="&gt;&gt;roundContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="roundsDataGridView.Size" type="System.Drawing.Size, System.Drawing">
+        <value>806, 500</value>
+    </data>
+    <data name="roundsDataGridView.TabIndex" type="System.Int32, mscorlib">
         <value>5</value>
     </data>
-    <data name="&gt;&gt;dataGridView1.Name" xml:space="preserve">
-    <value>dataGridView1</value>
+    <data name="&gt;&gt;roundsDataGridView.Name" xml:space="preserve">
+    <value>roundsDataGridView</value>
   </data>
-    <data name="&gt;&gt;dataGridView1.Type" xml:space="preserve">
+    <data name="&gt;&gt;roundsDataGridView.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-    <data name="&gt;&gt;dataGridView1.Parent" xml:space="preserve">
+    <data name="&gt;&gt;roundsDataGridView.Parent" xml:space="preserve">
     <value>$this</value>
   </data>
-    <data name="&gt;&gt;dataGridView1.ZOrder" xml:space="preserve">
-    <value>0</value>
+    <data name="&gt;&gt;roundsDataGridView.ZOrder" xml:space="preserve">
+    <value>3</value>
+  </data>
+    <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing"
+          mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>
+            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+            xAAADsQBlSsOGwAAAGBJREFUOE/dkTEKwDAMA/2oDH1jH+zVrU0CiSuBCx1KBDdJXCAWFDMTVbVEbwsZ
+            guNswe4CHyOQAO1iyEgCyPLSW74TMOYhwwWMLECb+ERGTYDi57nLh6Cc/wgSvZ0jcgGH8OxYn96gCgAA
+            AABJRU5ErkJggg==
+        </value>
+    </data>
+    <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
+        <value>12, 111</value>
+    </data>
+    <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
+        <value>107, 29</value>
+    </data>
+    <data name="button1.TabIndex" type="System.Int32, mscorlib">
+        <value>6</value>
+    </data>
+    <data name="button1.Text" xml:space="preserve">
+    <value>Add Round</value>
+  </data>
+    <data name="button1.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+        <value>ImageBeforeText</value>
+    </data>
+    <data name="&gt;&gt;button1.Name" xml:space="preserve">
+    <value>button1</value>
+  </data>
+    <data name="&gt;&gt;button1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;button1.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+    <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+    <data name="resetAllToDefaultButton.Image" type="System.Drawing.Bitmap, System.Drawing"
+          mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>
+            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+            xAAADsQBlSsOGwAAAZVJREFUOE+Fkj9LQlEYxm9DEIHSEtkaRZ/AIZLGaA+iCNvDIWisPkNTQ1lagoQG
+            DRlBzWbgFmGLUpoYQli0eAeX0/s7nnMTvdELD57zPn/Oe47XcV1X/YMxx5Ssx83ytxA5yye+aLa+vQD5
+            DQrqgowgoM2UbHzNoC/g+PC2pA5unugVvRACEO5fPf4ZIFisNb9UYD2l+ybk3AYsvbx/qtG1M01uJx/8
+            AiLttlu33MjqqXqufcDNEZDYShQ0EdnNKREOBJiDQsI15ndymovF83ApiNeZWFY3s/kyTd8AStYbF/dl
+            zU1tZuDqNNXwSlI3q3JP9hgB0/QFTKKxB6Cl2bEBPJTsZzH1YMj40YbQoMUj+w7N6rS5wmWhQjNq9AMF
+            hwYtHrw04/YRF/auGftNehPG4xU9ODRo8eCFCFcaLf3XWMKERAUhgyg9exBaPHhtevrorqRJOwmjcl/A
+            2p4M0OLRZko2fOdFCDuJH+CMmU85aOzdMiFpRmNUHomXBqzpmbHTA+beEjIsiAuqgo4Ba3rdO3vlOD8d
+            UGVZXX4W9gAAAABJRU5ErkJggg==
+        </value>
+    </data>
+    <data name="resetAllToDefaultButton.Location" type="System.Drawing.Point, System.Drawing">
+        <value>129, 111</value>
+    </data>
+    <data name="resetAllToDefaultButton.Size" type="System.Drawing.Size, System.Drawing">
+        <value>142, 28</value>
+    </data>
+    <data name="resetAllToDefaultButton.TabIndex" type="System.Int32, mscorlib">
+        <value>7</value>
+    </data>
+    <data name="resetAllToDefaultButton.Text" xml:space="preserve">
+    <value>Reset all to default</value>
+  </data>
+    <data name="resetAllToDefaultButton.TextImageRelation"
+          type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
+        <value>ImageBeforeText</value>
+    </data>
+    <data name="&gt;&gt;resetAllToDefaultButton.Name" xml:space="preserve">
+    <value>resetAllToDefaultButton</value>
+  </data>
+    <data name="&gt;&gt;resetAllToDefaultButton.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;resetAllToDefaultButton.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+    <data name="&gt;&gt;resetAllToDefaultButton.ZOrder" xml:space="preserve">
+    <value>1</value>
   </data>
     <metadata name="$this.Localizable"
               type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
@@ -489,7 +680,7 @@
         <value>6, 13</value>
     </data>
     <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-        <value>702, 613</value>
+        <value>828, 659</value>
     </data>
     <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing"
           mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -2210,6 +2401,30 @@
   </data>
     <data name="&gt;&gt;BrakText.Type" xml:space="preserve">
     <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;TimerName.Name" xml:space="preserve">
+    <value>TimerName</value>
+  </data>
+    <data name="&gt;&gt;TimerName.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridViewTextBoxColumn, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;deleteToolStripMenuItem.Name" xml:space="preserve">
+    <value>deleteToolStripMenuItem</value>
+  </data>
+    <data name="&gt;&gt;deleteToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;setToDefaultToolStripMenuItem.Name" xml:space="preserve">
+    <value>setToDefaultToolStripMenuItem</value>
+  </data>
+    <data name="&gt;&gt;setToDefaultToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;setValueToDefaultToolStripMenuItem.Name" xml:space="preserve">
+    <value>setValueToDefaultToolStripMenuItem</value>
+  </data>
+    <data name="&gt;&gt;setValueToDefaultToolStripMenuItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
     <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>RoundsManager</value>

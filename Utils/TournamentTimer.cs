@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.Serialization;
 using System.Timers;
-using Utils.Annotations;
 
 namespace Utils
 {
@@ -33,20 +30,88 @@ namespace Utils
         private void OnRoundsListChanged(object sender,
             NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Add)
+            switch (notifyCollectionChangedEventArgs.Action)
             {
-                foreach (Round newRound in notifyCollectionChangedEventArgs.NewItems)
+                case NotifyCollectionChangedAction.Add:
                 {
-                    void OnRoundPropertyChanged(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
+                    foreach (Round round in notifyCollectionChangedEventArgs.NewItems)
                     {
-                        Console.WriteLine(newRound);
+                        round.PropertyChanged += RoundPropertyChanged;
                     }
 
-                    newRound.PropertyChanged += OnRoundPropertyChanged;
+                    if (notifyCollectionChangedEventArgs.NewStartingIndex <= CurrentRoundId)
+                    {
+                        CurrentRoundId += notifyCollectionChangedEventArgs.NewItems.Count;
+                    }
+
+                    break;
                 }
+
+                case NotifyCollectionChangedAction.Remove
+                    when notifyCollectionChangedEventArgs.OldStartingIndex <= CurrentRoundId &&
+                         notifyCollectionChangedEventArgs.OldStartingIndex +
+                         notifyCollectionChangedEventArgs.OldItems.Count > CurrentRoundId:
+                {
+                    if (notifyCollectionChangedEventArgs.OldStartingIndex > RoundsList.Count)
+                    {
+                        CurrentRoundId = RoundsList.Count - 1;
+                        IsFinished();
+                    }
+                    else
+                    {
+                        CurrentRoundId = notifyCollectionChangedEventArgs.OldStartingIndex;
+                    }
+
+                    goto case NotifyCollectionChangedAction.Remove;
+                }
+
+                case NotifyCollectionChangedAction.Remove
+                    when notifyCollectionChangedEventArgs.OldStartingIndex < CurrentRoundId:
+                {
+                    CurrentRoundId -= notifyCollectionChangedEventArgs.OldItems.Count;
+                    goto case NotifyCollectionChangedAction.Remove;
+                }
+
+                case NotifyCollectionChangedAction.Remove:
+                {
+                    foreach (Round oldRound in notifyCollectionChangedEventArgs.OldItems)
+                    {
+                        oldRound.PropertyChanged -= RoundPropertyChanged;
+                    }
+
+                    break;
+                }
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-            else if (notifyCollectionChangedEventArgs.Action == NotifyCollectionChangedAction.Remove)
+        }
+
+        private void RoundPropertyChanged(object sender, (string, TimeSpan) args)
+        {
+            var (propertyName, oldValue) = args;
+            if (!(sender is Round changedRound)) return;
+            if (RoundsList.IndexOf(changedRound) != CurrentRoundId) return;
+
+            switch (propertyName)
             {
+                case "Duration":
+                {
+                    if (IsBreak) break;
+                    Target += changedRound.Duration - oldValue;
+                    break;
+                }
+                case "BreakDuration":
+                {
+                    if (!IsBreak) break;
+                    Target += changedRound.BreakDuration - oldValue;
+                    break;
+                }
             }
         }
 
@@ -151,8 +216,7 @@ namespace Utils
 
         private bool IsFinished()
         {
-            if (CurrentRoundId < NumberOfRounds) return false;
-
+            if (CurrentRoundId + 1 < NumberOfRounds) return false;
             Finished = true;
             OnFinished?.Invoke(this, null);
             Pause();
@@ -189,6 +253,15 @@ namespace Utils
             SettingsChanged?.Invoke(this, Target);
         }
 
+        private Round CreateDefaultRound()
+        {
+            // ReSharper disable HeapView.DelegateAllocation
+            return new Round(DefaultRoundDurationTimeSpanMethod, DefaultBreakDurationTimeSpanMethod,
+                DefaultBlinkingDurationTimeSpanMethod, DefaultOvertimeAfterRoundMethod,
+                DefaultBreakTextMethod, DefaultTimerNameMethod, false);
+            // ReSharper enable HeapView.DelegateAllocation
+        }
+
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context)
         {
@@ -198,15 +271,6 @@ namespace Utils
             {
                 _framesTimer.Start();
             }
-        }
-
-        private Round CreateDefaultRound()
-        {
-            // ReSharper disable HeapView.DelegateAllocation
-            return new Round(DefaultRoundDurationTimeSpanMethod, DefaultBreakDurationTimeSpanMethod,
-                DefaultBlinkingDurationTimeSpanMethod, DefaultOvertimeAfterRoundMethod,
-                DefaultBreakTextMethod, DefaultTimerNameMethod, false);
-            // ReSharper enable HeapView.DelegateAllocation
         }
 
         public bool Equals(TournamentTimer? other)

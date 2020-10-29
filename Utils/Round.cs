@@ -7,13 +7,14 @@ using Utils.Annotations;
 namespace Utils
 {
     [DataContract]
-    public class Round : IEquatable<Round>, INotifyPropertyChanged
+    public sealed class Round : IEquatable<Round>
     {
         public TimeSpan Duration
         {
             get => _durationFunc?.Invoke() ?? _duration;
             set
             {
+                OnPropertyChanged(Duration);
                 _durationFunc = null;
                 _duration = value;
             }
@@ -24,6 +25,7 @@ namespace Utils
             get => _breakDurationFunc?.Invoke() ?? _breakDuration;
             set
             {
+                OnPropertyChanged(BreakDuration);
                 _breakDurationFunc = null;
                 _breakDuration = value;
             }
@@ -155,12 +157,13 @@ namespace Utils
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event EventHandler<(string, TimeSpan)> PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        private void OnPropertyChanged(TimeSpan oldValue, [CallerMemberName] string propertyName = null)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            HasBeenModifiedByUser = true;
+            PropertyChanged?.Invoke(this, (propertyName, oldValue));
         }
     }
 }

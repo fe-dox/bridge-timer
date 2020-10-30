@@ -221,6 +221,7 @@ namespace TCTimer
             this.roundsDataGridView.Name = "roundsDataGridView";
             this.roundsDataGridView.RowTemplate.ContextMenuStrip = this.roundContextMenuStrip;
             this.roundsDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.roundsDataGridView_MouseDown);
+            this.roundsDataGridView.CellValidating += new DataGridViewCellValidatingEventHandler(this.roundsDataGridView_CellValidating);
             // 
             // Duration
             // 

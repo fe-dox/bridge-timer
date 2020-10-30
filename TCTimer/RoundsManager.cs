@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Utils;
 
@@ -37,6 +36,7 @@ namespace TCTimer
                 action();
             }
         }
+
 
         private void UpdateColumn(DefaultSettings defaultSettings)
         {
@@ -246,6 +246,78 @@ namespace TCTimer
         {
             _tournamentTimer.DefaultBreakText = breakTextTextBox.Text;
             _tournamentTimer.OnDefaultSettingsChanged(DefaultSettings.BreakText);
+        }
+
+        private static bool GetDecimalFromCellValue(string value, out decimal result)
+        {
+            var numbersRegex = new Regex(@"(\d+(\.\d+)?)", RegexOptions.Compiled);
+            var match = numbersRegex.Match(value);
+
+            if (!match.Success)
+            {
+                result = 0;
+                return false;
+            }
+
+            result = decimal.Parse(match.Value);
+            return true;
+        }
+
+        private void roundsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            decimal result;
+            switch (e.ColumnIndex)
+            {
+                case 0:
+                    if (!GetDecimalFromCellValue(e.FormattedValue.ToString(), out result))
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+
+                    _tournamentTimer.RoundsList[e.RowIndex].Duration =
+                        new TimeSpan(0, 0, (int) (result * 60));
+                    e.Cancel = false;
+                    break;
+                case 1:
+                    if (!GetDecimalFromCellValue(e.FormattedValue.ToString(), out result))
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+
+                    _tournamentTimer.RoundsList[e.RowIndex].BlinkingDuration =
+                        new TimeSpan(0, 0, (int) result);
+                    e.Cancel = false;
+
+                    break;
+                case 2:
+                    _tournamentTimer.RoundsList[e.RowIndex].OvertimeAfterRound = (bool) e.FormattedValue;
+                    break;
+                case 3:
+                    if (!GetDecimalFromCellValue(e.FormattedValue.ToString(), out result))
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+
+                    _tournamentTimer.RoundsList[e.RowIndex].BreakDuration =
+                        new TimeSpan(0, 0, (int) result);
+                    e.Cancel = false;
+
+                    break;
+                case 4:
+                    _tournamentTimer.RoundsList[e.RowIndex].BreakText = e.FormattedValue.ToString();
+                    e.Cancel = false;
+
+                    break;
+                case 5:
+                    _tournamentTimer.RoundsList[e.RowIndex].TimerName = e.FormattedValue.ToString();
+                    e.Cancel = false;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
     }
 }

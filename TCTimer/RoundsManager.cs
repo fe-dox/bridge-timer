@@ -9,6 +9,8 @@ namespace TCTimer
     public partial class RoundsManager : Form
     {
         private readonly TournamentTimer _tournamentTimer;
+        private bool _cantOverwriteDefault;
+
 
         public RoundsManager(TournamentTimer timer)
         {
@@ -53,7 +55,7 @@ namespace TCTimer
                     DefaultSettings.TimerName => round.TimerName == null,
                     DefaultSettings.NumberOfRounds => throw new NotSupportedException(),
                     _ => throw new ArgumentOutOfRangeException()
-                }) continue;
+                } != true) continue;
 
                 // ReSharper disable once HeapView.BoxingAllocation
                 roundsDataGridView.Rows[i].Cells[(int) defaultSettings].Value = defaultSettings switch
@@ -272,48 +274,51 @@ namespace TCTimer
                     if (!GetDecimalFromCellValue(e.FormattedValue.ToString(), out result))
                     {
                         e.Cancel = true;
-                        return;
+                        break;
                     }
 
+                    e.Cancel = false;
+                    if (result == _tournamentTimer.DefaultRoundDuration) break;
                     _tournamentTimer.RoundsList[e.RowIndex].Duration =
                         new TimeSpan(0, 0, (int) (result * 60));
-                    e.Cancel = false;
                     break;
                 case 1:
                     if (!GetDecimalFromCellValue(e.FormattedValue.ToString(), out result))
                     {
                         e.Cancel = true;
-                        return;
+                        break;
                     }
 
+                    e.Cancel = false;
+                    if (result == _tournamentTimer.DefaultBlinkingDuration) break;
                     _tournamentTimer.RoundsList[e.RowIndex].BlinkingDuration =
                         new TimeSpan(0, 0, (int) result);
-                    e.Cancel = false;
-
                     break;
                 case 2:
+                    if ((bool) e.FormattedValue == _tournamentTimer.DefaultOvertimeAfterRound) break;
                     _tournamentTimer.RoundsList[e.RowIndex].OvertimeAfterRound = (bool) e.FormattedValue;
                     break;
                 case 3:
                     if (!GetDecimalFromCellValue(e.FormattedValue.ToString(), out result))
                     {
                         e.Cancel = true;
-                        return;
+                        break;
                     }
 
+                    e.Cancel = false;
+                    if (result == _tournamentTimer.DefaultBreakDuration) break;
                     _tournamentTimer.RoundsList[e.RowIndex].BreakDuration =
                         new TimeSpan(0, 0, (int) result);
-                    e.Cancel = false;
-
                     break;
                 case 4:
-                    _tournamentTimer.RoundsList[e.RowIndex].BreakText = e.FormattedValue.ToString();
                     e.Cancel = false;
-
+                    if (e.FormattedValue.ToString() == _tournamentTimer.DefaultBreakText) break;
+                    _tournamentTimer.RoundsList[e.RowIndex].BreakText = e.FormattedValue.ToString();
                     break;
                 case 5:
-                    _tournamentTimer.RoundsList[e.RowIndex].TimerName = e.FormattedValue.ToString();
                     e.Cancel = false;
+                    if (e.FormattedValue.ToString() == _tournamentTimer.DefaultTimerName) break;
+                    _tournamentTimer.RoundsList[e.RowIndex].TimerName = e.FormattedValue.ToString();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

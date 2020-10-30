@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace TCTimer
 {
@@ -57,9 +58,7 @@ namespace TCTimer
             this.roundContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.setToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.setValueToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
-            this.resetAllToDefaultButton = new System.Windows.Forms.Button();
+            this.addRoundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.breakDurationUpDown)).BeginInit();
@@ -148,6 +147,7 @@ namespace TCTimer
             this.numberOfRoundsUpDown.Minimum = new decimal(new int[] {1, 0, 0, 0});
             this.numberOfRoundsUpDown.Name = "numberOfRoundsUpDown";
             this.numberOfRoundsUpDown.Value = new decimal(new int[] {12, 0, 0, 0});
+            this.numberOfRoundsUpDown.ValueChanged += new System.EventHandler(this.numberOfRoundsUpDown_ValueChanged);
             // 
             // label1
             // 
@@ -172,6 +172,7 @@ namespace TCTimer
             resources.ApplyResources(this.roundsDataGridView, "roundsDataGridView");
             this.roundsDataGridView.Name = "roundsDataGridView";
             this.roundsDataGridView.RowTemplate.ContextMenuStrip = this.roundContextMenuStrip;
+            this.roundsDataGridView.MouseDown += new MouseEventHandler(this.roundsDataGridView_MouseDown);
             // 
             // Duration
             // 
@@ -205,7 +206,7 @@ namespace TCTimer
             // 
             // roundContextMenuStrip
             // 
-            this.roundContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.deleteToolStripMenuItem, this.setToDefaultToolStripMenuItem, this.setValueToDefaultToolStripMenuItem});
+            this.roundContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.deleteToolStripMenuItem, this.setToDefaultToolStripMenuItem, this.addRoundToolStripMenuItem});
             this.roundContextMenuStrip.Name = "roundContextMenuStrip";
             resources.ApplyResources(this.roundContextMenuStrip, "roundContextMenuStrip");
             // 
@@ -221,30 +222,16 @@ namespace TCTimer
             this.setToDefaultToolStripMenuItem.Name = "setToDefaultToolStripMenuItem";
             this.setToDefaultToolStripMenuItem.Click += new System.EventHandler(this.setToDefaultToolStripMenuItem_Click);
             // 
-            // setValueToDefaultToolStripMenuItem
+            // addRoundToolStripMenuItem
             // 
-            resources.ApplyResources(this.setValueToDefaultToolStripMenuItem, "setValueToDefaultToolStripMenuItem");
-            this.setValueToDefaultToolStripMenuItem.Name = "setValueToDefaultToolStripMenuItem";
-            this.setValueToDefaultToolStripMenuItem.Click += new System.EventHandler(this.setValueToDefaultToolStripMenuItem_Click);
-            // 
-            // button1
-            // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // resetAllToDefaultButton
-            // 
-            resources.ApplyResources(this.resetAllToDefaultButton, "resetAllToDefaultButton");
-            this.resetAllToDefaultButton.Name = "resetAllToDefaultButton";
-            this.resetAllToDefaultButton.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.addRoundToolStripMenuItem, "addRoundToolStripMenuItem");
+            this.addRoundToolStripMenuItem.Name = "addRoundToolStripMenuItem";
+            this.addRoundToolStripMenuItem.Click += new System.EventHandler(this.addRoundToolStripMenuItem_Click);
             // 
             // RoundsManager
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.resetAllToDefaultButton);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.roundsDataGridView);
             this.Controls.Add(this.groupBox1);
             this.MaximizeBox = false;
@@ -260,15 +247,13 @@ namespace TCTimer
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.ToolStripMenuItem setValueToDefaultToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addRoundToolStripMenuItem;
 
         private System.Windows.Forms.TextBox breakTextTextBox;
 
         private System.Windows.Forms.NumericUpDown blinkingDurationUpDown;
 
         private System.Windows.Forms.NumericUpDown breakDurationUpDown;
-
-        private System.Windows.Forms.Button resetAllToDefaultButton;
 
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox timerNameTextBox;
@@ -282,8 +267,6 @@ namespace TCTimer
         private System.Windows.Forms.ToolStripMenuItem setToDefaultToolStripMenuItem;
 
         private System.Windows.Forms.ToolStripMenuItem deleteToolStripMenuItem;
-
-        private System.Windows.Forms.Button button1;
 
         private System.Windows.Forms.DataGridViewTextBoxColumn BlinkingDuration;
         private System.Windows.Forms.DataGridViewTextBoxColumn BrakText;

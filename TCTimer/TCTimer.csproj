@@ -27,6 +27,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -64,7 +65,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Web"/>
+      <Reference Include="System.Web"/>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -85,27 +86,27 @@
     <Compile Include="RoundsManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RoundsManager.Designer.cs">
-      <DependentUpon>RoundsManager.cs</DependentUpon>
-    </Compile>
-    <Compile Include="TimerUI.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="TimerUI.Designer.cs">
-      <DependentUpon>TimerUI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs"/>
-    <Compile Include="Properties\AssemblyInfo.cs"/>
-    <EmbeddedResource Include="AboutForm.resx">
-      <DependentUpon>AboutForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
+      <Compile Include="RoundsManager.Designer.cs">
+          <DependentUpon>RoundsManager.cs</DependentUpon>
+      </Compile>
+      <Compile Include="TimerUI.cs">
+          <SubType>Form</SubType>
+      </Compile>
+      <Compile Include="TimerUI.Designer.cs">
+          <DependentUpon>TimerUI.cs</DependentUpon>
+      </Compile>
+      <Compile Include="Program.cs"/>
+      <Compile Include="Properties\AssemblyInfo.cs"/>
+      <EmbeddedResource Include="AboutForm.resx">
+          <DependentUpon>AboutForm.cs</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Include="Properties\Resources.resx">
+          <Generator>ResXFileCodeGenerator</Generator>
+          <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+          <SubType>Designer</SubType>
+      </EmbeddedResource>
+      <Compile Include="Properties\Resources.Designer.cs">
+          <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -115,7 +116,7 @@
     <EmbeddedResource Include="TimerUI.resx">
       <DependentUpon>TimerUI.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.manifest"/>
+      <None Include="app.manifest"/>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

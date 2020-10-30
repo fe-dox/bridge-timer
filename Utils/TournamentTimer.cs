@@ -136,7 +136,11 @@ namespace Utils
         [DataMember] public bool Finished { get; private set; }
         [DataMember] public string DefaultBreakText { get; set; } = string.Empty;
         [DataMember] public string DefaultTimerName { get; set; } = string.Empty;
+        [DataMember] public int DefaultBlinkingDuration { get; set; }
+        [DataMember] public decimal DefaultRoundDuration { get; set; }
+        [DataMember] public int DefaultBreakDuration { get; set; }
         [DataMember] public bool DefaultOvertimeAfterRound { get; set; }
+
         [DataMember] public string ResultsUrl { get; set; } = string.Empty;
         [DataMember] public bool Running { get; private set; }
         [DataMember] public bool IsBreak { get; private set; }
@@ -150,13 +154,10 @@ namespace Utils
         public TimeSpan BlinkingDuration =>
             RoundsList[CurrentRoundId].BlinkingDuration ?? DefaultBlinkingDurationTimeSpan;
 
-        private TimeSpan DefaultRoundDurationTimeSpan => new TimeSpan(0, 0, (int) (DefaultRoundDuration * 60));
-        private TimeSpan DefaultBreakDurationTimeSpan => new TimeSpan(0, 0, DefaultBreakDuration);
-        private TimeSpan DefaultBlinkingDurationTimeSpan => new TimeSpan(0, 0, DefaultBlinkingDuration);
+        public TimeSpan DefaultRoundDurationTimeSpan => new TimeSpan(0, 0, (int) (DefaultRoundDuration * 60));
+        public TimeSpan DefaultBreakDurationTimeSpan => new TimeSpan(0, 0, DefaultBreakDuration);
+        public TimeSpan DefaultBlinkingDurationTimeSpan => new TimeSpan(0, 0, DefaultBlinkingDuration);
         private Round CurrentRound => RoundsList[CurrentRoundId];
-        [DataMember] public int DefaultBlinkingDuration { get; set; }
-        [DataMember] public decimal DefaultRoundDuration { get; set; }
-        [DataMember] public int DefaultBreakDuration { get; set; }
         [DataMember] public DateTime Target { get; private set; }
         [DataMember] public DateTime PausedAtTime { get; private set; }
         [DataMember] public int CurrentRoundId { get; private set; }
@@ -164,6 +165,12 @@ namespace Utils
         public event EventHandler<DateTime>? SettingsChanged;
         public event EventHandler<DateTime>? Ticked;
         public event EventHandler? OnFinished;
+        public event EventHandler<DefaultSettings>? DefaultSettingsChanged;
+
+        public void OnDefaultSettingsChanged(DefaultSettings defaultSettings)
+        {
+            DefaultSettingsChanged?.Invoke(this, defaultSettings);
+        }
 
         private void OnTick(object sender, EventArgs e)
         {
@@ -192,6 +199,7 @@ namespace Utils
 
         public void Start()
         {
+            if (IsFinished()) return;
             Target += DateTime.Now - PausedAtTime;
             Running = true;
             Finished = false;
@@ -219,13 +227,13 @@ namespace Utils
 
         private bool IsFinished()
         {
-            if (CurrentRoundId + 1 < NumberOfRounds) return false;
+            if (CurrentRoundId + 1 < NumberOfRounds && NumberOfRounds > 0) return false;
             Finished = true;
             OnFinished?.Invoke(this, null);
             Pause();
-
             return true;
         }
+
 
         public void GoToNextRound()
         {
@@ -264,11 +272,6 @@ namespace Utils
             if (Running)
             {
                 _framesTimer.Start();
-            }
-
-            foreach (Round round in RoundsList)
-            {
-                round.PropertyChanged += RoundPropertyChanged;
             }
         }
 

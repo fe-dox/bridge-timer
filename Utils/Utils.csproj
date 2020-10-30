@@ -42,6 +42,7 @@
         <Reference Include="System.Xml" />
     </ItemGroup>
     <ItemGroup>
+        <Compile Include="DefaultSettings.cs"/>
         <Compile Include="Properties\Annotations.cs"/>
         <Compile Include="Round.cs"/>
         <Compile Include="TimerMessage.cs"/>

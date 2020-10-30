@@ -464,7 +464,7 @@
     <value>$this</value>
   </data>
     <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
-    <value>4</value>
+    <value>2</value>
   </data>
     <data name="Duration.HeaderText" xml:space="preserve">
     <value>Duration</value>
@@ -507,7 +507,7 @@
         <value>261</value>
     </data>
     <data name="roundsDataGridView.Location" type="System.Drawing.Point, System.Drawing">
-        <value>12, 147</value>
+        <value>12, 111</value>
     </data>
     <metadata name="roundContextMenuStrip.TrayLocation"
               type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -523,7 +523,7 @@
         </value>
     </data>
     <data name="deleteToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-        <value>179, 22</value>
+        <value>156, 22</value>
     </data>
     <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
     <value>Delete Round</value>
@@ -543,32 +543,28 @@
         </value>
     </data>
     <data name="setToDefaultToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-        <value>179, 22</value>
+        <value>156, 22</value>
     </data>
     <data name="setToDefaultToolStripMenuItem.Text" xml:space="preserve">
-    <value>Set round to default</value>
+    <value>Reset to default</value>
   </data>
-    <data name="setValueToDefaultToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing"
+    <data name="addRoundToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing"
           mimetype="application/x-microsoft.net.object.bytearray.base64">
         <value>
-            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-            xAAADsQBlSsOGwAAAX9JREFUOE+Fkk9qwkAUxtMDVLoptSfoCVwUunIREjyCSW8QvYogbixdFEIpWbjw
-            AOLWS0QaEjeudZHN9P3GN6loSh98OPP9m0mMdzwezT+483Rkfa/L38HU7/dbsd/vmwL57QgKwZfg1oYZ
-            2bSGwUXB23K5NIvFAm7TlFCAMcuyPwsE/m63M4PBwPJa8ukKgrIsTRiGVpzNZm0FL4fDoXBaEAQmz3O0
-            Zwrep9OpFUajkRHjVYEe1BWtTJLEapPJBO0DIY/j2JKr1QqytYCR9SsetOFwiFZAGt/3LVlVlS0gCLjN
-            RcEjHncAXsjaFfCiZP9E6Aw3msfbxYOXjOxryG0URZZcr9eQsfqvBg0PXjJkIefuJY7HY679LdyDZpqB
-            Q8ODlwxZhF5RFPavcYKWxIKuIoZzB+ElQ9a1p3xliO4mXJXnBazdyQAvGRtmZMN3vkFwN2kDmob5lDsa
-            P42WpFyNq/KSeNOANZxeO70Kn4+IPcFcsBXUCtZwp2duxvN+AFwMV+KqpemtAAAAAElFTkSuQmCC
+            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+            YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAABgSURBVDhP3ZExCsAwDAP9qAx9Yx/s1a1NAokrgQsdSgQ3
+            SVwgFhQzE1W1RG8LGYLjbMHuAh8jkADtYshIAsjy0lu+EzDmIcMFjCxAm/hERk2A4ue5y4egnP8IEr2d
+            I3IBh/DsWJ/eoAoAAAAASUVORK5CYII=
         </value>
     </data>
-    <data name="setValueToDefaultToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-        <value>179, 22</value>
+    <data name="addRoundToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+        <value>156, 22</value>
     </data>
-    <data name="setValueToDefaultToolStripMenuItem.Text" xml:space="preserve">
-    <value>Set value to default</value>
+    <data name="addRoundToolStripMenuItem.Text" xml:space="preserve">
+    <value>Add Round</value>
   </data>
     <data name="roundContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-        <value>180, 70</value>
+        <value>157, 92</value>
     </data>
     <data name="&gt;&gt;roundContextMenuStrip.Name" xml:space="preserve">
     <value>roundContextMenuStrip</value>
@@ -577,7 +573,7 @@
     <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
     <data name="roundsDataGridView.Size" type="System.Drawing.Size, System.Drawing">
-        <value>806, 500</value>
+        <value>806, 536</value>
     </data>
     <data name="roundsDataGridView.TabIndex" type="System.Int32, mscorlib">
         <value>5</value>
@@ -592,84 +588,6 @@
     <value>$this</value>
   </data>
     <data name="&gt;&gt;roundsDataGridView.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-    <data name="button1.Image" type="System.Drawing.Bitmap, System.Drawing"
-          mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>
-            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-            xAAADsQBlSsOGwAAAGBJREFUOE/dkTEKwDAMA/2oDH1jH+zVrU0CiSuBCx1KBDdJXCAWFDMTVbVEbwsZ
-            guNswe4CHyOQAO1iyEgCyPLSW74TMOYhwwWMLECb+ERGTYDi57nLh6Cc/wgSvZ0jcgGH8OxYn96gCgAA
-            AABJRU5ErkJggg==
-        </value>
-    </data>
-    <data name="button1.Location" type="System.Drawing.Point, System.Drawing">
-        <value>12, 111</value>
-    </data>
-    <data name="button1.Size" type="System.Drawing.Size, System.Drawing">
-        <value>107, 29</value>
-    </data>
-    <data name="button1.TabIndex" type="System.Int32, mscorlib">
-        <value>6</value>
-    </data>
-    <data name="button1.Text" xml:space="preserve">
-    <value>Add Round</value>
-  </data>
-    <data name="button1.TextImageRelation" type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-        <value>ImageBeforeText</value>
-    </data>
-    <data name="&gt;&gt;button1.Name" xml:space="preserve">
-    <value>button1</value>
-  </data>
-    <data name="&gt;&gt;button1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-    <data name="&gt;&gt;button1.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-    <data name="&gt;&gt;button1.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-    <data name="resetAllToDefaultButton.Image" type="System.Drawing.Bitmap, System.Drawing"
-          mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>
-            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
-            xAAADsQBlSsOGwAAAZVJREFUOE+Fkj9LQlEYxm9DEIHSEtkaRZ/AIZLGaA+iCNvDIWisPkNTQ1lagoQG
-            DRlBzWbgFmGLUpoYQli0eAeX0/s7nnMTvdELD57zPn/Oe47XcV1X/YMxx5Ssx83ytxA5yye+aLa+vQD5
-            DQrqgowgoM2UbHzNoC/g+PC2pA5unugVvRACEO5fPf4ZIFisNb9UYD2l+ybk3AYsvbx/qtG1M01uJx/8
-            AiLttlu33MjqqXqufcDNEZDYShQ0EdnNKREOBJiDQsI15ndymovF83ApiNeZWFY3s/kyTd8AStYbF/dl
-            zU1tZuDqNNXwSlI3q3JP9hgB0/QFTKKxB6Cl2bEBPJTsZzH1YMj40YbQoMUj+w7N6rS5wmWhQjNq9AMF
-            hwYtHrw04/YRF/auGftNehPG4xU9ODRo8eCFCFcaLf3XWMKERAUhgyg9exBaPHhtevrorqRJOwmjcl/A
-            2p4M0OLRZko2fOdFCDuJH+CMmU85aOzdMiFpRmNUHomXBqzpmbHTA+beEjIsiAuqgo4Ba3rdO3vlOD8d
-            UGVZXX4W9gAAAABJRU5ErkJggg==
-        </value>
-    </data>
-    <data name="resetAllToDefaultButton.Location" type="System.Drawing.Point, System.Drawing">
-        <value>129, 111</value>
-    </data>
-    <data name="resetAllToDefaultButton.Size" type="System.Drawing.Size, System.Drawing">
-        <value>142, 28</value>
-    </data>
-    <data name="resetAllToDefaultButton.TabIndex" type="System.Int32, mscorlib">
-        <value>7</value>
-    </data>
-    <data name="resetAllToDefaultButton.Text" xml:space="preserve">
-    <value>Reset all to default</value>
-  </data>
-    <data name="resetAllToDefaultButton.TextImageRelation"
-          type="System.Windows.Forms.TextImageRelation, System.Windows.Forms">
-        <value>ImageBeforeText</value>
-    </data>
-    <data name="&gt;&gt;resetAllToDefaultButton.Name" xml:space="preserve">
-    <value>resetAllToDefaultButton</value>
-  </data>
-    <data name="&gt;&gt;resetAllToDefaultButton.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-    <data name="&gt;&gt;resetAllToDefaultButton.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-    <data name="&gt;&gt;resetAllToDefaultButton.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
     <metadata name="$this.Localizable"
@@ -2420,10 +2338,10 @@
     <data name="&gt;&gt;setToDefaultToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-    <data name="&gt;&gt;setValueToDefaultToolStripMenuItem.Name" xml:space="preserve">
-    <value>setValueToDefaultToolStripMenuItem</value>
+    <data name="&gt;&gt;addRoundToolStripMenuItem.Name" xml:space="preserve">
+    <value>addRoundToolStripMenuItem</value>
   </data>
-    <data name="&gt;&gt;setValueToDefaultToolStripMenuItem.Type" xml:space="preserve">
+    <data name="&gt;&gt;addRoundToolStripMenuItem.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
     <data name="&gt;&gt;$this.Name" xml:space="preserve">

@@ -43,6 +43,18 @@ namespace TCTimer
             for (int i = 0; i < roundsDataGridView.Rows.Count; i++)
             {
                 var round = _tournamentTimer.RoundsList[i];
+                if (defaultSettings switch
+                {
+                    DefaultSettings.RoundDuration => round.Duration == null,
+                    DefaultSettings.BlinkingDuration => round.BlinkingDuration == null,
+                    DefaultSettings.AfterRoundOvertime => round.OvertimeAfterRound == null,
+                    DefaultSettings.BreakDuration => round.BreakDuration == null,
+                    DefaultSettings.BreakText => round.BreakText == null,
+                    DefaultSettings.TimerName => round.TimerName == null,
+                    DefaultSettings.NumberOfRounds => throw new NotSupportedException(),
+                    _ => throw new ArgumentOutOfRangeException()
+                }) continue;
+
                 // ReSharper disable once HeapView.BoxingAllocation
                 roundsDataGridView.Rows[i].Cells[(int) defaultSettings].Value = defaultSettings switch
                 {
@@ -198,6 +210,42 @@ namespace TCTimer
         {
             _tournamentTimer.NumberOfRounds = (int) numberOfRoundsUpDown.Value;
             _tournamentTimer.OnDefaultSettingsChanged(DefaultSettings.NumberOfRounds);
+        }
+
+        private void minutesPerRoundUpDown_ValueChanged_1(object sender, EventArgs e)
+        {
+            _tournamentTimer.DefaultRoundDuration = minutesPerRoundUpDown.Value;
+            _tournamentTimer.OnDefaultSettingsChanged(DefaultSettings.RoundDuration);
+        }
+
+        private void breakDurationUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.DefaultBreakDuration = (int) breakDurationUpDown.Value;
+            _tournamentTimer.OnDefaultSettingsChanged(DefaultSettings.BreakDuration);
+        }
+
+        private void roundOvertimeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.DefaultOvertimeAfterRound = roundOvertimeCheckBox.Checked;
+            _tournamentTimer.OnDefaultSettingsChanged(DefaultSettings.AfterRoundOvertime);
+        }
+
+        private void blinkingDurationUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.DefaultBlinkingDuration = (int) blinkingDurationUpDown.Value;
+            _tournamentTimer.OnDefaultSettingsChanged(DefaultSettings.BlinkingDuration);
+        }
+
+        private void timerNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.DefaultTimerName = timerNameTextBox.Text;
+            _tournamentTimer.OnDefaultSettingsChanged(DefaultSettings.TimerName);
+        }
+
+        private void breakTextTextBox_TextChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.DefaultBreakText = breakTextTextBox.Text;
+            _tournamentTimer.OnDefaultSettingsChanged(DefaultSettings.BreakText);
         }
     }
 }

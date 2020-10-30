@@ -466,6 +466,41 @@
     <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+    <metadata name="TimerName.UserAddedColumn"
+              type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+        <value>True</value>
+    </metadata>
+    <metadata name="roundContextMenuStrip.TrayLocation"
+              type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+        <value>46, 22</value>
+    </metadata>
+    <data name="roundsDataGridView.Location" type="System.Drawing.Point, System.Drawing">
+        <value>12, 111</value>
+    </data>
+    <data name="&gt;&gt;roundContextMenuStrip.Name" xml:space="preserve">
+    <value>roundContextMenuStrip</value>
+  </data>
+    <data name="&gt;&gt;roundContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="roundsDataGridView.Size" type="System.Drawing.Size, System.Drawing">
+        <value>806, 536</value>
+    </data>
+    <data name="roundsDataGridView.TabIndex" type="System.Int32, mscorlib">
+        <value>5</value>
+    </data>
+    <data name="&gt;&gt;roundsDataGridView.Name" xml:space="preserve">
+    <value>roundsDataGridView</value>
+  </data>
+    <data name="&gt;&gt;roundsDataGridView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;roundsDataGridView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+    <data name="&gt;&gt;roundsDataGridView.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
     <data name="Duration.HeaderText" xml:space="preserve">
     <value>Duration</value>
   </data>
@@ -506,13 +541,19 @@
     <data name="TimerName.Width" type="System.Int32, mscorlib">
         <value>261</value>
     </data>
-    <data name="roundsDataGridView.Location" type="System.Drawing.Point, System.Drawing">
-        <value>12, 111</value>
-    </data>
     <metadata name="roundContextMenuStrip.TrayLocation"
               type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
         <value>46, 22</value>
     </metadata>
+    <data name="roundContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+        <value>157, 70</value>
+    </data>
+    <data name="&gt;&gt;roundContextMenuStrip.Name" xml:space="preserve">
+    <value>roundContextMenuStrip</value>
+  </data>
+    <data name="&gt;&gt;roundContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
     <data name="deleteToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing"
           mimetype="application/x-microsoft.net.object.bytearray.base64">
         <value>
@@ -551,10 +592,10 @@
     <data name="addRoundToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing"
           mimetype="application/x-microsoft.net.object.bytearray.base64">
         <value>
-            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-            YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAABgSURBVDhP3ZExCsAwDAP9qAx9Yx/s1a1NAokrgQsdSgQ3
-            SVwgFhQzE1W1RG8LGYLjbMHuAh8jkADtYshIAsjy0lu+EzDmIcMFjCxAm/hERk2A4ue5y4egnP8IEr2d
-            I3IBh/DsWJ/eoAoAAAAASUVORK5CYII=
+            iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAO
+            xAAADsQBlSsOGwAAAGBJREFUOE/dkTEKwDAMA/2oDH1jH+zVrU0CiSuBCx1KBDdJXCAWFDMTVbVEbwsZ
+            guNswe4CHyOQAO1iyEgCyPLSW74TMOYhwwWMLECb+ERGTYDi57nLh6Cc/wgSvZ0jcgGH8OxYn96gCgAA
+            AABJRU5ErkJggg==
         </value>
     </data>
     <data name="addRoundToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
@@ -562,33 +603,6 @@
     </data>
     <data name="addRoundToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Round</value>
-  </data>
-    <data name="roundContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-        <value>157, 92</value>
-    </data>
-    <data name="&gt;&gt;roundContextMenuStrip.Name" xml:space="preserve">
-    <value>roundContextMenuStrip</value>
-  </data>
-    <data name="&gt;&gt;roundContextMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-    <data name="roundsDataGridView.Size" type="System.Drawing.Size, System.Drawing">
-        <value>806, 536</value>
-    </data>
-    <data name="roundsDataGridView.TabIndex" type="System.Int32, mscorlib">
-        <value>5</value>
-    </data>
-    <data name="&gt;&gt;roundsDataGridView.Name" xml:space="preserve">
-    <value>roundsDataGridView</value>
-  </data>
-    <data name="&gt;&gt;roundsDataGridView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-    <data name="&gt;&gt;roundsDataGridView.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-    <data name="&gt;&gt;roundsDataGridView.ZOrder" xml:space="preserve">
-    <value>1</value>
   </data>
     <metadata name="$this.Localizable"
               type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">

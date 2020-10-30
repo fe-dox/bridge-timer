@@ -9,7 +9,6 @@ namespace TCTimer
     public partial class RoundsManager : Form
     {
         private readonly TournamentTimer _tournamentTimer;
-        private bool _cantOverwriteDefault;
 
 
         public RoundsManager(TournamentTimer timer)

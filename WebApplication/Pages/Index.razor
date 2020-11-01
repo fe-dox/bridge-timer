@@ -93,7 +93,6 @@
             var timerDataStream =
                 await httpClient.GetStreamAsync(NavigationManager.BaseUri + "/timer.xml");
             var tmpTimer = _serializer.ReadObject(timerDataStream) as TournamentTimer;
-            Console.WriteLine("Refreshing Timer ...");
             if (!_tournamentTimer.Equals(tmpTimer) && tmpTimer != null)
             {
                 _tournamentTimer = tmpTimer;
@@ -134,12 +133,14 @@
             if (_tournamentTimer.Running)
             {
                 var time = _tournamentTimer.Target.Subtract(DateTime.Now);
-                _clockValue = time.Hours == 0 ? time.ToString(@"mm\:ss") : time.ToString(@"HH\:mm\:ss");
+                var prefix = time >= new TimeSpan(0) || !_tournamentTimer.Overtime ? "" : "-";
+                _clockValue = time.Hours == 0 ? prefix + time.ToString(@"mm\:ss") : prefix + time.ToString(@"HH\:mm\:ss");
             }
             else
             {
                 var time = _tournamentTimer.Target.Subtract(_tournamentTimer.PausedAtTime);
-                _clockValue = time.Hours == 0 ? time.ToString(@"mm\:ss") : time.ToString(@"HH\:mm\:ss");
+                var prefix = time >= new TimeSpan(0) || !_tournamentTimer.Overtime ? "" : "-";
+                _clockValue = time.Hours == 0 ? prefix + time.ToString(@"mm\:ss") : prefix + time.ToString(@"HH\:mm\:ss");
             }
             _blinking = DateTime.Now + _tournamentTimer.BlinkingDuration > _tournamentTimer.Target && !_tournamentTimer.IsBreak && !_tournamentTimer.Finished ? "is-blinking" : "";
         }

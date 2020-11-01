@@ -32,6 +32,9 @@ using System;
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable InconsistentNaming
 
+// ReSharper disable once CheckNamespace
+#pragma warning disable 8618
+
 namespace Utils.Annotations
 {
     /// <summary>

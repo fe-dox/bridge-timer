@@ -63,6 +63,7 @@ namespace Utils
 
         public string BreakText => RoundsList[CurrentRoundId].BreakText ?? DefaultBreakText;
         public string TimerName => RoundsList[CurrentRoundId].TimerName ?? DefaultTimerName;
+        public bool Overtime => RoundsList[CurrentRoundId].OvertimeAfterRound ?? DefaultOvertimeAfterRound;
 
         public TimeSpan BlinkingDuration =>
             RoundsList[CurrentRoundId].BlinkingDuration ?? DefaultBlinkingDurationTimeSpan;

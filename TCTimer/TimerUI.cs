@@ -102,7 +102,9 @@ namespace TCTimer
         {
             RunAction(() =>
             {
-                currentTime.Text = target.Subtract(DateTime.Now).ToString(@"hh\:mm\:ss");
+                currentTime.Text = target >= DateTime.Now
+                    ? (target - DateTime.Now).ToString(@"hh\:mm\:ss")
+                    : "-" + (target - DateTime.Now).ToString(@"hh\:mm\:ss");
                 currentRoundLabel.Text =
                     _tournamentTimer.IsBreak ? "Break" : $@"Round {(_tournamentTimer.CurrentRoundId + 1).ToString()}";
                 numberOfRoundsUpDown.Minimum = _tournamentTimer.CurrentRoundId + 1;

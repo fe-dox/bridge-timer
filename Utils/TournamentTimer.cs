@@ -203,7 +203,7 @@ namespace Utils
         {
             if (Target < DateTime.Now)
             {
-                if (CurrentRound.OvertimeAfterRound ?? DefaultOvertimeAfterRound)
+                if (CurrentRound.OvertimeAfterRound ?? DefaultOvertimeAfterRound && !IsBreak)
                 {
                     Ticked?.Invoke(this, Target);
                     return;

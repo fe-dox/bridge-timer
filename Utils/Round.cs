@@ -16,7 +16,7 @@ namespace Utils
             get => _duration;
             set
             {
-                OnPropertyChanged(Duration);
+                OnPropertyChanged(value);
                 _duration = value;
             }
         }
@@ -27,7 +27,7 @@ namespace Utils
             get => _breakDuration;
             set
             {
-                OnPropertyChanged(BreakDuration);
+                OnPropertyChanged(value);
                 _breakDuration = value;
             }
         }

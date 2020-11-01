@@ -10,15 +10,63 @@ namespace Utils
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
         [DataMember] private Timer _framesTimer;
+        [DataMember] public bool Finished { get; private set; }
+        [DataMember] public string DefaultBreakText { get; set; } = string.Empty;
+        [DataMember] public string DefaultTimerName { get; set; } = string.Empty;
+        [DataMember] public int DefaultBlinkingDuration { get; set; }
+        [DataMember] public decimal DefaultRoundDuration { get; set; }
+        [DataMember] public int DefaultBreakDuration { get; set; }
+        [DataMember] public bool DefaultOvertimeAfterRound { get; set; }
+        [DataMember] public string ResultsUrl { get; set; } = string.Empty;
+        [DataMember] public bool Running { get; private set; }
+        [DataMember] public bool IsBreak { get; private set; }
+        [DataMember] public TimerMessage? TimerMessage { get; set; }
+        [DataMember] public ObservableCollection<Round> RoundsList { get; set; } = new ObservableCollection<Round>();
+        [DataMember] public DateTime Target { get; private set; }
+        [DataMember] public DateTime PausedAtTime { get; private set; }
+        [DataMember] public int CurrentRoundId { get; private set; }
+
+        public event EventHandler<DateTime>? SettingsChanged;
+        public event EventHandler<DateTime>? Ticked;
+        public event EventHandler? OnFinished;
+        public event EventHandler<DefaultSettings>? DefaultSettingsChanged;
+
+        public string BreakText => RoundsList[CurrentRoundId].BreakText ?? DefaultBreakText;
+        public string TimerName => RoundsList[CurrentRoundId].TimerName ?? DefaultTimerName;
+
+        public TimeSpan BlinkingDuration =>
+            RoundsList[CurrentRoundId].BlinkingDuration ?? DefaultBlinkingDurationTimeSpan;
+
+        public TimeSpan DefaultRoundDurationTimeSpan => new TimeSpan(0, 0, (int) (DefaultRoundDuration * 60));
+        public TimeSpan DefaultBreakDurationTimeSpan => new TimeSpan(0, 0, DefaultBreakDuration);
+        public TimeSpan DefaultBlinkingDurationTimeSpan => new TimeSpan(0, 0, DefaultBlinkingDuration);
+        private Round CurrentRound => RoundsList[CurrentRoundId];
+
+        public int NumberOfRounds
+        {
+            get => RoundsList.Count;
+            set
+            {
+                while (value > RoundsList.Count)
+                {
+                    RoundsList.Add(new Round());
+                }
+
+                while (value < RoundsList.Count && value > CurrentRoundId + 1)
+                {
+                    RoundsList.RemoveAt(RoundsList.Count - 1);
+                }
+            }
+        }
 
         public TournamentTimer(int numberOfRounds, decimal defaultRoundDuration, int defaultBreakDuration,
             int defaultBlinkingDuration)
         {
+            RoundsList.CollectionChanged += OnRoundsListChanged;
             NumberOfRounds = numberOfRounds;
             DefaultRoundDuration = defaultRoundDuration;
             DefaultBreakDuration = defaultBreakDuration;
             DefaultBlinkingDuration = defaultBlinkingDuration;
-            RoundsList.CollectionChanged += OnRoundsListChanged;
             _framesTimer = new Timer(50);
             _framesTimer.Elapsed += OnTick;
             Target = DateTime.Now + (CurrentRound.Duration ?? DefaultRoundDurationTimeSpan);
@@ -37,7 +85,8 @@ namespace Utils
                         round.PropertyChanged += RoundPropertyChanged;
                     }
 
-                    if (notifyCollectionChangedEventArgs.NewStartingIndex <= CurrentRoundId)
+                    if (notifyCollectionChangedEventArgs.NewStartingIndex <= CurrentRoundId &&
+                        RoundsList.Count - notifyCollectionChangedEventArgs.NewItems.Count > 0)
                     {
                         CurrentRoundId += notifyCollectionChangedEventArgs.NewItems.Count;
                     }
@@ -92,7 +141,7 @@ namespace Utils
 
         private void RoundPropertyChanged(object sender, (string, TimeSpan?) valueTuple)
         {
-            var (propertyName, oldValue) = valueTuple;
+            var (propertyName, newValue) = valueTuple;
             if (!(sender is Round changedRound)) return;
             if (RoundsList.IndexOf(changedRound) != CurrentRoundId) return;
 
@@ -101,74 +150,42 @@ namespace Utils
                 case "Duration":
                 {
                     if (IsBreak) break;
-                    Target += (changedRound.Duration ?? DefaultRoundDurationTimeSpan) -
-                              (oldValue ?? DefaultRoundDurationTimeSpan);
+                    Target += (newValue ?? DefaultRoundDurationTimeSpan) -
+                              (changedRound.Duration ?? DefaultRoundDurationTimeSpan);
                     break;
                 }
                 case "BreakDuration":
                 {
                     if (!IsBreak) break;
-                    Target += (changedRound.BreakDuration ?? DefaultBreakDurationTimeSpan) -
-                              (oldValue ?? DefaultRoundDurationTimeSpan);
+                    Target += (newValue ?? DefaultRoundDurationTimeSpan) -
+                              (changedRound.BreakDuration ?? DefaultBreakDurationTimeSpan);
                     break;
                 }
             }
         }
 
-
-        public int NumberOfRounds
-        {
-            get => RoundsList.Count;
-            set
-            {
-                while (value > RoundsList.Count)
-                {
-                    RoundsList.Add(new Round());
-                }
-
-                while (value < RoundsList.Count && value > CurrentRoundId + 1)
-                {
-                    RoundsList.RemoveAt(RoundsList.Count - 1);
-                }
-            }
-        }
-
-        [DataMember] public bool Finished { get; private set; }
-        [DataMember] public string DefaultBreakText { get; set; } = string.Empty;
-        [DataMember] public string DefaultTimerName { get; set; } = string.Empty;
-        [DataMember] public int DefaultBlinkingDuration { get; set; }
-        [DataMember] public decimal DefaultRoundDuration { get; set; }
-        [DataMember] public int DefaultBreakDuration { get; set; }
-        [DataMember] public bool DefaultOvertimeAfterRound { get; set; }
-
-        [DataMember] public string ResultsUrl { get; set; } = string.Empty;
-        [DataMember] public bool Running { get; private set; }
-        [DataMember] public bool IsBreak { get; private set; }
-        [DataMember] public TimerMessage? TimerMessage { get; set; }
-
-        [DataMember] public ObservableCollection<Round> RoundsList { get; set; } = new ObservableCollection<Round>();
-
-        public string BreakText => RoundsList[CurrentRoundId].BreakText ?? DefaultBreakText;
-        public string TimerName => RoundsList[CurrentRoundId].TimerName ?? DefaultTimerName;
-
-        public TimeSpan BlinkingDuration =>
-            RoundsList[CurrentRoundId].BlinkingDuration ?? DefaultBlinkingDurationTimeSpan;
-
-        public TimeSpan DefaultRoundDurationTimeSpan => new TimeSpan(0, 0, (int) (DefaultRoundDuration * 60));
-        public TimeSpan DefaultBreakDurationTimeSpan => new TimeSpan(0, 0, DefaultBreakDuration);
-        public TimeSpan DefaultBlinkingDurationTimeSpan => new TimeSpan(0, 0, DefaultBlinkingDuration);
-        private Round CurrentRound => RoundsList[CurrentRoundId];
-        [DataMember] public DateTime Target { get; private set; }
-        [DataMember] public DateTime PausedAtTime { get; private set; }
-        [DataMember] public int CurrentRoundId { get; private set; }
-
-        public event EventHandler<DateTime>? SettingsChanged;
-        public event EventHandler<DateTime>? Ticked;
-        public event EventHandler? OnFinished;
-        public event EventHandler<DefaultSettings>? DefaultSettingsChanged;
-
         public void OnDefaultSettingsChanged(DefaultSettings defaultSettings)
         {
+            switch (defaultSettings)
+            {
+                case DefaultSettings.RoundDuration:
+                    break;
+                case DefaultSettings.BreakDuration:
+                    break;
+                case DefaultSettings.BlinkingDuration:
+                    break;
+                case DefaultSettings.AfterRoundOvertime:
+                    break;
+                case DefaultSettings.BreakText:
+                    break;
+                case DefaultSettings.TimerName:
+                    break;
+                case DefaultSettings.NumberOfRounds:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(defaultSettings), defaultSettings, null);
+            }
+
             DefaultSettingsChanged?.Invoke(this, defaultSettings);
         }
 

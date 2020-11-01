@@ -10,12 +10,42 @@ namespace Utils
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
         [DataMember] private Timer _framesTimer;
+        [DataMember] private decimal _defaultRoundDuration;
+        [DataMember] private int _defaultBreakDuration;
         [DataMember] public bool Finished { get; private set; }
         [DataMember] public string DefaultBreakText { get; set; } = string.Empty;
         [DataMember] public string DefaultTimerName { get; set; } = string.Empty;
         [DataMember] public int DefaultBlinkingDuration { get; set; }
-        [DataMember] public decimal DefaultRoundDuration { get; set; }
-        [DataMember] public int DefaultBreakDuration { get; set; }
+
+
+        public decimal DefaultRoundDuration
+        {
+            get => _defaultRoundDuration;
+            set
+            {
+                if (CurrentRound.Duration == null && !IsBreak)
+                {
+                    Target += new TimeSpan(0, 0, (int) (value * 60)) - DefaultRoundDurationTimeSpan;
+                }
+
+                _defaultRoundDuration = value;
+            }
+        }
+
+        public int DefaultBreakDuration
+        {
+            get => _defaultBreakDuration;
+            set
+            {
+                if (CurrentRound.BreakDuration == null && IsBreak)
+                {
+                    Target += new TimeSpan(0, 0, value) - DefaultBreakDurationTimeSpan;
+                }
+
+                _defaultBreakDuration = value;
+            }
+        }
+
         [DataMember] public bool DefaultOvertimeAfterRound { get; set; }
         [DataMember] public string ResultsUrl { get; set; } = string.Empty;
         [DataMember] public bool Running { get; private set; }
@@ -166,26 +196,6 @@ namespace Utils
 
         public void OnDefaultSettingsChanged(DefaultSettings defaultSettings)
         {
-            switch (defaultSettings)
-            {
-                case DefaultSettings.RoundDuration:
-                    break;
-                case DefaultSettings.BreakDuration:
-                    break;
-                case DefaultSettings.BlinkingDuration:
-                    break;
-                case DefaultSettings.AfterRoundOvertime:
-                    break;
-                case DefaultSettings.BreakText:
-                    break;
-                case DefaultSettings.TimerName:
-                    break;
-                case DefaultSettings.NumberOfRounds:
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(defaultSettings), defaultSettings, null);
-            }
-
             DefaultSettingsChanged?.Invoke(this, defaultSettings);
         }
 

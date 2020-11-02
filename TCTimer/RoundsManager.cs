@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Utils;
@@ -138,8 +137,7 @@ namespace TCTimer
 
         private void roundsDataGridView_MouseDown(object sender, EventArgs eventArgs)
         {
-            var mouseEventArgs = eventArgs as MouseEventArgs;
-            Debug.Assert(mouseEventArgs != null, nameof(mouseEventArgs) + " != null");
+            if (!(eventArgs is MouseEventArgs mouseEventArgs)) return;
             if (mouseEventArgs.Button != MouseButtons.Right) return;
             var hitTestInfo = roundsDataGridView.HitTest(mouseEventArgs.X, mouseEventArgs.Y);
             if (hitTestInfo.RowIndex < 0 || hitTestInfo.ColumnIndex < 0) return;

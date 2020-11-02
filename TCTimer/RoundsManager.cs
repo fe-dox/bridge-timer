@@ -285,9 +285,10 @@ namespace TCTimer
                     }
 
                     e.Cancel = false;
-                    _tournamentTimer.RoundsList[e.RowIndex].Duration = result == _tournamentTimer.DefaultRoundDuration
-                        ? (TimeSpan?) null
-                        : new TimeSpan(0, 0, (int) (result * 60));
+                    _tournamentTimer.RoundsList[e.RowIndex].Duration =
+                        result == _tournamentTimer.DefaultRoundDuration
+                            ? (TimeSpan?) null
+                            : new TimeSpan(0, 0, (int) (result * 60));
                     break;
                 case 1:
                     if (!GetDecimalFromCellValue(e.FormattedValue.ToString(), out result))
@@ -316,9 +317,10 @@ namespace TCTimer
                     }
 
                     e.Cancel = false;
-                    if (result == _tournamentTimer.DefaultBreakDuration) break;
                     _tournamentTimer.RoundsList[e.RowIndex].BreakDuration =
-                        new TimeSpan(0, 0, (int) result);
+                        result == _tournamentTimer.DefaultBreakDuration
+                            ? (TimeSpan?) null
+                            : new TimeSpan(0, 0, (int) result);
                     break;
                 case 4:
                     e.Cancel = false;

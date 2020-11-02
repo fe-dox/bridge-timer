@@ -7,18 +7,15 @@ using System.IO.Compression;
 #endif
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Forms;
 using TCTimer.Properties;
 using Utils;
-using Timer = System.Timers.Timer;
 
 namespace TCTimer
 {
     public partial class TimerForm : Form
     {
         private readonly ResultsUrlShortener _resultsUrlShortener;
-        private readonly Timer _serializationTimer = new Timer(200);
         private readonly SimpleHttpServer _simpleHttpServer;
 #if !DEBUG
         private readonly string _timerPath = Path.GetTempPath() + "\\bridge_timer\\" + Path.GetRandomFileName();
@@ -36,8 +33,7 @@ namespace TCTimer
             _tournamentTimer.Ticked += UpdateTime;
             _tournamentTimer.SettingsChanged += UpdateTime;
             _tournamentTimer.OnFinished += OnFinished;
-            _serializationTimer.Elapsed += WriteTournamentTimer;
-            _serializationTimer.Start();
+            _tournamentTimer.FileUpdateRequired += WriteTournamentTimer;
             if (!Directory.Exists(_timerPath))
             {
                 Directory.CreateDirectory(_timerPath);
@@ -49,6 +45,7 @@ namespace TCTimer
             }).Start();
 #endif
             _simpleHttpServer = new SimpleHttpServer(_timerPath);
+            WriteTournamentTimer(this, EventArgs.Empty);
         }
 
         private void OnFinished(object sender, EventArgs e)
@@ -63,7 +60,6 @@ namespace TCTimer
 
         private void TimerForm_FormClosing(object sender, FormClosingEventArgs formClosingEvent)
         {
-            // TODO lokalizacja, nie zbyt wazne obecnie, ale kiedys do zrobienia
             if (MessageBox.Show("Are you sure you want to close this window?", "Are you sure?",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) formClosingEvent.Cancel = true;
             _simpleHttpServer.Stop();
@@ -80,21 +76,27 @@ namespace TCTimer
             about.ShowDialog(this);
         }
 
-        private void WriteTournamentTimer(object sender, ElapsedEventArgs elapsedEventArgs)
+        private void WriteTournamentTimer(object sender, EventArgs eventArgs)
         {
-            var serializer = new DataContractSerializer(typeof(TournamentTimer));
-            var writer = new FileStream(_timerPath + "\\timer.xml", FileMode.Create);
-            try
+            var success = false;
+            while (!success)
             {
-                serializer.WriteObject(writer, _tournamentTimer);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-            }
-            finally
-            {
-                writer.Close();
+                var serializer = new DataContractSerializer(typeof(TournamentTimer));
+                var writer = new FileStream(_timerPath + "\\timer.xml", FileMode.Create);
+                try
+                {
+                    serializer.WriteObject(writer, _tournamentTimer);
+                    success = true;
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message);
+                    success = false;
+                }
+                finally
+                {
+                    writer.Close();
+                }
             }
         }
 

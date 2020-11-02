@@ -12,6 +12,7 @@ namespace Utils
         [DataMember] private Timer _framesTimer;
         [DataMember] private decimal _defaultRoundDuration;
         [DataMember] private int _defaultBreakDuration;
+        [DataMember] private TimerMessage? _timerMessage;
         [DataMember] public bool Finished { get; private set; }
         [DataMember] public string DefaultBreakText { get; set; } = string.Empty;
         [DataMember] public string DefaultTimerName { get; set; } = string.Empty;
@@ -26,6 +27,10 @@ namespace Utils
                 if (CurrentRound.Duration == null && !IsBreak)
                 {
                     Target += new TimeSpan(0, 0, (int) (value * 60)) - DefaultRoundDurationTimeSpan;
+                    if (!Running)
+                    {
+                        SettingsChanged?.Invoke(this, Target + (DateTime.Now - PausedAtTime));
+                    }
                 }
 
                 _defaultRoundDuration = value;
@@ -40,9 +45,23 @@ namespace Utils
                 if (CurrentRound.BreakDuration == null && IsBreak)
                 {
                     Target += new TimeSpan(0, 0, value) - DefaultBreakDurationTimeSpan;
+                    if (!Running)
+                    {
+                        SettingsChanged?.Invoke(this, Target + (DateTime.Now - PausedAtTime));
+                    }
                 }
 
                 _defaultBreakDuration = value;
+            }
+        }
+
+        public TimerMessage? TimerMessage
+        {
+            get => _timerMessage;
+            set
+            {
+                _timerMessage = value;
+                OnFileUpdateRequired();
             }
         }
 
@@ -50,7 +69,6 @@ namespace Utils
         [DataMember] public string ResultsUrl { get; set; } = string.Empty;
         [DataMember] public bool Running { get; private set; }
         [DataMember] public bool IsBreak { get; private set; }
-        [DataMember] public TimerMessage? TimerMessage { get; set; }
         [DataMember] public ObservableCollection<Round> RoundsList { get; set; } = new ObservableCollection<Round>();
         [DataMember] public DateTime Target { get; private set; }
         [DataMember] public DateTime PausedAtTime { get; private set; }
@@ -60,6 +78,8 @@ namespace Utils
         public event EventHandler<DateTime>? Ticked;
         public event EventHandler? OnFinished;
         public event EventHandler<DefaultSettings>? DefaultSettingsChanged;
+
+        public event EventHandler? FileUpdateRequired;
 
         public string BreakText => RoundsList[CurrentRoundId].BreakText ?? DefaultBreakText;
         public string TimerName => RoundsList[CurrentRoundId].TimerName ?? DefaultTimerName;
@@ -183,6 +203,11 @@ namespace Utils
                     if (IsBreak) break;
                     Target += (newValue ?? DefaultRoundDurationTimeSpan) -
                               (changedRound.Duration ?? DefaultRoundDurationTimeSpan);
+                    if (!Running)
+                    {
+                        SettingsChanged?.Invoke(this, Target + (DateTime.Now - PausedAtTime));
+                    }
+
                     break;
                 }
                 case "BreakDuration":
@@ -190,14 +215,22 @@ namespace Utils
                     if (!IsBreak) break;
                     Target += (newValue ?? DefaultRoundDurationTimeSpan) -
                               (changedRound.BreakDuration ?? DefaultBreakDurationTimeSpan);
+                    if (!Running)
+                    {
+                        SettingsChanged?.Invoke(this, Target + (DateTime.Now - PausedAtTime));
+                    }
+
                     break;
                 }
             }
+
+            OnFileUpdateRequired();
         }
 
         public void OnDefaultSettingsChanged(DefaultSettings defaultSettings)
         {
             DefaultSettingsChanged?.Invoke(this, defaultSettings);
+            OnFileUpdateRequired();
         }
 
         private void OnTick(object sender, EventArgs e)
@@ -239,6 +272,7 @@ namespace Utils
             Running = true;
             Finished = false;
             _framesTimer.Start();
+            OnFileUpdateRequired();
         }
 
         public void Pause()
@@ -246,18 +280,21 @@ namespace Utils
             PausedAtTime = DateTime.Now;
             Running = false;
             _framesTimer.Stop();
+            OnFileUpdateRequired();
         }
 
         public void AddMinute()
         {
             Target += new TimeSpan(0, 1, 0);
             SettingsChanged?.Invoke(this, Running ? Target : Target + (DateTime.Now - PausedAtTime));
+            OnFileUpdateRequired();
         }
 
         public void SubtractMinute()
         {
             Target -= new TimeSpan(0, 1, 0);
             SettingsChanged?.Invoke(this, Running ? Target : Target + (DateTime.Now - PausedAtTime));
+            OnFileUpdateRequired();
         }
 
         private bool IsFinished()
@@ -266,6 +303,7 @@ namespace Utils
             Finished = true;
             Pause();
             OnFinished?.Invoke(this, null);
+            OnFileUpdateRequired();
             return true;
         }
 
@@ -281,6 +319,8 @@ namespace Utils
             {
                 SettingsChanged?.Invoke(this, Target);
             }
+
+            OnFileUpdateRequired();
         }
 
         public void GoToPreviousRound()
@@ -294,9 +334,16 @@ namespace Utils
 
             IsBreak = false;
 
+            OnFileUpdateRequired();
             if (Running) return;
             PausedAtTime = DateTime.Now;
             SettingsChanged?.Invoke(this, Target);
+            OnFileUpdateRequired();
+        }
+
+        public void OnFileUpdateRequired()
+        {
+            FileUpdateRequired?.Invoke(this, EventArgs.Empty);
         }
 
         [OnDeserialized]

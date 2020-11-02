@@ -194,12 +194,13 @@ namespace Utils
         {
             var (propertyName, newValue) = valueTuple;
             if (!(sender is Round changedRound)) return;
-            if (RoundsList.IndexOf(changedRound) != CurrentRoundId) return;
+
 
             switch (propertyName)
             {
                 case "Duration":
                 {
+                    if (RoundsList.IndexOf(changedRound) != CurrentRoundId) break;
                     if (IsBreak) break;
                     Target += (newValue ?? DefaultRoundDurationTimeSpan) -
                               (changedRound.Duration ?? DefaultRoundDurationTimeSpan);
@@ -212,6 +213,7 @@ namespace Utils
                 }
                 case "BreakDuration":
                 {
+                    if (RoundsList.IndexOf(changedRound) != CurrentRoundId) break;
                     if (!IsBreak) break;
                     Target += (newValue ?? DefaultRoundDurationTimeSpan) -
                               (changedRound.BreakDuration ?? DefaultBreakDurationTimeSpan);
@@ -361,47 +363,50 @@ namespace Utils
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _framesTimer.Equals(other._framesTimer) && Finished == other.Finished &&
-                   DefaultBreakText == other.DefaultBreakText && DefaultTimerName == other.DefaultTimerName &&
+            return _framesTimer.Equals(other._framesTimer) && _defaultRoundDuration == other._defaultRoundDuration &&
+                   _defaultBreakDuration == other._defaultBreakDuration && Equals(_timerMessage, other._timerMessage) &&
+                   Finished == other.Finished && DefaultBreakText == other.DefaultBreakText &&
+                   DefaultTimerName == other.DefaultTimerName &&
+                   DefaultBlinkingDuration == other.DefaultBlinkingDuration &&
                    DefaultOvertimeAfterRound == other.DefaultOvertimeAfterRound && ResultsUrl == other.ResultsUrl &&
-                   Running == other.Running && IsBreak == other.IsBreak && Equals(TimerMessage, other.TimerMessage) &&
-                   RoundsList.Equals(other.RoundsList) && DefaultBlinkingDuration == other.DefaultBlinkingDuration &&
-                   DefaultRoundDuration.Equals(other.DefaultRoundDuration) &&
-                   DefaultBreakDuration == other.DefaultBreakDuration && Target.Equals(other.Target) &&
-                   PausedAtTime.Equals(other.PausedAtTime) && CurrentRoundId == other.CurrentRoundId;
+                   Running == other.Running && IsBreak == other.IsBreak && RoundsList.Equals(other.RoundsList) &&
+                   Target.Equals(other.Target) && PausedAtTime.Equals(other.PausedAtTime) &&
+                   CurrentRoundId == other.CurrentRoundId;
         }
 
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            return obj.GetType() == this.GetType() && Equals((TournamentTimer) obj);
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((TournamentTimer) obj);
         }
 
         public override int GetHashCode()
         {
+            // ReSharper disable NonReadonlyMemberInGetHashCode
             unchecked
             {
-                // ReSharper disable NonReadonlyMemberInGetHashCode
                 var hashCode = _framesTimer.GetHashCode();
+                hashCode = (hashCode * 397) ^ _defaultRoundDuration.GetHashCode();
+                hashCode = (hashCode * 397) ^ _defaultBreakDuration;
+                hashCode = (hashCode * 397) ^ (_timerMessage != null ? _timerMessage.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ Finished.GetHashCode();
                 hashCode = (hashCode * 397) ^ DefaultBreakText.GetHashCode();
                 hashCode = (hashCode * 397) ^ DefaultTimerName.GetHashCode();
+                hashCode = (hashCode * 397) ^ DefaultBlinkingDuration;
                 hashCode = (hashCode * 397) ^ DefaultOvertimeAfterRound.GetHashCode();
                 hashCode = (hashCode * 397) ^ ResultsUrl.GetHashCode();
                 hashCode = (hashCode * 397) ^ Running.GetHashCode();
                 hashCode = (hashCode * 397) ^ IsBreak.GetHashCode();
-                hashCode = (hashCode * 397) ^ (TimerMessage != null ? TimerMessage.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ RoundsList.GetHashCode();
-                hashCode = (hashCode * 397) ^ DefaultBlinkingDuration;
-                hashCode = (hashCode * 397) ^ DefaultRoundDuration.GetHashCode();
-                hashCode = (hashCode * 397) ^ DefaultBreakDuration;
                 hashCode = (hashCode * 397) ^ Target.GetHashCode();
                 hashCode = (hashCode * 397) ^ PausedAtTime.GetHashCode();
                 hashCode = (hashCode * 397) ^ CurrentRoundId;
                 return hashCode;
-                // ReSharper enable NonReadonlyMemberInGetHashCode
             }
+
+            // ReSharper enable NonReadonlyMemberInGetHashCode
         }
     }
 }

@@ -63,6 +63,16 @@ namespace TCTimer
             if (MessageBox.Show("Are you sure you want to close this window?", "Are you sure?",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) formClosingEvent.Cancel = true;
             _simpleHttpServer.Stop();
+#if !DEBUG
+            try
+            {
+                Directory.Delete(_timerPath, true);
+            }
+            catch
+            {
+                // ignore
+            }
+#endif
         }
 
         private void closeMenuItem_Click(object sender, EventArgs e)
@@ -82,20 +92,21 @@ namespace TCTimer
             while (!success)
             {
                 var serializer = new DataContractSerializer(typeof(TournamentTimer));
-                var writer = new FileStream(_timerPath + "\\timer.xml", FileMode.Create);
+                FileStream writer = null;
                 try
                 {
+                    writer = new FileStream(_timerPath + "\\timer.xml", FileMode.Create);
                     serializer.WriteObject(writer, _tournamentTimer);
                     success = true;
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show(e.Message);
+                    // MessageBox.Show(e.Message);
                     success = false;
                 }
                 finally
                 {
-                    writer.Close();
+                    writer?.Close();
                 }
             }
         }
@@ -128,21 +139,25 @@ namespace TCTimer
         private void numberOfRoundsUpDown_ValueChanged(object sender, EventArgs e)
         {
             _tournamentTimer.NumberOfRounds = (int) numberOfRoundsUpDown.Value;
+            _tournamentTimer.OnFileUpdateRequired();
         }
 
         private void minutesPerRoundUpDown_ValueChanged(object sender, EventArgs e)
         {
             _tournamentTimer.DefaultRoundDuration = minutesPerRoundUpDown.Value;
+            _tournamentTimer.OnFileUpdateRequired();
         }
 
         private void breakTimeUpDown_ValueChanged(object sender, EventArgs e)
         {
             _tournamentTimer.DefaultBreakDuration = (int) breakTimeUpDown.Value;
+            _tournamentTimer.OnFileUpdateRequired();
         }
 
         private void breakTextBox_TextChanged(object sender, EventArgs e)
         {
             _tournamentTimer.DefaultBreakText = breakTextBox.Text;
+            _tournamentTimer.OnFileUpdateRequired();
         }
 
         private async void resultsUrlTextBox_TextChanged(object sender, EventArgs e)
@@ -236,6 +251,11 @@ namespace TCTimer
         {
             var roundsManager = new RoundsManager(_tournamentTimer);
             roundsManager.ShowDialog();
+            minutesPerRoundUpDown.Value = _tournamentTimer.DefaultRoundDuration;
+            breakTimeUpDown.Value = _tournamentTimer.DefaultBreakDuration;
+            numberOfRoundsUpDown.Value = _tournamentTimer.NumberOfRounds;
+            breakTextBox.Text = _tournamentTimer.DefaultBreakText;
+            tournamentNameTextBox.Text = _tournamentTimer.DefaultTimerName;
         }
     }
 }

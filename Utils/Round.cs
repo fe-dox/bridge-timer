@@ -10,6 +10,10 @@ namespace Utils
     {
         [DataMember] private TimeSpan? _duration;
         [DataMember] private TimeSpan? _breakDuration;
+        [DataMember] private TimeSpan? _blinkingDuration;
+        [DataMember] private bool? _overtimeAfterRound;
+        [DataMember] private string? _breakText;
+        [DataMember] private string? _timerName;
 
         public TimeSpan? Duration
         {
@@ -21,7 +25,6 @@ namespace Utils
             }
         }
 
-
         public TimeSpan? BreakDuration
         {
             get => _breakDuration;
@@ -32,10 +35,45 @@ namespace Utils
             }
         }
 
-        [DataMember] public TimeSpan? BlinkingDuration { get; set; }
-        [DataMember] public bool? OvertimeAfterRound { get; set; }
-        [DataMember] public string? BreakText { get; set; }
-        [DataMember] public string? TimerName { get; set; }
+        public TimeSpan? BlinkingDuration
+        {
+            get => _blinkingDuration;
+            set
+            {
+                _blinkingDuration = value;
+                OnPropertyChanged(null);
+            }
+        }
+
+        public bool? OvertimeAfterRound
+        {
+            get => _overtimeAfterRound;
+            set
+            {
+                _overtimeAfterRound = value;
+                OnPropertyChanged(null);
+            }
+        }
+
+        public string? BreakText
+        {
+            get => _breakText;
+            set
+            {
+                _breakText = value;
+                OnPropertyChanged(null);
+            }
+        }
+
+        public string? TimerName
+        {
+            get => _timerName;
+            set
+            {
+                _timerName = value;
+                OnPropertyChanged(null);
+            }
+        }
 
 
         public Round(TimeSpan duration, TimeSpan breakDuration, TimeSpan blinkingDuration, bool overtimeAfterRound,

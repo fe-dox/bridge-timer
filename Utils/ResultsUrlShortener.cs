@@ -18,18 +18,24 @@ namespace Utils
                 return shortenedUri;
             }
 
-            using (var httpClient = new HttpClient())
+            using var httpClient = new HttpClient();
+            var shortenedUrlTask =
+                httpClient.GetStringAsync(
+                    $"https://is.gd/create.php?format=simple&url={WebUtility.UrlEncode(uri.ToString())}");
+
+            shortenedUrlTask.Wait(1000);
+
+            var shortenedUrl = new Uri(shortenedUrlTask.Result);
+            try
             {
-                var shortenedUrlTask =
-                    httpClient.GetStringAsync(
-                        $"https://is.gd/create.php?format=simple&url={WebUtility.UrlEncode(uri.ToString())}");
-
-                shortenedUrlTask.Wait(1000);
-
-                var shortenedUrl = new Uri(shortenedUrlTask.Result);
                 _shortenedUrls.Add(uri, shortenedUrl);
-                return shortenedUrl;
             }
+            catch (ArgumentException e)
+            {
+                // ignore
+            }
+
+            return shortenedUrl;
         }
     }
 }

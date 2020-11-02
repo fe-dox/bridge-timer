@@ -160,12 +160,19 @@ namespace TCTimer
             _tournamentTimer.OnFileUpdateRequired();
         }
 
+        private void tournamentNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.DefaultTimerName = tournamentNameTextBox.Text;
+            _tournamentTimer.OnFileUpdateRequired();
+        }
+
         private async void resultsUrlTextBox_TextChanged(object sender, EventArgs e)
         {
             if (!Uri.IsWellFormedUriString(resultsUrlTextBox.Text, UriKind.Absolute)) return;
             if (!shortenUrlCheckBox.Checked)
             {
-                _tournamentTimer.ResultsUrl = resultsUrlTextBox.Text;
+                _tournamentTimer.ResultsUrl = resultsUrlTextBox.Text.Replace("https://", "").Replace("http://", "");
+                _tournamentTimer.OnFileUpdateRequired();
                 return;
             }
 
@@ -174,6 +181,7 @@ namespace TCTimer
                 var shortenedUrl = await
                     Task.Factory.StartNew(() => _resultsUrlShortener.ShortenUrl(new Uri(resultsUrlTextBox.Text)));
                 _tournamentTimer.ResultsUrl = shortenedUrl.ToString().Replace("https://", "");
+                _tournamentTimer.OnFileUpdateRequired();
             }
             catch
             {
@@ -240,11 +248,6 @@ namespace TCTimer
         private void gitHubToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/fe-dox/bridge-timer");
-        }
-
-        private void tournamentNameTextBox_TextChanged(object sender, EventArgs e)
-        {
-            _tournamentTimer.DefaultTimerName = tournamentNameTextBox.Text;
         }
 
         private void advancedRoundEditor_Click(object sender, EventArgs e)

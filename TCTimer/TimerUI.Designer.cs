@@ -220,6 +220,7 @@
             resources.ApplyResources(this.shortenUrlCheckBox, "shortenUrlCheckBox");
             this.shortenUrlCheckBox.Name = "shortenUrlCheckBox";
             this.shortenUrlCheckBox.UseVisualStyleBackColor = true;
+            this.shortenUrlCheckBox.CheckedChanged += new System.EventHandler(this.resultsUrlTextBox_TextChanged);
             this.shortenUrlCheckBox.CheckStateChanged += new System.EventHandler(this.resultsUrlTextBox_TextChanged);
             // 
             // label6

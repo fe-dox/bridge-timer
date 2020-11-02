@@ -20,7 +20,7 @@
                 {
                     <div class="clock-label">@_tournamentTimer.TimerMessage.Text</div>
                 }
-                else if (_tournamentTimer.IsBreak)
+                else if (_tournamentTimer.IsBreak && !string.IsNullOrWhiteSpace(_tournamentTimer.BreakText))
                 {
                     <div class="clock-label">@_tournamentTimer.BreakText</div>
                 }
@@ -132,15 +132,15 @@
         {
             if (_tournamentTimer.Running)
             {
-                var time = _tournamentTimer.Target.Subtract(DateTime.Now);
+                var time = _tournamentTimer.Target - DateTime.Now;
                 var prefix = time >= new TimeSpan(0) || !_tournamentTimer.Overtime ? "" : "-";
-                _clockValue = time.Hours == 0 ? prefix + time.ToString(@"mm\:ss") : prefix + time.ToString(@"HH\:mm\:ss");
+                _clockValue = time.Hours == 0 ? prefix + time.ToString(@"mm\:ss") : prefix + time.ToString(@"hh\:mm\:ss");
             }
             else
             {
                 var time = _tournamentTimer.Target.Subtract(_tournamentTimer.PausedAtTime);
                 var prefix = time >= new TimeSpan(0) || !_tournamentTimer.Overtime ? "" : "-";
-                _clockValue = time.Hours == 0 ? prefix + time.ToString(@"mm\:ss") : prefix + time.ToString(@"HH\:mm\:ss");
+                _clockValue = time.Hours == 0 ? prefix + time.ToString(@"mm\:ss") : prefix + time.ToString(@"hh\:mm\:ss");
             }
             _blinking = DateTime.Now + _tournamentTimer.BlinkingDuration > _tournamentTimer.Target && !_tournamentTimer.IsBreak && !_tournamentTimer.Finished ? "is-blinking" : "";
         }

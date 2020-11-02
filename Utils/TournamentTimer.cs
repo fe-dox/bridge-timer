@@ -9,7 +9,7 @@ namespace Utils
     [DataContract]
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
-        [DataMember] private Timer _framesTimer;
+        private Timer _framesTimer;
         [DataMember] private decimal _defaultRoundDuration;
         [DataMember] private int _defaultBreakDuration;
         [DataMember] private TimerMessage? _timerMessage;
@@ -78,7 +78,6 @@ namespace Utils
         public event EventHandler<DateTime>? Ticked;
         public event EventHandler? OnFinished;
         public event EventHandler<DefaultSettings>? DefaultSettingsChanged;
-
         public event EventHandler? FileUpdateRequired;
 
         public string BreakText => RoundsList[CurrentRoundId].BreakText ?? DefaultBreakText;
@@ -252,8 +251,9 @@ namespace Utils
                 else
                 {
                     if (IsFinished()) return;
-                    Target = DateTime.Now + new TimeSpan(0, 0, DefaultBreakDuration);
+                    Target = DateTime.Now + (CurrentRound.BreakDuration ?? DefaultBreakDurationTimeSpan);
                     IsBreak = true;
+                    OnFileUpdateRequired();
                 }
             }
 
@@ -359,11 +359,12 @@ namespace Utils
             }
         }
 
+
         public bool Equals(TournamentTimer? other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _framesTimer.Equals(other._framesTimer) && _defaultRoundDuration == other._defaultRoundDuration &&
+            return _defaultRoundDuration == other._defaultRoundDuration &&
                    _defaultBreakDuration == other._defaultBreakDuration && Equals(_timerMessage, other._timerMessage) &&
                    Finished == other.Finished && DefaultBreakText == other.DefaultBreakText &&
                    DefaultTimerName == other.DefaultTimerName &&
@@ -384,11 +385,10 @@ namespace Utils
 
         public override int GetHashCode()
         {
-            // ReSharper disable NonReadonlyMemberInGetHashCode
             unchecked
             {
-                var hashCode = _framesTimer.GetHashCode();
-                hashCode = (hashCode * 397) ^ _defaultRoundDuration.GetHashCode();
+                // ReSharper disable NonReadonlyMemberInGetHashCode
+                var hashCode = _defaultRoundDuration.GetHashCode();
                 hashCode = (hashCode * 397) ^ _defaultBreakDuration;
                 hashCode = (hashCode * 397) ^ (_timerMessage != null ? _timerMessage.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ Finished.GetHashCode();
@@ -405,8 +405,6 @@ namespace Utils
                 hashCode = (hashCode * 397) ^ CurrentRoundId;
                 return hashCode;
             }
-
-            // ReSharper enable NonReadonlyMemberInGetHashCode
         }
     }
 }

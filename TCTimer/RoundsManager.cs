@@ -150,36 +150,43 @@ namespace TCTimer
 
         private void setToDefaultToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (DataGridViewCell cell in roundsDataGridView.SelectedCells)
+            try
             {
-                var round = _tournamentTimer.RoundsList[cell.RowIndex];
-                switch (cell.ColumnIndex)
+                foreach (DataGridViewCell cell in roundsDataGridView.SelectedCells)
                 {
-                    case 0:
-                        round.Duration = null;
-                        cell.Value = _tournamentTimer.DefaultRoundDuration + " m";
-                        break;
-                    case 1:
-                        round.BlinkingDuration = null;
-                        cell.Value = _tournamentTimer.DefaultBlinkingDuration + " s";
-                        break;
-                    case 2:
-                        round.OvertimeAfterRound = null;
-                        cell.Value = _tournamentTimer.DefaultOvertimeAfterRound;
-                        break;
-                    case 3:
-                        round.BreakDuration = null;
-                        cell.Value = _tournamentTimer.DefaultBreakDuration + " s";
-                        break;
-                    case 4:
-                        round.BreakText = null;
-                        cell.Value = _tournamentTimer.DefaultBreakText;
-                        break;
-                    case 5:
-                        round.TimerName = null;
-                        cell.Value = _tournamentTimer.DefaultTimerName;
-                        break;
+                    var round = _tournamentTimer.RoundsList[cell.RowIndex];
+                    switch (cell.ColumnIndex)
+                    {
+                        case 0:
+                            round.Duration = null;
+                            cell.Value = _tournamentTimer.DefaultRoundDuration + " m";
+                            break;
+                        case 1:
+                            round.BlinkingDuration = null;
+                            cell.Value = _tournamentTimer.DefaultBlinkingDuration + " s";
+                            break;
+                        case 2:
+                            round.OvertimeAfterRound = null;
+                            cell.Value = _tournamentTimer.DefaultOvertimeAfterRound;
+                            break;
+                        case 3:
+                            round.BreakDuration = null;
+                            cell.Value = _tournamentTimer.DefaultBreakDuration + " s";
+                            break;
+                        case 4:
+                            round.BreakText = null;
+                            cell.Value = _tournamentTimer.DefaultBreakText;
+                            break;
+                        case 5:
+                            round.TimerName = null;
+                            cell.Value = _tournamentTimer.DefaultTimerName;
+                            break;
+                    }
                 }
+            }
+            catch
+            {
+                // ignore
             }
         }
 
@@ -188,12 +195,14 @@ namespace TCTimer
             var nRound = new Round();
             _tournamentTimer.RoundsList.Add(nRound);
             AddRoundToDataGridView(nRound);
+            _tournamentTimer.OnDefaultSettingsChanged(DefaultSettings.NumberOfRounds);
         }
 
         private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             foreach (DataGridViewCell cell in roundsDataGridView.SelectedCells)
             {
+                if (_tournamentTimer.RoundsList.Count == 1) break;
                 try
                 {
                     _tournamentTimer.RoundsList.RemoveAt(cell.RowIndex);
@@ -267,6 +276,7 @@ namespace TCTimer
         private void roundsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             decimal result;
+            if (_tournamentTimer.RoundsList.Count <= e.RowIndex) return;
             switch (e.ColumnIndex)
             {
                 case 0:
@@ -277,9 +287,9 @@ namespace TCTimer
                     }
 
                     e.Cancel = false;
-                    if (result == _tournamentTimer.DefaultRoundDuration) break;
-                    _tournamentTimer.RoundsList[e.RowIndex].Duration =
-                        new TimeSpan(0, 0, (int) (result * 60));
+                    _tournamentTimer.RoundsList[e.RowIndex].Duration = result == _tournamentTimer.DefaultRoundDuration
+                        ? (TimeSpan?) null
+                        : new TimeSpan(0, 0, (int) (result * 60));
                     break;
                 case 1:
                     if (!GetDecimalFromCellValue(e.FormattedValue.ToString(), out result))
@@ -289,13 +299,16 @@ namespace TCTimer
                     }
 
                     e.Cancel = false;
-                    if (result == _tournamentTimer.DefaultBlinkingDuration) break;
                     _tournamentTimer.RoundsList[e.RowIndex].BlinkingDuration =
-                        new TimeSpan(0, 0, (int) result);
+                        result == _tournamentTimer.DefaultBlinkingDuration
+                            ? (TimeSpan?) null
+                            : new TimeSpan(0, 0, (int) result);
                     break;
                 case 2:
-                    if ((bool) e.FormattedValue == _tournamentTimer.DefaultOvertimeAfterRound) break;
-                    _tournamentTimer.RoundsList[e.RowIndex].OvertimeAfterRound = (bool) e.FormattedValue;
+                    _tournamentTimer.RoundsList[e.RowIndex].OvertimeAfterRound =
+                        (bool) e.FormattedValue == _tournamentTimer.DefaultOvertimeAfterRound
+                            ? (bool?) null
+                            : (bool) e.FormattedValue;
                     break;
                 case 3:
                     if (!GetDecimalFromCellValue(e.FormattedValue.ToString(), out result))
@@ -311,13 +324,17 @@ namespace TCTimer
                     break;
                 case 4:
                     e.Cancel = false;
-                    if (e.FormattedValue.ToString() == _tournamentTimer.DefaultBreakText) break;
-                    _tournamentTimer.RoundsList[e.RowIndex].BreakText = e.FormattedValue.ToString();
+                    _tournamentTimer.RoundsList[e.RowIndex].BreakText =
+                        e.FormattedValue.ToString() == _tournamentTimer.DefaultBreakText
+                            ? null
+                            : e.FormattedValue.ToString();
                     break;
                 case 5:
                     e.Cancel = false;
-                    if (e.FormattedValue.ToString() == _tournamentTimer.DefaultTimerName) break;
-                    _tournamentTimer.RoundsList[e.RowIndex].TimerName = e.FormattedValue.ToString();
+                    _tournamentTimer.RoundsList[e.RowIndex].TimerName =
+                        e.FormattedValue.ToString() == _tournamentTimer.DefaultTimerName
+                            ? null
+                            : e.FormattedValue.ToString();
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

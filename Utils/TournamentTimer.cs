@@ -83,7 +83,7 @@ namespace Utils
                     RoundsList.Add(new Round());
                 }
 
-                while (value < RoundsList.Count && value > CurrentRoundId + 1)
+                while (value < RoundsList.Count && value > CurrentRoundId)
                 {
                     RoundsList.RemoveAt(RoundsList.Count - 1);
                 }
@@ -130,7 +130,7 @@ namespace Utils
                          notifyCollectionChangedEventArgs.OldStartingIndex +
                          notifyCollectionChangedEventArgs.OldItems.Count > CurrentRoundId:
                 {
-                    if (notifyCollectionChangedEventArgs.OldStartingIndex > RoundsList.Count)
+                    if (notifyCollectionChangedEventArgs.OldStartingIndex >= RoundsList.Count)
                     {
                         CurrentRoundId = RoundsList.Count - 1;
                         IsFinished();
@@ -227,8 +227,15 @@ namespace Utils
 
         public void Start()
         {
-            if (IsFinished()) return;
-            Target += DateTime.Now - PausedAtTime;
+            if (Finished)
+            {
+                Target = DateTime.Now + (CurrentRound.Duration ?? DefaultRoundDurationTimeSpan);
+            }
+            else
+            {
+                Target += DateTime.Now - PausedAtTime;
+            }
+
             Running = true;
             Finished = false;
             _framesTimer.Start();
@@ -257,8 +264,8 @@ namespace Utils
         {
             if (CurrentRoundId + 1 < NumberOfRounds && NumberOfRounds > 0) return false;
             Finished = true;
-            OnFinished?.Invoke(this, null);
             Pause();
+            OnFinished?.Invoke(this, null);
             return true;
         }
 
@@ -278,7 +285,7 @@ namespace Utils
 
         public void GoToPreviousRound()
         {
-            if (CurrentRoundId > 0)
+            if (CurrentRoundId > 0 && !IsBreak && !Finished)
             {
                 CurrentRoundId--;
             }

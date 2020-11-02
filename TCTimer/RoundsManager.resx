@@ -122,12 +122,15 @@
             PublicKeyToken=b77a5c561934e089
         </value>
     </resheader>
+    <assembly alias="System.Windows.Forms"
+              name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
+    <data name="groupBox1.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+        <value>Top, Left, Right</value>
+    </data>
     <assembly alias="mscorlib" name="mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
     <data name="label6.AutoSize" type="System.Boolean, mscorlib">
         <value>True</value>
     </data>
-    <assembly alias="System.Windows.Forms"
-              name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"/>
     <data name="label6.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
         <value>NoControl</value>
     </data>
@@ -157,6 +160,9 @@
     <data name="&gt;&gt;label6.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
+    <data name="timerNameTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+        <value>Top, Left, Right</value>
+    </data>
     <data name="timerNameTextBox.Location" type="System.Drawing.Point, System.Drawing">
         <value>353, 39</value>
     </data>
@@ -205,6 +211,9 @@
     <data name="&gt;&gt;label5.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
+    <data name="breakTextTextBox.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+        <value>Top, Left, Right</value>
+    </data>
     <data name="breakTextTextBox.Location" type="System.Drawing.Point, System.Drawing">
         <value>344, 13</value>
     </data>
@@ -466,41 +475,9 @@
     <data name="&gt;&gt;groupBox1.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
-    <metadata name="TimerName.UserAddedColumn"
-              type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-        <value>True</value>
-    </metadata>
-    <metadata name="roundContextMenuStrip.TrayLocation"
-              type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-        <value>46, 22</value>
-    </metadata>
-    <data name="roundsDataGridView.Location" type="System.Drawing.Point, System.Drawing">
-        <value>12, 111</value>
+    <data name="roundsDataGridView.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+        <value>Top, Bottom, Left, Right</value>
     </data>
-    <data name="&gt;&gt;roundContextMenuStrip.Name" xml:space="preserve">
-    <value>roundContextMenuStrip</value>
-  </data>
-    <data name="&gt;&gt;roundContextMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-    <data name="roundsDataGridView.Size" type="System.Drawing.Size, System.Drawing">
-        <value>806, 536</value>
-    </data>
-    <data name="roundsDataGridView.TabIndex" type="System.Int32, mscorlib">
-        <value>5</value>
-    </data>
-    <data name="&gt;&gt;roundsDataGridView.Name" xml:space="preserve">
-    <value>roundsDataGridView</value>
-  </data>
-    <data name="&gt;&gt;roundsDataGridView.Type" xml:space="preserve">
-    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-    <data name="&gt;&gt;roundsDataGridView.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-    <data name="&gt;&gt;roundsDataGridView.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
     <data name="Duration.HeaderText" xml:space="preserve">
     <value>Duration</value>
   </data>
@@ -541,19 +518,13 @@
     <data name="TimerName.Width" type="System.Int32, mscorlib">
         <value>261</value>
     </data>
+    <data name="roundsDataGridView.Location" type="System.Drawing.Point, System.Drawing">
+        <value>12, 111</value>
+    </data>
     <metadata name="roundContextMenuStrip.TrayLocation"
               type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
         <value>46, 22</value>
     </metadata>
-    <data name="roundContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
-        <value>157, 70</value>
-    </data>
-    <data name="&gt;&gt;roundContextMenuStrip.Name" xml:space="preserve">
-    <value>roundContextMenuStrip</value>
-  </data>
-    <data name="&gt;&gt;roundContextMenuStrip.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
     <data name="deleteToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing"
           mimetype="application/x-microsoft.net.object.bytearray.base64">
         <value>
@@ -604,6 +575,33 @@
     <data name="addRoundToolStripMenuItem.Text" xml:space="preserve">
     <value>Add Round</value>
   </data>
+    <data name="roundContextMenuStrip.Size" type="System.Drawing.Size, System.Drawing">
+        <value>157, 70</value>
+    </data>
+    <data name="&gt;&gt;roundContextMenuStrip.Name" xml:space="preserve">
+    <value>roundContextMenuStrip</value>
+  </data>
+    <data name="&gt;&gt;roundContextMenuStrip.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="roundsDataGridView.Size" type="System.Drawing.Size, System.Drawing">
+        <value>806, 536</value>
+    </data>
+    <data name="roundsDataGridView.TabIndex" type="System.Int32, mscorlib">
+        <value>5</value>
+    </data>
+    <data name="&gt;&gt;roundsDataGridView.Name" xml:space="preserve">
+    <value>roundsDataGridView</value>
+  </data>
+    <data name="&gt;&gt;roundsDataGridView.Type" xml:space="preserve">
+    <value>System.Windows.Forms.DataGridView, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+    <data name="&gt;&gt;roundsDataGridView.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+    <data name="&gt;&gt;roundsDataGridView.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
     <metadata name="$this.Localizable"
               type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
         <value>True</value>
@@ -612,7 +610,7 @@
         <value>6, 13</value>
     </data>
     <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-        <value>828, 659</value>
+        <value>829, 659</value>
     </data>
     <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing"
           mimetype="application/x-microsoft.net.object.bytearray.base64">

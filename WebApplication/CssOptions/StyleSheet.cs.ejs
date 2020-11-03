@@ -1,0 +1,10 @@
+﻿// This file is generated, do not edit it manually. Use grunt to update it.
+namespace Utils
+{
+public static class StyleSheet
+{
+<% for(let i = 0; i < stylesheets.length; i++){ %>
+    public const string <%= stylesheets[i].name %> = @"<%= stylesheets[i].content.toString().replace(/"/g, "'") %>";
+<% } %>
+}
+}

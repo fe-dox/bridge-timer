@@ -1,6 +1,15 @@
 ﻿@page "/"
 @inject NavigationManager NavigationManager
 
+@if (_tournamentTimer != null)
+{
+    <style>@_tournamentTimer.Style</style>
+}
+else
+{
+    <style>@StyleSheet.Default</style>
+}
+
 <div class="main">
     @if (_tournamentTimer != null)
     {

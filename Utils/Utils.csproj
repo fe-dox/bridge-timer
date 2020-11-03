@@ -43,8 +43,10 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="DefaultSettings.cs"/>
+        <Compile Include="Ftp.cs"/>
         <Compile Include="Properties\Annotations.cs"/>
         <Compile Include="Round.cs"/>
+        <Compile Include="StyleSheet.cs"/>
         <Compile Include="TimerMessage.cs"/>
         <Compile Include="ResultsUrlShortener.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>

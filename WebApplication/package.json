@@ -1,0 +1,17 @@
+{
+  "name": "tctimer-web-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "grunt": "^1.3.0",
+    "grunt-contrib-clean": "^2.0.0",
+    "grunt-contrib-sass": "^2.0.0",
+    "grunt-template": "^1.0.0"
+  }
+}

@@ -1,4 +1,7 @@
-﻿@mixin prefix($declarations, $prefixes: ()) {
+﻿$background-color: #fff !default;
+$font-color: #000 !default;
+
+@mixin prefix($declarations, $prefixes: ()) {
   @each $property, $value in $declarations {
     @each $prefix in $prefixes {
       #{'-' + $prefix + '-' + $property}: $value;
@@ -13,6 +16,8 @@ html, body {
   width: 99%;
   height: 99%;
   font-size: 1vw;
+  color: $font-color;
+  background-color: $background-color;
 }
 
 app {

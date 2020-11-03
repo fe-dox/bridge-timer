@@ -32,6 +32,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TimerForm));
             this.showTimerButton = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.blinkingDurationNumericUpDown = new System.Windows.Forms.NumericUpDown();
             this.advancedRoundEditor = new System.Windows.Forms.Button();
             this.breakTimeUpDown = new System.Windows.Forms.NumericUpDown();
             this.minutesPerRoundUpDown = new System.Windows.Forms.NumericUpDown();
@@ -66,7 +68,29 @@
             this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gitHubToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.groupBoxFtp = new System.Windows.Forms.GroupBox();
+            this.uploadTimerNowButton = new System.Windows.Forms.Button();
+            this.uploadSupportFilesButton = new System.Windows.Forms.Button();
+            this.buttonLoadLastCredentials = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
+            this.ftpStatusIndicator = new System.Windows.Forms.Button();
+            this.checkBoxFtpEnabled = new System.Windows.Forms.CheckBox();
+            this.textBoxFtpPassword = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.textBoxFtpUsername = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.textBoxFtpPath = new System.Windows.Forms.TextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.appearanceGroupBox = new System.Windows.Forms.GroupBox();
+            this.radioColourfulCSS = new System.Windows.Forms.RadioButton();
+            this.chooseCustomCSSButton = new System.Windows.Forms.Button();
+            this.customCSSLabel = new System.Windows.Forms.Label();
+            this.radioCustomCSS = new System.Windows.Forms.RadioButton();
+            this.radioHighContrastCSS = new System.Windows.Forms.RadioButton();
+            this.radioWhiteOnBlackCSS = new System.Windows.Forms.RadioButton();
+            this.radioBlackOnWhiteCSS = new System.Windows.Forms.RadioButton();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).BeginInit();
@@ -74,6 +98,8 @@
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.messageDurationUpDown)).BeginInit();
             this.menuStrip1.SuspendLayout();
+            this.groupBoxFtp.SuspendLayout();
+            this.appearanceGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // showTimerButton
@@ -85,6 +111,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.blinkingDurationNumericUpDown);
             this.groupBox1.Controls.Add(this.advancedRoundEditor);
             this.groupBox1.Controls.Add(this.breakTimeUpDown);
             this.groupBox1.Controls.Add(this.minutesPerRoundUpDown);
@@ -95,6 +123,18 @@
             resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
+            // 
+            // label12
+            // 
+            resources.ApplyResources(this.label12, "label12");
+            this.label12.Name = "label12";
+            // 
+            // blinkingDurationNumericUpDown
+            // 
+            resources.ApplyResources(this.blinkingDurationNumericUpDown, "blinkingDurationNumericUpDown");
+            this.blinkingDurationNumericUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
+            this.blinkingDurationNumericUpDown.Name = "blinkingDurationNumericUpDown";
+            this.blinkingDurationNumericUpDown.Value = new decimal(new int[] {90, 0, 0, 0});
             // 
             // advancedRoundEditor
             // 
@@ -325,11 +365,165 @@
             this.gitHubToolStripMenuItem.Name = "gitHubToolStripMenuItem";
             this.gitHubToolStripMenuItem.Click += new System.EventHandler(this.gitHubToolStripMenuItem_Click);
             // 
+            // groupBoxFtp
+            // 
+            this.groupBoxFtp.Controls.Add(this.uploadTimerNowButton);
+            this.groupBoxFtp.Controls.Add(this.uploadSupportFilesButton);
+            this.groupBoxFtp.Controls.Add(this.buttonLoadLastCredentials);
+            this.groupBoxFtp.Controls.Add(this.label19);
+            this.groupBoxFtp.Controls.Add(this.ftpStatusIndicator);
+            this.groupBoxFtp.Controls.Add(this.checkBoxFtpEnabled);
+            this.groupBoxFtp.Controls.Add(this.textBoxFtpPassword);
+            this.groupBoxFtp.Controls.Add(this.label8);
+            this.groupBoxFtp.Controls.Add(this.textBoxFtpUsername);
+            this.groupBoxFtp.Controls.Add(this.label9);
+            this.groupBoxFtp.Controls.Add(this.textBoxFtpPath);
+            this.groupBoxFtp.Controls.Add(this.label10);
+            resources.ApplyResources(this.groupBoxFtp, "groupBoxFtp");
+            this.groupBoxFtp.Name = "groupBoxFtp";
+            this.groupBoxFtp.TabStop = false;
+            // 
+            // uploadTimerNowButton
+            // 
+            resources.ApplyResources(this.uploadTimerNowButton, "uploadTimerNowButton");
+            this.uploadTimerNowButton.Name = "uploadTimerNowButton";
+            this.uploadTimerNowButton.UseVisualStyleBackColor = true;
+            // 
+            // uploadSupportFilesButton
+            // 
+            resources.ApplyResources(this.uploadSupportFilesButton, "uploadSupportFilesButton");
+            this.uploadSupportFilesButton.Name = "uploadSupportFilesButton";
+            this.uploadSupportFilesButton.UseVisualStyleBackColor = true;
+            // 
+            // buttonLoadLastCredentials
+            // 
+            resources.ApplyResources(this.buttonLoadLastCredentials, "buttonLoadLastCredentials");
+            this.buttonLoadLastCredentials.Name = "buttonLoadLastCredentials";
+            this.buttonLoadLastCredentials.UseVisualStyleBackColor = true;
+            // 
+            // label19
+            // 
+            resources.ApplyResources(this.label19, "label19");
+            this.label19.Name = "label19";
+            // 
+            // ftpStatusIndicator
+            // 
+            resources.ApplyResources(this.ftpStatusIndicator, "ftpStatusIndicator");
+            this.ftpStatusIndicator.BackColor = System.Drawing.Color.Red;
+            this.ftpStatusIndicator.ForeColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.ftpStatusIndicator.Name = "ftpStatusIndicator";
+            this.ftpStatusIndicator.UseVisualStyleBackColor = false;
+            // 
+            // checkBoxFtpEnabled
+            // 
+            resources.ApplyResources(this.checkBoxFtpEnabled, "checkBoxFtpEnabled");
+            this.checkBoxFtpEnabled.Name = "checkBoxFtpEnabled";
+            this.checkBoxFtpEnabled.UseVisualStyleBackColor = true;
+            // 
+            // textBoxFtpPassword
+            // 
+            resources.ApplyResources(this.textBoxFtpPassword, "textBoxFtpPassword");
+            this.textBoxFtpPassword.Name = "textBoxFtpPassword";
+            this.textBoxFtpPassword.UseSystemPasswordChar = true;
+            // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.Name = "label8";
+            // 
+            // textBoxFtpUsername
+            // 
+            resources.ApplyResources(this.textBoxFtpUsername, "textBoxFtpUsername");
+            this.textBoxFtpUsername.Name = "textBoxFtpUsername";
+            // 
+            // label9
+            // 
+            resources.ApplyResources(this.label9, "label9");
+            this.label9.Name = "label9";
+            // 
+            // textBoxFtpPath
+            // 
+            resources.ApplyResources(this.textBoxFtpPath, "textBoxFtpPath");
+            this.textBoxFtpPath.Name = "textBoxFtpPath";
+            // 
+            // label10
+            // 
+            resources.ApplyResources(this.label10, "label10");
+            this.label10.Name = "label10";
+            // 
+            // appearanceGroupBox
+            // 
+            this.appearanceGroupBox.Controls.Add(this.radioColourfulCSS);
+            this.appearanceGroupBox.Controls.Add(this.chooseCustomCSSButton);
+            this.appearanceGroupBox.Controls.Add(this.customCSSLabel);
+            this.appearanceGroupBox.Controls.Add(this.radioCustomCSS);
+            this.appearanceGroupBox.Controls.Add(this.radioHighContrastCSS);
+            this.appearanceGroupBox.Controls.Add(this.radioWhiteOnBlackCSS);
+            this.appearanceGroupBox.Controls.Add(this.radioBlackOnWhiteCSS);
+            resources.ApplyResources(this.appearanceGroupBox, "appearanceGroupBox");
+            this.appearanceGroupBox.Name = "appearanceGroupBox";
+            this.appearanceGroupBox.TabStop = false;
+            // 
+            // radioColourfulCSS
+            // 
+            resources.ApplyResources(this.radioColourfulCSS, "radioColourfulCSS");
+            this.radioColourfulCSS.Name = "radioColourfulCSS";
+            this.radioColourfulCSS.TabStop = true;
+            this.radioColourfulCSS.UseVisualStyleBackColor = true;
+            this.radioColourfulCSS.CheckedChanged += new System.EventHandler(this.radioColourfulCSS_CheckedChanged);
+            // 
+            // chooseCustomCSSButton
+            // 
+            resources.ApplyResources(this.chooseCustomCSSButton, "chooseCustomCSSButton");
+            this.chooseCustomCSSButton.Name = "chooseCustomCSSButton";
+            this.chooseCustomCSSButton.UseVisualStyleBackColor = true;
+            this.chooseCustomCSSButton.Click += new System.EventHandler(this.chooseCustomCSSButton_Click);
+            // 
+            // customCSSLabel
+            // 
+            resources.ApplyResources(this.customCSSLabel, "customCSSLabel");
+            this.customCSSLabel.Name = "customCSSLabel";
+            // 
+            // radioCustomCSS
+            // 
+            resources.ApplyResources(this.radioCustomCSS, "radioCustomCSS");
+            this.radioCustomCSS.Name = "radioCustomCSS";
+            this.radioCustomCSS.TabStop = true;
+            this.radioCustomCSS.UseVisualStyleBackColor = true;
+            this.radioCustomCSS.CheckedChanged += new System.EventHandler(this.radioCustomCSS_CheckedChanged);
+            // 
+            // radioHighContrastCSS
+            // 
+            resources.ApplyResources(this.radioHighContrastCSS, "radioHighContrastCSS");
+            this.radioHighContrastCSS.Name = "radioHighContrastCSS";
+            this.radioHighContrastCSS.TabStop = true;
+            this.radioHighContrastCSS.UseVisualStyleBackColor = true;
+            this.radioHighContrastCSS.CheckedChanged += new System.EventHandler(this.radioHighContrastCSS_CheckedChanged);
+            // 
+            // radioWhiteOnBlackCSS
+            // 
+            resources.ApplyResources(this.radioWhiteOnBlackCSS, "radioWhiteOnBlackCSS");
+            this.radioWhiteOnBlackCSS.Name = "radioWhiteOnBlackCSS";
+            this.radioWhiteOnBlackCSS.TabStop = true;
+            this.radioWhiteOnBlackCSS.UseVisualStyleBackColor = true;
+            this.radioWhiteOnBlackCSS.CheckedChanged += new System.EventHandler(this.radioWhiteOnBlackCSS_CheckedChanged);
+            // 
+            // radioBlackOnWhiteCSS
+            // 
+            resources.ApplyResources(this.radioBlackOnWhiteCSS, "radioBlackOnWhiteCSS");
+            this.radioBlackOnWhiteCSS.Checked = true;
+            this.radioBlackOnWhiteCSS.Name = "radioBlackOnWhiteCSS";
+            this.radioBlackOnWhiteCSS.TabStop = true;
+            this.radioBlackOnWhiteCSS.UseVisualStyleBackColor = true;
+            this.radioBlackOnWhiteCSS.CheckedChanged += new System.EventHandler(this.radioBlackOnWhiteCSS_CheckedChanged);
+            // 
             // TimerForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.appearanceGroupBox);
+            this.Controls.Add(this.groupBoxFtp);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.stopStartButton);
@@ -348,6 +542,7 @@
             this.Name = "TimerForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TimerForm_FormClosing);
             this.groupBox1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).EndInit();
@@ -358,9 +553,47 @@
             ((System.ComponentModel.ISupportInitialize) (this.messageDurationUpDown)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBoxFtp.ResumeLayout(false);
+            this.groupBoxFtp.PerformLayout();
+            this.appearanceGroupBox.ResumeLayout(false);
+            this.appearanceGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Label customCSSLabel;
+
+        private System.Windows.Forms.Button buttonLoadLastCredentials;
+
+        private System.Windows.Forms.Button chooseCustomCSSButton;
+
+        private System.Windows.Forms.RadioButton radioColourfulCSS;
+
+        private System.Windows.Forms.Button uploadSupportFilesButton;
+        private System.Windows.Forms.Button uploadTimerNowButton;
+
+        private System.Windows.Forms.NumericUpDown blinkingDurationNumericUpDown;
+        private System.Windows.Forms.Label label12;
+
+        private System.Windows.Forms.RadioButton radioCustomCSS;
+
+        private System.Windows.Forms.RadioButton radioHighContrastCSS;
+
+        private System.Windows.Forms.RadioButton radioBlackOnWhiteCSS;
+        private System.Windows.Forms.RadioButton radioWhiteOnBlackCSS;
+
+        private System.Windows.Forms.GroupBox appearanceGroupBox;
+
+        private System.Windows.Forms.CheckBox checkBoxFtpEnabled;
+        private System.Windows.Forms.Button ftpStatusIndicator;
+        private System.Windows.Forms.GroupBox groupBoxFtp;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox textBoxFtpPassword;
+        private System.Windows.Forms.TextBox textBoxFtpPath;
+        private System.Windows.Forms.TextBox textBoxFtpUsername;
 
         private System.Windows.Forms.Button advancedRoundEditor;
 

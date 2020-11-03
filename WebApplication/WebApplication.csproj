@@ -13,14 +13,21 @@
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css" />
-      <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css.map" />
-      <_ContentIncludedByDefault Remove="build\web.config" />
-      <_ContentIncludedByDefault Remove="build\wwwroot\_framework\blazor.boot.json" />
+        <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css"/>
+        <_ContentIncludedByDefault Remove="wwwroot\css\bootstrap\bootstrap.min.css.map"/>
+        <_ContentIncludedByDefault Remove="build\web.config"/>
+        <_ContentIncludedByDefault Remove="build\wwwroot\_framework\blazor.boot.json"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Utils\Utils.csproj" />
+        <ProjectReference Include="..\Utils\Utils.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="CssOptions\base.scss">
+            <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+            <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        </Content>
     </ItemGroup>
     <PropertyGroup>
     </PropertyGroup>

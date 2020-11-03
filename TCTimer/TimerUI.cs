@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TCTimer.Properties;
 using Utils;
+using Utils.Annotations;
 
 namespace TCTimer
 {
@@ -23,6 +24,7 @@ namespace TCTimer
         private readonly string _timerPath = "..\\..\\WebApp\\wwwroot";
 #endif
         private readonly TournamentTimer _tournamentTimer;
+        [CanBeNull] private string _customCss;
 
         public TimerForm()
         {
@@ -259,6 +261,51 @@ namespace TCTimer
             numberOfRoundsUpDown.Value = _tournamentTimer.NumberOfRounds;
             breakTextBox.Text = _tournamentTimer.DefaultBreakText;
             tournamentNameTextBox.Text = _tournamentTimer.DefaultTimerName;
+        }
+
+        private void radioBlackOnWhiteCSS_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!radioBlackOnWhiteCSS.Checked) return;
+            _tournamentTimer.Style = StyleSheet.Default;
+        }
+
+        private void radioWhiteOnBlackCSS_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!radioWhiteOnBlackCSS.Checked) return;
+            _tournamentTimer.Style = StyleSheet.WhiteOnBlack;
+        }
+
+        private void radioHighContrastCSS_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!radioHighContrastCSS.Checked) return;
+            _tournamentTimer.Style = StyleSheet.HighContrast;
+        }
+
+        private void radioColourfulCSS_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!radioColourfulCSS.Checked) return;
+            _tournamentTimer.Style = StyleSheet.Crazy;
+        }
+
+        private void radioCustomCSS_CheckedChanged(object sender, EventArgs e)
+        {
+            chooseCustomCSSButton.Enabled = radioCustomCSS.Checked;
+            if (!radioCustomCSS.Checked) return;
+            _tournamentTimer.Style = _customCss ?? StyleSheet.Default;
+        }
+
+        private void chooseCustomCSSButton_Click(object sender, EventArgs e)
+        {
+            using var openFileDialog = new OpenFileDialog
+            {
+                Filter = @"css files (*.css)|*.css|All files (*.*)|*.*",
+                FilterIndex = 2,
+                RestoreDirectory = true
+            };
+            if (openFileDialog.ShowDialog() != DialogResult.OK) return;
+            var filePath = openFileDialog.FileName;
+            _customCss = _tournamentTimer.Style = File.ReadAllText(filePath);
+            customCSSLabel.Text = Path.GetFileName(filePath);
         }
     }
 }

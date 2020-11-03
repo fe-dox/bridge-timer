@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Runtime.Serialization;
 using System.Timers;
+using Utils.Annotations;
 
 namespace Utils
 {
@@ -13,6 +14,7 @@ namespace Utils
         [DataMember] private decimal _defaultRoundDuration;
         [DataMember] private int _defaultBreakDuration;
         [DataMember] private TimerMessage? _timerMessage;
+        [DataMember] private string _style = StyleSheet.Default;
         [DataMember] public bool Finished { get; private set; }
         [DataMember] public string DefaultBreakText { get; set; } = string.Empty;
         [DataMember] public string DefaultTimerName { get; set; } = string.Empty;
@@ -61,6 +63,16 @@ namespace Utils
             set
             {
                 _timerMessage = value;
+                OnFileUpdateRequired();
+            }
+        }
+
+        public string Style
+        {
+            get => _style;
+            set
+            {
+                _style = value;
                 OnFileUpdateRequired();
             }
         }

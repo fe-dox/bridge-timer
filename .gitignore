@@ -438,3 +438,7 @@ fabric.properties
 /TCTimer/TCTimer.wixobj
 /TCTimer/TCTimer.msi
 /TCTimer/TCTimer.wixpdb
+/WebApplication/package-lock.json
+
+*.css
+*.map

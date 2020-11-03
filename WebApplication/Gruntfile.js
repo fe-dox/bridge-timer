@@ -8,13 +8,12 @@ module.exports = function (grunt) {
             options: {
                 force: true
             },
-            default: ["../Utils/StyleSheet.cs", "CssOptions/*.css"]
+            default: ["../Utils/StyleSheet.cs", "CssOptions/*.css", "CssOptions/*.css.map"]
         },
         sass: {
             options: {
-                sourcemap: false,
-                compress: false,
-                style: 'expanded',
+                "style": "compressed",
+                "no-source-map": true,
             },
             dist: {
                 files: {

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Reflection;
 using System.Windows.Forms;
 
 namespace TCTimer
@@ -10,6 +12,9 @@ namespace TCTimer
         public AboutForm()
         {
             InitializeComponent();
+            tournamentVerion.Text = "Version:  " +
+                                    FileVersionInfo.GetVersionInfo(Assembly.GetExecutingAssembly().Location)
+                                        .FileVersion;
         }
 
         private void label2_Click(object sender, EventArgs e)

@@ -32,24 +32,26 @@ namespace TCTimer
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelTitle = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.tournamentVerion = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // label1
+            // labelTitle
             // 
-            this.label1.Font = new System.Drawing.Font("Comfortaa", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(221, 33);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Tournament Timer";
+            this.labelTitle.AutoSize = true;
+            this.labelTitle.Font = new System.Drawing.Font("Comfortaa", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.labelTitle.Location = new System.Drawing.Point(12, 9);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Size = new System.Drawing.Size(216, 34);
+            this.labelTitle.TabIndex = 0;
+            this.labelTitle.Text = "Tournament Timer";
             // 
             // label2
             // 
             this.label2.Font = new System.Drawing.Font("Comfortaa", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.label2.Location = new System.Drawing.Point(12, 42);
+            this.label2.Location = new System.Drawing.Point(12, 75);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(299, 32);
             this.label2.TabIndex = 1;
@@ -59,27 +61,40 @@ namespace TCTimer
             // label3
             // 
             this.label3.Font = new System.Drawing.Font("Comfortaa", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.label3.Location = new System.Drawing.Point(12, 73);
+            this.label3.Location = new System.Drawing.Point(12, 107);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(240, 32);
             this.label3.TabIndex = 2;
             this.label3.Text = "Contact: fedox@fedox.pl";
             // 
+            // tournamentVerion
+            // 
+            this.tournamentVerion.Font = new System.Drawing.Font("Comfortaa", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.tournamentVerion.Location = new System.Drawing.Point(12, 43);
+            this.tournamentVerion.Name = "tournamentVerion";
+            this.tournamentVerion.Size = new System.Drawing.Size(295, 32);
+            this.tournamentVerion.TabIndex = 3;
+            // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(334, 114);
+            this.ClientSize = new System.Drawing.Size(319, 151);
+            this.Controls.Add(this.tournamentVerion);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelTitle);
             this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
             this.Name = "AboutForm";
             this.Text = "About";
             this.ResumeLayout(false);
+            this.PerformLayout();
         }
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelTitle;
+
+        private System.Windows.Forms.Label tournamentVerion;
+
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
 

@@ -184,7 +184,7 @@ namespace TCTimer
 
         private void blinkingDurationNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            _tournamentTimer.DefaultBreakDuration = (int) blinkingDurationNumericUpDown.Value;
+            _tournamentTimer.DefaultBlinkingDuration = (int) blinkingDurationNumericUpDown.Value;
             _tournamentTimer.OnFileUpdateRequired();
         }
 

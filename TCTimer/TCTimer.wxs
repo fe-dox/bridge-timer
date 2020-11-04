@@ -1,8 +1,8 @@
 ﻿<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
     <Product Name='TCTimer' Manufacturer='Mikolaj Bogucki'
-             Id='D1B7AD37-E912-4F02-8EBE-6D9E6422072C'
+             Id='6BA92C2E-A7AF-47A2-9641-928273829FC0'
              UpgradeCode='FB92D70E-4301-44FD-A9B8-7CB28BF9F4E1'
-             Language='1033' Codepage='1252' Version='1.0.2'>
+             Language='1033' Codepage='1252' Version='1.0.3'>
         <Package Id='*' Keywords='Installer' Description="TCTimer 1.0 Installer" Manufacturer='Mikolaj Bogucki'
                  InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252'/>
         <Condition Message="You need to be an administrator to install this product.">
@@ -11,7 +11,7 @@
         <Upgrade Id='FB92D70E-4301-44FD-A9B8-7CB28BF9F4E1'>
             <UpgradeVersion OnlyDetect='no' Property='PREVIOUSFOUND'
                             Minimum='1.0.0' IncludeMinimum='yes'
-                            Maximum='1.0.2' IncludeMaximum='no'/>
+                            Maximum='1.0.3' IncludeMaximum='no'/>
         </Upgrade>
 
         <InstallExecuteSequence>

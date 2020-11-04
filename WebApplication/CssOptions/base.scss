@@ -98,10 +98,10 @@ app {
 
 @keyframes blinking {
   0% {
-    color: black;
+    color: $font-color;
   }
   50% {
-    color: black;
+    color: $font-color;
   }
   51% {
     color: red;
@@ -186,5 +186,16 @@ app {
   }
   .timer-name {
     font-size: 7rem;
+  }
+}
+
+.disconnected {
+  position: absolute;
+  top: 0;
+  left: 1%;
+  font-size: 2rem;
+
+  .emoji {
+    font-size: 1.4em;
   }
 }

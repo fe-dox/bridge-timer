@@ -124,7 +124,7 @@ namespace TCTimer
             // blinkingDurationUpDown
             // 
             resources.ApplyResources(this.blinkingDurationUpDown, "blinkingDurationUpDown");
-            this.blinkingDurationUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
+            this.blinkingDurationUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
             this.blinkingDurationUpDown.Name = "blinkingDurationUpDown";
             this.blinkingDurationUpDown.Value = new decimal(new int[] {90, 0, 0, 0});
             this.blinkingDurationUpDown.ValueChanged += new System.EventHandler(this.blinkingDurationUpDown_ValueChanged);
@@ -132,7 +132,7 @@ namespace TCTimer
             // breakDurationUpDown
             // 
             resources.ApplyResources(this.breakDurationUpDown, "breakDurationUpDown");
-            this.breakDurationUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
+            this.breakDurationUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
             this.breakDurationUpDown.Name = "breakDurationUpDown";
             this.breakDurationUpDown.Value = new decimal(new int[] {30, 0, 0, 0});
             this.breakDurationUpDown.ValueChanged += new System.EventHandler(this.breakDurationUpDown_ValueChanged);
@@ -141,8 +141,7 @@ namespace TCTimer
             // 
             this.minutesPerRoundUpDown.DecimalPlaces = 1;
             resources.ApplyResources(this.minutesPerRoundUpDown, "minutesPerRoundUpDown");
-            this.minutesPerRoundUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
-            this.minutesPerRoundUpDown.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.minutesPerRoundUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
             this.minutesPerRoundUpDown.Name = "minutesPerRoundUpDown";
             this.minutesPerRoundUpDown.Value = new decimal(new int[] {165, 0, 0, 65536});
             this.minutesPerRoundUpDown.ValueChanged += new System.EventHandler(this.minutesPerRoundUpDown_ValueChanged_1);

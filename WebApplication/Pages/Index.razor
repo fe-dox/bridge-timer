@@ -11,6 +11,10 @@ else
 }
 
 <div class="main">
+    @if (_isConnectionLost)
+    {
+        <div class="disconnected">Disconnected <span class="emoji">🔌</span></div>
+    }
     @if (_tournamentTimer != null)
     {
         <div class="timer-name">@_tournamentTimer.TimerName</div>
@@ -59,6 +63,7 @@ else
 @code{
     private readonly Timer _refreshTimer = new Timer(1000);
     private readonly Timer _framesTimer = new Timer(200);
+    private bool _isConnectionLost;
     private string _currentTimeValue = string.Empty;
     private bool _showingMessage;
     private TimerMessage _currentOrLastMessage;
@@ -100,9 +105,9 @@ else
         {
             using var httpClient = new HttpClient();
             var timerDataStream =
-                await httpClient.GetStreamAsync(NavigationManager.BaseUri + "/timer.xml");
+                await httpClient.GetStreamAsync(NavigationManager.BaseUri + "/timer.xml?=" + DateTime.Now);
             var tmpTimer = _serializer.ReadObject(timerDataStream) as TournamentTimer;
-            if (!_tournamentTimer.Equals(tmpTimer) && tmpTimer != null)
+            if (!_tournamentTimer.Equals(tmpTimer) && tmpTimer != null && !(tmpTimer.Target < DateTime.Now && !tmpTimer.Overtime))
             {
                 _tournamentTimer = tmpTimer;
             }
@@ -113,6 +118,7 @@ else
                 _showingMessage = true;
                 _showingMessageTarget = DateTime.Now.Add(_tournamentTimer.TimerMessage.Duration);
             }
+
 
             if (_connectionErrors != 0)
             {
@@ -128,6 +134,7 @@ else
                 _refreshTimer.Interval = Math.Min(10000, (_connectionErrors + 1) * 1000);
             }
         }
+        _isConnectionLost = DateTime.Now - _tournamentTimer.SerializationTimeStamp > new TimeSpan(0, 2, 0);
         StateHasChanged();
     }
 

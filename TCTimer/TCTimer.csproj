@@ -62,10 +62,10 @@
   </PropertyGroup>
   <ItemGroup>
       <Reference Include="Microsoft.VisualBasic.Compatibility"/>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.IO.Compression.FileSystem" />
-    <Reference Include="System.Runtime.Serialization" />
+      <Reference Include="System"/>
+      <Reference Include="System.Core"/>
+      <Reference Include="System.IO.Compression.FileSystem"/>
+      <Reference Include="System.Runtime.Serialization"/>
       <Reference Include="System.Web"/>
       <Reference Include="System.Xml.Linq"/>
       <Reference Include="System.Data.DataSetExtensions"/>
@@ -91,6 +91,7 @@
         <Compile Include="RoundsManager.Designer.cs">
             <DependentUpon>RoundsManager.cs</DependentUpon>
         </Compile>
+        <Compile Include="Settings.cs"/>
         <Compile Include="TimerUI.cs"/>
         <Compile Include="TimerUI.Designer.cs">
             <DependentUpon>TimerUI.cs</DependentUpon>

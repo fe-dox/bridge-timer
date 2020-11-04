@@ -132,9 +132,10 @@
             // blinkingDurationNumericUpDown
             // 
             resources.ApplyResources(this.blinkingDurationNumericUpDown, "blinkingDurationNumericUpDown");
-            this.blinkingDurationNumericUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
+            this.blinkingDurationNumericUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
             this.blinkingDurationNumericUpDown.Name = "blinkingDurationNumericUpDown";
             this.blinkingDurationNumericUpDown.Value = new decimal(new int[] {90, 0, 0, 0});
+            this.blinkingDurationNumericUpDown.ValueChanged += new System.EventHandler(this.blinkingDurationNumericUpDown_ValueChanged);
             // 
             // advancedRoundEditor
             // 
@@ -146,7 +147,7 @@
             // breakTimeUpDown
             // 
             resources.ApplyResources(this.breakTimeUpDown, "breakTimeUpDown");
-            this.breakTimeUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
+            this.breakTimeUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
             this.breakTimeUpDown.Name = "breakTimeUpDown";
             this.breakTimeUpDown.Value = new decimal(new int[] {30, 0, 0, 0});
             this.breakTimeUpDown.ValueChanged += new System.EventHandler(this.breakTimeUpDown_ValueChanged);
@@ -155,8 +156,7 @@
             // 
             this.minutesPerRoundUpDown.DecimalPlaces = 1;
             resources.ApplyResources(this.minutesPerRoundUpDown, "minutesPerRoundUpDown");
-            this.minutesPerRoundUpDown.Maximum = new decimal(new int[] {120, 0, 0, 0});
-            this.minutesPerRoundUpDown.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.minutesPerRoundUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
             this.minutesPerRoundUpDown.Name = "minutesPerRoundUpDown";
             this.minutesPerRoundUpDown.Value = new decimal(new int[] {165, 0, 0, 65536});
             this.minutesPerRoundUpDown.ValueChanged += new System.EventHandler(this.minutesPerRoundUpDown_ValueChanged);
@@ -307,7 +307,7 @@
             // messageDurationUpDown
             // 
             resources.ApplyResources(this.messageDurationUpDown, "messageDurationUpDown");
-            this.messageDurationUpDown.Maximum = new decimal(new int[] {300, 0, 0, 0});
+            this.messageDurationUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
             this.messageDurationUpDown.Minimum = new decimal(new int[] {5, 0, 0, 0});
             this.messageDurationUpDown.Name = "messageDurationUpDown";
             this.messageDurationUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
@@ -388,18 +388,21 @@
             resources.ApplyResources(this.uploadTimerNowButton, "uploadTimerNowButton");
             this.uploadTimerNowButton.Name = "uploadTimerNowButton";
             this.uploadTimerNowButton.UseVisualStyleBackColor = true;
+            this.uploadTimerNowButton.Click += new System.EventHandler(this.uploadTimerNowButton_Click);
             // 
             // uploadSupportFilesButton
             // 
             resources.ApplyResources(this.uploadSupportFilesButton, "uploadSupportFilesButton");
             this.uploadSupportFilesButton.Name = "uploadSupportFilesButton";
             this.uploadSupportFilesButton.UseVisualStyleBackColor = true;
+            this.uploadSupportFilesButton.Click += new System.EventHandler(this.uploadSupportFilesButton_Click);
             // 
             // buttonLoadLastCredentials
             // 
             resources.ApplyResources(this.buttonLoadLastCredentials, "buttonLoadLastCredentials");
             this.buttonLoadLastCredentials.Name = "buttonLoadLastCredentials";
             this.buttonLoadLastCredentials.UseVisualStyleBackColor = true;
+            this.buttonLoadLastCredentials.Click += new System.EventHandler(this.buttonLoadLastCredentials_Click);
             // 
             // label19
             // 
@@ -419,6 +422,7 @@
             resources.ApplyResources(this.checkBoxFtpEnabled, "checkBoxFtpEnabled");
             this.checkBoxFtpEnabled.Name = "checkBoxFtpEnabled";
             this.checkBoxFtpEnabled.UseVisualStyleBackColor = true;
+            this.checkBoxFtpEnabled.CheckedChanged += new System.EventHandler(this.checkBoxFtpEnabled_CheckedChanged);
             // 
             // textBoxFtpPassword
             // 

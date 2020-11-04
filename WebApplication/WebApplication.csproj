@@ -30,5 +30,6 @@
         </Content>
     </ItemGroup>
     <PropertyGroup>
+        <BlazorCacheBootResources>false</BlazorCacheBootResources>
     </PropertyGroup>
 </Project>

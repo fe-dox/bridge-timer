@@ -6,16 +6,19 @@ using System.IO;
 using System.IO.Compression;
 #endif
 using System.Runtime.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TCTimer.Properties;
 using Utils;
 using Utils.Annotations;
+using Timer = System.Timers.Timer;
 
 namespace TCTimer
 {
     public partial class TimerForm : Form
     {
+        private Timer _serializationTimer;
         private readonly ResultsUrlShortener _resultsUrlShortener;
         private readonly SimpleHttpServer _simpleHttpServer;
 #if !DEBUG
@@ -24,6 +27,7 @@ namespace TCTimer
         private readonly string _timerPath = "..\\..\\WebApp\\wwwroot";
 #endif
         private readonly TournamentTimer _tournamentTimer;
+        [CanBeNull] private Ftp _ftp;
         [CanBeNull] private string _customCss;
 
         public TimerForm()
@@ -47,6 +51,9 @@ namespace TCTimer
             }).Start();
 #endif
             _simpleHttpServer = new SimpleHttpServer(_timerPath);
+            _serializationTimer = new Timer(60000);
+            _serializationTimer.Elapsed += WriteTournamentTimer;
+            _serializationTimer.Start();
             WriteTournamentTimer(this, EventArgs.Empty);
         }
 
@@ -88,7 +95,7 @@ namespace TCTimer
             about.ShowDialog(this);
         }
 
-        private void WriteTournamentTimer(object sender, EventArgs eventArgs)
+        private async void WriteTournamentTimer(object sender, EventArgs eventArgs)
         {
             var success = false;
             while (!success)
@@ -101,15 +108,34 @@ namespace TCTimer
                     serializer.WriteObject(writer, _tournamentTimer);
                     success = true;
                 }
-                catch (Exception e)
+                catch
                 {
-                    MessageBox.Show(e.Message);
                     success = false;
                 }
                 finally
                 {
                     writer?.Close();
                 }
+            }
+
+            if (_ftp?.Connected ?? false)
+            {
+                ftpStatusIndicator.BackColor = Color.DodgerBlue;
+                await Task.Run(() =>
+                {
+                    var success2 = false;
+                    while (!success2)
+                    {
+                        if (_ftp == null)
+                        {
+                            success = true;
+                            break;
+                        }
+
+                        success2 = _ftp.UploadFile("timer.xml", _timerPath + "\\timer.xml");
+                    }
+                });
+                ftpStatusIndicator.BackColor = Color.LawnGreen;
             }
         }
 
@@ -153,6 +179,12 @@ namespace TCTimer
         private void breakTimeUpDown_ValueChanged(object sender, EventArgs e)
         {
             _tournamentTimer.DefaultBreakDuration = (int) breakTimeUpDown.Value;
+            _tournamentTimer.OnFileUpdateRequired();
+        }
+
+        private void blinkingDurationNumericUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.DefaultBreakDuration = (int) blinkingDurationNumericUpDown.Value;
             _tournamentTimer.OnFileUpdateRequired();
         }
 
@@ -256,6 +288,7 @@ namespace TCTimer
         {
             var roundsManager = new RoundsManager(_tournamentTimer);
             roundsManager.ShowDialog();
+            blinkingDurationNumericUpDown.Value = _tournamentTimer.DefaultBlinkingDuration;
             minutesPerRoundUpDown.Value = _tournamentTimer.DefaultRoundDuration;
             breakTimeUpDown.Value = _tournamentTimer.DefaultBreakDuration;
             numberOfRoundsUpDown.Value = _tournamentTimer.NumberOfRounds;
@@ -306,6 +339,79 @@ namespace TCTimer
             var filePath = openFileDialog.FileName;
             _customCss = _tournamentTimer.Style = File.ReadAllText(filePath);
             customCSSLabel.Text = Path.GetFileName(filePath);
+        }
+
+        private async void checkBoxFtpEnabled_CheckedChanged(object sender, EventArgs e)
+        {
+            await CheckBoxFtpChanged();
+        }
+
+        private async Task CheckBoxFtpChanged()
+        {
+            textBoxFtpPassword.Enabled = textBoxFtpPath.Enabled = textBoxFtpUsername.Enabled =
+                buttonLoadLastCredentials.Enabled = !checkBoxFtpEnabled.Checked;
+            ftpStatusIndicator.BackColor = checkBoxFtpEnabled.Checked ? Color.Yellow : Color.Red;
+
+            if (checkBoxFtpEnabled.Checked)
+            {
+                checkBoxFtpEnabled.Enabled = false;
+                await Task.Run(() =>
+                {
+                    try
+                    {
+                        _ftp = new Ftp(textBoxFtpUsername.Text, textBoxFtpPassword.Text, textBoxFtpPath.Text);
+                        _ftp.ConnectAndCreateDirectories();
+                        Settings.Write("LAST_FTP_PATH", textBoxFtpPath.Text);
+                        Settings.Write("LAST_FTP_USERNAME", textBoxFtpUsername.Text);
+                        Settings.Write("LAST_FTP_PASSWORD", textBoxFtpPassword.Text);
+                        ftpStatusIndicator.BackColor = Color.LawnGreen;
+                    }
+                    catch (Exception exception)
+                    {
+                        RunAction(() =>
+                        {
+                            MessageBox.Show($"Can't start FTP {exception.Message}", "Something went wrong",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            checkBoxFtpEnabled.Checked = false;
+                        });
+                    }
+                });
+                checkBoxFtpEnabled.Enabled = true;
+                uploadSupportFilesButton.Enabled = uploadTimerNowButton.Enabled = checkBoxFtpEnabled.Checked;
+            }
+            else
+            {
+                uploadSupportFilesButton.Enabled = uploadTimerNowButton.Enabled = checkBoxFtpEnabled.Checked;
+                _ftp = null;
+            }
+        }
+
+        private void uploadTimerNowButton_Click(object sender, EventArgs e)
+        {
+            if (!_ftp?.Connected ?? true) return;
+            WriteTournamentTimer(this, EventArgs.Empty);
+        }
+
+        private async void uploadSupportFilesButton_Click(object sender, EventArgs e)
+        {
+            if (!_ftp?.Connected ?? true) return;
+            ftpStatusIndicator.BackColor = Color.DodgerBlue;
+            await Task.Run(() =>
+            {
+                var success = false;
+                while (!success)
+                {
+                    success = _ftp.UploadDirectory(_timerPath!);
+                }
+            });
+            ftpStatusIndicator.BackColor = Color.LawnGreen;
+        }
+
+        private void buttonLoadLastCredentials_Click(object sender, EventArgs e)
+        {
+            textBoxFtpPath.Text = Settings.Read("LAST_FTP_PATH") ?? string.Empty;
+            textBoxFtpUsername.Text = Settings.Read("LAST_FTP_USERNAME") ?? string.Empty;
+            textBoxFtpPassword.Text = Settings.Read("LAST_FTP_PASSWORD") ?? string.Empty;
         }
     }
 }

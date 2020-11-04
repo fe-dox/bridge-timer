@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Runtime.Serialization;
 using System.Timers;
+using System.Xml;
 using Utils.Annotations;
 
 namespace Utils
@@ -11,6 +12,7 @@ namespace Utils
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
         private Timer _framesTimer;
+        [DataMember] public DateTime SerializationTimeStamp { get; private set; } = DateTime.Now;
         [DataMember] private decimal _defaultRoundDuration;
         [DataMember] private int _defaultBreakDuration;
         [DataMember] private TimerMessage? _timerMessage;
@@ -358,6 +360,12 @@ namespace Utils
         public void OnFileUpdateRequired()
         {
             FileUpdateRequired?.Invoke(this, EventArgs.Empty);
+        }
+
+        [OnSerializing]
+        internal void OnSerializing(StreamingContext context)
+        {
+            SerializationTimeStamp = DateTime.Now;
         }
 
         [OnDeserialized]

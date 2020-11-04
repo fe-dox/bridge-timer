@@ -166,6 +166,9 @@
     <data name="timerNameTextBox.Location" type="System.Drawing.Point, System.Drawing">
         <value>353, 39</value>
     </data>
+    <data name="timerNameTextBox.MaxLength" type="System.Int32, mscorlib">
+        <value>30</value>
+    </data>
     <data name="timerNameTextBox.Size" type="System.Drawing.Size, System.Drawing">
         <value>447, 20</value>
     </data>

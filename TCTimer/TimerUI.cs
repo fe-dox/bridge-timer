@@ -6,7 +6,6 @@ using System.IO;
 using System.IO.Compression;
 #endif
 using System.Runtime.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TCTimer.Properties;
@@ -18,7 +17,7 @@ namespace TCTimer
 {
     public partial class TimerForm : Form
     {
-        private Timer _serializationTimer;
+        private readonly Timer _serializationTimer;
         private readonly ResultsUrlShortener _resultsUrlShortener;
         private readonly SimpleHttpServer _simpleHttpServer;
 #if !DEBUG
@@ -50,6 +49,8 @@ namespace TCTimer
                 ZipFile.ExtractToDirectory(Application.StartupPath + "\\WebApp.app", _timerPath);
             }).Start();
 #endif
+            customCSSLabel.Text = Settings.Read("APPEARANCE_FILE_NAME") ?? "None selected";
+            _customCss = Settings.Read("APPEARANCE_CUSTOM_CSS_STRING");
             _simpleHttpServer = new SimpleHttpServer(_timerPath);
             _serializationTimer = new Timer(60000);
             _serializationTimer.Elapsed += WriteTournamentTimer;
@@ -339,6 +340,8 @@ namespace TCTimer
             var filePath = openFileDialog.FileName;
             _customCss = _tournamentTimer.Style = File.ReadAllText(filePath);
             customCSSLabel.Text = Path.GetFileName(filePath);
+            Settings.Write("APPEARANCE_FILE_NAME", Path.GetFileName(filePath));
+            Settings.Write("APPEARANCE_CUSTOM_CSS_STRING", _customCss);
         }
 
         private async void checkBoxFtpEnabled_CheckedChanged(object sender, EventArgs e)

@@ -89,6 +89,16 @@
             this.radioHighContrastCSS = new System.Windows.Forms.RadioButton();
             this.radioWhiteOnBlackCSS = new System.Windows.Forms.RadioButton();
             this.radioBlackOnWhiteCSS = new System.Windows.Forms.RadioButton();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).BeginInit();
@@ -100,6 +110,9 @@
             this.menuStrip1.SuspendLayout();
             this.groupBoxFtp.SuspendLayout();
             this.appearanceGroupBox.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // showTimerButton
@@ -521,11 +534,78 @@
             this.radioBlackOnWhiteCSS.UseVisualStyleBackColor = true;
             this.radioBlackOnWhiteCSS.CheckedChanged += new System.EventHandler(this.radioBlackOnWhiteCSS_CheckedChanged);
             // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.checkBox1);
+            this.groupBox4.Controls.Add(this.button1);
+            this.groupBox4.Controls.Add(this.label15);
+            this.groupBox4.Controls.Add(this.label14);
+            this.groupBox4.Controls.Add(this.textBox1);
+            this.groupBox4.Controls.Add(this.numericUpDown2);
+            this.groupBox4.Controls.Add(this.label13);
+            this.groupBox4.Controls.Add(this.label11);
+            this.groupBox4.Controls.Add(this.numericUpDown1);
+            resources.ApplyResources(this.groupBox4, "groupBox4");
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.TabStop = false;
+            // 
+            // checkBox1
+            // 
+            resources.ApplyResources(this.checkBox1, "checkBox1");
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            resources.ApplyResources(this.button1, "button1");
+            this.button1.Name = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label15
+            // 
+            resources.ApplyResources(this.label15, "label15");
+            this.label15.Name = "label15";
+            // 
+            // label14
+            // 
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.Name = "label14";
+            // 
+            // textBox1
+            // 
+            resources.ApplyResources(this.textBox1, "textBox1");
+            this.textBox1.Name = "textBox1";
+            // 
+            // numericUpDown2
+            // 
+            resources.ApplyResources(this.numericUpDown2, "numericUpDown2");
+            this.numericUpDown2.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Value = new decimal(new int[] {60, 0, 0, 0});
+            // 
+            // label13
+            // 
+            resources.ApplyResources(this.label13, "label13");
+            this.label13.Name = "label13";
+            // 
+            // label11
+            // 
+            resources.ApplyResources(this.label11, "label11");
+            this.label11.Name = "label11";
+            // 
+            // numericUpDown1
+            // 
+            resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
+            this.numericUpDown1.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Value = new decimal(new int[] {60, 0, 0, 0});
+            // 
             // TimerForm
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.appearanceGroupBox);
             this.Controls.Add(this.groupBoxFtp);
             this.Controls.Add(this.groupBox3);
@@ -546,6 +626,7 @@
             this.Name = "TimerForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TimerForm_FormClosing);
             this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationNumericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).EndInit();
@@ -561,9 +642,30 @@
             this.groupBoxFtp.PerformLayout();
             this.appearanceGroupBox.ResumeLayout(false);
             this.appearanceGroupBox.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.CheckBox checkBox1;
+
+        private System.Windows.Forms.Button button1;
+
+        private System.Windows.Forms.Label label15;
+
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.TextBox textBox1;
+
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
+
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+
+        private System.Windows.Forms.GroupBox groupBox4;
 
         private System.Windows.Forms.Label customCSSLabel;
 

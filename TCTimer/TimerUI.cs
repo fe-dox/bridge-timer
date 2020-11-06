@@ -367,7 +367,7 @@ namespace TCTimer
                         Settings.Write("LAST_FTP_PATH", textBoxFtpPath.Text);
                         Settings.Write("LAST_FTP_USERNAME", textBoxFtpUsername.Text);
                         Settings.Write("LAST_FTP_PASSWORD", textBoxFtpPassword.Text);
-                        ftpStatusIndicator.BackColor = Color.LawnGreen;
+                        RunAction(() => ftpStatusIndicator.BackColor = Color.LawnGreen);
                     }
                     catch (Exception exception)
                     {

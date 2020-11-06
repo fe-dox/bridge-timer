@@ -9,55 +9,64 @@ else
 {
     <style>@StyleSheet.Default</style>
 }
+@if (_isConnectionLost)
+{
+    <div class="disconnected">Disconnected <span class="emoji">🔌</span></div>
+}
+@if (_showingResults)
+{
+    <iframe width="80%" height="80%" src="http://localhost:55607/0/projector0.html"></iframe>
+}
+else
+{
+    <div class="main">
 
-<div class="main">
-    @if (_isConnectionLost)
-    {
-        <div class="disconnected">Disconnected <span class="emoji">🔌</span></div>
-    }
-    @if (_tournamentTimer != null)
-    {
-        <div class="timer-name">@_tournamentTimer.TimerName</div>
-    }
-    <div class="clock">
-        @if (_tournamentTimer != null && _showingMessage && _tournamentTimer.TimerMessage != null && _tournamentTimer.TimerMessage.ShowFullScreen)
-        {
-            <p>@_tournamentTimer.TimerMessage.Text</p>
-        }
-        else
-        {
-            <div class="clock-time @_blinking">@_clockValue</div>
-            @if (_tournamentTimer != null)
-            {
-                if (_showingMessage && _tournamentTimer.TimerMessage != null)
-                {
-                    <div class="clock-label">@_tournamentTimer.TimerMessage.Text</div>
-                }
-                else if (_tournamentTimer.IsBreak && !string.IsNullOrWhiteSpace(_tournamentTimer.BreakText))
-                {
-                    <div class="clock-label">@_tournamentTimer.BreakText</div>
-                }
-                else if (_tournamentTimer.Finished)
-                {
-                    <div class="clock-label">Finished</div>
-                }
-            }
-        }
-
-    </div>
-    <div class="bottom">
-        <div class="current-time">@_currentTimeValue</div>
-        @if (!string.IsNullOrWhiteSpace(_tournamentTimer?.ResultsUrl))
-        {
-            <div class="results">@_tournamentTimer.ResultsUrl</div>
-        }
-        @* ReSharper disable once HeapView.BoxingAllocation *@
         @if (_tournamentTimer != null)
         {
-            <div class="round">@((_tournamentTimer.CurrentRoundId + 1).ToString())/@_tournamentTimer.NumberOfRounds.ToString()</div>
+            <div class="timer-name">@_tournamentTimer.TimerName</div>
         }
+        <div class="clock">
+
+
+            @if (_tournamentTimer != null && _showingMessage && _tournamentTimer.TimerMessage != null && _tournamentTimer.TimerMessage.ShowFullScreen)
+            {
+                <p>@_tournamentTimer.TimerMessage.Text</p>
+            }
+            else
+            {
+                <div class="clock-time @_blinking">@_clockValue</div>
+                @if (_tournamentTimer != null)
+                {
+                    if (_showingMessage && _tournamentTimer.TimerMessage != null)
+                    {
+                        <div class="clock-label">@_tournamentTimer.TimerMessage.Text</div>
+                    }
+                    else if (_tournamentTimer.IsBreak && !string.IsNullOrWhiteSpace(_tournamentTimer.BreakText))
+                    {
+                        <div class="clock-label">@_tournamentTimer.BreakText</div>
+                    }
+                    else if (_tournamentTimer.Finished)
+                    {
+                        <div class="clock-label">Finished</div>
+                    }
+                }
+            }
+
+        </div>
+        <div class="bottom">
+            <div class="current-time">@_currentTimeValue</div>
+            @if (!string.IsNullOrWhiteSpace(_tournamentTimer?.ResultsUrl))
+            {
+                <div class="results">@_tournamentTimer.ResultsUrl</div>
+            }
+            @* ReSharper disable once HeapView.BoxingAllocation *@
+            @if (_tournamentTimer != null)
+            {
+                <div class="round">@((_tournamentTimer.CurrentRoundId + 1).ToString())/@_tournamentTimer.NumberOfRounds.ToString()</div>
+            }
+        </div>
     </div>
-</div>
+}
 
 
 @code{
@@ -74,6 +83,7 @@ else
     private string _clockValue = "00:00";
     private readonly HttpClient _httpClient = new HttpClient();
     private string _blinking = "";
+    private bool _showingResults = true;
 
     protected override async Task OnInitializedAsync()
     {

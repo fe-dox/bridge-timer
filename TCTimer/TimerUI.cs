@@ -2,10 +2,12 @@
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 #if !DEBUG
 using System.IO.Compression;
 #endif
 using System.Runtime.Serialization;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TCTimer.Properties;
@@ -169,6 +171,7 @@ namespace TCTimer
         {
             _tournamentTimer.NumberOfRounds = (int) numberOfRoundsUpDown.Value;
             _tournamentTimer.OnFileUpdateRequired();
+            UpdateSelectedRoundsLabel();
         }
 
         private void minutesPerRoundUpDown_ValueChanged(object sender, EventArgs e)
@@ -415,6 +418,138 @@ namespace TCTimer
             textBoxFtpPath.Text = Settings.Read("LAST_FTP_PATH") ?? string.Empty;
             textBoxFtpUsername.Text = Settings.Read("LAST_FTP_USERNAME") ?? string.Empty;
             textBoxFtpPassword.Text = Settings.Read("LAST_FTP_PASSWORD") ?? string.Empty;
+        }
+
+        private void resultsIframeCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.ResultsIframeEnabled =
+                resultsIframeVisibilityUpDown.Enabled = iframeSourceTextBox.Enabled =
+                    clockVisibilityDurationUpDown.Enabled = resultsIframeVisibilityUpDown.Enabled =
+                        selectRoundsButton.Enabled = selectedRoundsLabel.Enabled =
+                            enableByDefaultCheckBox.Enabled = resultsIframeCheckBox.Checked;
+            _tournamentTimer.OnFileUpdateRequired();
+            UpdateSelectedRoundsLabel();
+        }
+
+        private void resultsIframeVisibilityUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.ResultsIframeIframeVisibility = (int) resultsIframeVisibilityUpDown.Value;
+            _tournamentTimer.OnFileUpdateRequired();
+        }
+
+        private void clockVisibilityDurationUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.ResultsIframeClockVisibility = (int) clockVisibilityDurationUpDown.Value;
+            _tournamentTimer.OnFileUpdateRequired();
+        }
+
+        private void enableByDefaultCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.DefaultResultsIframeActive = enableByDefaultCheckBox.Checked;
+            _tournamentTimer.OnFileUpdateRequired();
+            UpdateSelectedRoundsLabel();
+        }
+
+        private void iframeSourceTextBox_TextChanged(object sender, EventArgs e)
+        {
+            _tournamentTimer.ResultsIframeSource = iframeSourceTextBox.Text;
+            _tournamentTimer.OnFileUpdateRequired();
+        }
+
+        private void selectRoundsButton_Click(object sender, EventArgs e)
+        {
+            var rounds = _tournamentTimer.RoundsList.Select((o, i) =>
+                new CheckListOption<Round>($"Round {(i + 1).ToString()}" + (o.ResultsIframeActive == null
+                    ? " [DEFAULT]"
+                    : ""), o)).ToList();
+
+            var roundsSelectDialog = new ChooseFromCheckList<Round>(
+                rounds,
+                rounds.Where(o => o.Value.ResultsIframeActive ?? _tournamentTimer.DefaultResultsIframeActive)
+                    .ToList(),
+                "Select rounds", "Select rounds in which results should be shown", true);
+            roundsSelectDialog.ShowDialog();
+
+            // ReSharper disable once ConvertIfStatementToSwitchStatement
+            if (roundsSelectDialog.DialogResult == DialogResult.Cancel) return;
+            if (roundsSelectDialog.DialogResult == DialogResult.Retry)
+            {
+                foreach (var round in _tournamentTimer.RoundsList)
+                {
+                    round.ResultsIframeActive = null;
+                }
+
+                _tournamentTimer.OnFileUpdateRequired();
+                UpdateSelectedRoundsLabel();
+                return;
+            }
+
+
+            foreach (var round in roundsSelectDialog.Selected)
+            {
+                if (_tournamentTimer.DefaultResultsIframeActive && round.ResultsIframeActive == null)
+                {
+                    round.ResultsIframeActive = null;
+                }
+                else
+                {
+                    round.ResultsIframeActive = true;
+                }
+            }
+
+            foreach (var round in roundsSelectDialog.NotSelected)
+            {
+                if (!_tournamentTimer.DefaultResultsIframeActive && round.ResultsIframeActive == null)
+                {
+                    round.ResultsIframeActive = null;
+                }
+                else
+                {
+                    round.ResultsIframeActive = false;
+                }
+            }
+
+            _tournamentTimer.OnFileUpdateRequired();
+            UpdateSelectedRoundsLabel();
+        }
+
+        private void UpdateSelectedRoundsLabel()
+        {
+            var sb = new StringBuilder();
+            var enabledRoundsIds = Enumerable.Range(1, _tournamentTimer.RoundsList.Count).Where(i =>
+                    _tournamentTimer.RoundsList[i - 1].ResultsIframeActive ??
+                    _tournamentTimer.DefaultResultsIframeActive)
+                .ToList();
+
+            for (int i = 0; i < enabledRoundsIds.Count; i++)
+            {
+                var current = enabledRoundsIds[i];
+                var previous = enabledRoundsIds.ElementAtOrDefault(i - 1);
+                var next = enabledRoundsIds.ElementAtOrDefault(i + 1);
+                if (previous == 0)
+                {
+                    sb.Append(current);
+                    continue;
+                }
+
+                if (current - previous == 1)
+                {
+                    if (next - current == 1)
+                    {
+                        continue;
+                    }
+
+                    sb.Append("-");
+                    sb.Append(current);
+                }
+                else
+                {
+                    sb.Append(", ");
+                    sb.Append(current);
+                }
+            }
+
+            selectedRoundsLabel.Text = "Rounds: " + sb;
         }
     }
 }

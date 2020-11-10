@@ -90,15 +90,16 @@
             this.radioWhiteOnBlackCSS = new System.Windows.Forms.RadioButton();
             this.radioBlackOnWhiteCSS = new System.Windows.Forms.RadioButton();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
+            this.enableByDefaultCheckBox = new System.Windows.Forms.CheckBox();
+            this.resultsIframeCheckBox = new System.Windows.Forms.CheckBox();
+            this.selectRoundsButton = new System.Windows.Forms.Button();
+            this.selectedRoundsLabel = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.iframeSourceTextBox = new System.Windows.Forms.TextBox();
+            this.resultsIframeVisibilityUpDown = new System.Windows.Forms.NumericUpDown();
             this.label13 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.clockVisibilityDurationUpDown = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationNumericUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).BeginInit();
@@ -111,8 +112,8 @@
             this.groupBoxFtp.SuspendLayout();
             this.appearanceGroupBox.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.resultsIframeVisibilityUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize) (this.clockVisibilityDurationUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // showTimerButton
@@ -259,7 +260,7 @@
             // 
             resources.ApplyResources(this.tournamentNameTextBox, "tournamentNameTextBox");
             this.tournamentNameTextBox.Name = "tournamentNameTextBox";
-            this.tournamentNameTextBox.TextChanged += new System.EventHandler(this.tournamentNameTextBox_TextChanged);
+            this.tournamentNameTextBox.Leave += new System.EventHandler(this.tournamentNameTextBox_TextChanged);
             // 
             // label7
             // 
@@ -297,7 +298,7 @@
             // 
             resources.ApplyResources(this.breakTextBox, "breakTextBox");
             this.breakTextBox.Name = "breakTextBox";
-            this.breakTextBox.TextChanged += new System.EventHandler(this.breakTextBox_TextChanged);
+            this.breakTextBox.Leave += new System.EventHandler(this.breakTextBox_TextChanged);
             // 
             // groupBox3
             // 
@@ -536,52 +537,64 @@
             // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.checkBox1);
-            this.groupBox4.Controls.Add(this.button1);
-            this.groupBox4.Controls.Add(this.label15);
+            this.groupBox4.Controls.Add(this.enableByDefaultCheckBox);
+            this.groupBox4.Controls.Add(this.resultsIframeCheckBox);
+            this.groupBox4.Controls.Add(this.selectRoundsButton);
+            this.groupBox4.Controls.Add(this.selectedRoundsLabel);
             this.groupBox4.Controls.Add(this.label14);
-            this.groupBox4.Controls.Add(this.textBox1);
-            this.groupBox4.Controls.Add(this.numericUpDown2);
+            this.groupBox4.Controls.Add(this.iframeSourceTextBox);
+            this.groupBox4.Controls.Add(this.resultsIframeVisibilityUpDown);
             this.groupBox4.Controls.Add(this.label13);
             this.groupBox4.Controls.Add(this.label11);
-            this.groupBox4.Controls.Add(this.numericUpDown1);
+            this.groupBox4.Controls.Add(this.clockVisibilityDurationUpDown);
             resources.ApplyResources(this.groupBox4, "groupBox4");
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.TabStop = false;
             // 
-            // checkBox1
+            // enableByDefaultCheckBox
             // 
-            resources.ApplyResources(this.checkBox1, "checkBox1");
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.enableByDefaultCheckBox, "enableByDefaultCheckBox");
+            this.enableByDefaultCheckBox.Name = "enableByDefaultCheckBox";
+            this.enableByDefaultCheckBox.UseVisualStyleBackColor = true;
+            this.enableByDefaultCheckBox.CheckedChanged += new System.EventHandler(this.enableByDefaultCheckBox_CheckedChanged);
             // 
-            // button1
+            // resultsIframeCheckBox
             // 
-            resources.ApplyResources(this.button1, "button1");
-            this.button1.Name = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            resources.ApplyResources(this.resultsIframeCheckBox, "resultsIframeCheckBox");
+            this.resultsIframeCheckBox.Name = "resultsIframeCheckBox";
+            this.resultsIframeCheckBox.UseVisualStyleBackColor = true;
+            this.resultsIframeCheckBox.CheckedChanged += new System.EventHandler(this.resultsIframeCheckBox_CheckedChanged);
             // 
-            // label15
+            // selectRoundsButton
             // 
-            resources.ApplyResources(this.label15, "label15");
-            this.label15.Name = "label15";
+            resources.ApplyResources(this.selectRoundsButton, "selectRoundsButton");
+            this.selectRoundsButton.Name = "selectRoundsButton";
+            this.selectRoundsButton.UseVisualStyleBackColor = true;
+            this.selectRoundsButton.Click += new System.EventHandler(this.selectRoundsButton_Click);
+            // 
+            // selectedRoundsLabel
+            // 
+            resources.ApplyResources(this.selectedRoundsLabel, "selectedRoundsLabel");
+            this.selectedRoundsLabel.Name = "selectedRoundsLabel";
             // 
             // label14
             // 
             resources.ApplyResources(this.label14, "label14");
             this.label14.Name = "label14";
             // 
-            // textBox1
+            // iframeSourceTextBox
             // 
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.Name = "textBox1";
+            resources.ApplyResources(this.iframeSourceTextBox, "iframeSourceTextBox");
+            this.iframeSourceTextBox.Name = "iframeSourceTextBox";
+            this.iframeSourceTextBox.TextChanged += new System.EventHandler(this.iframeSourceTextBox_TextChanged);
             // 
-            // numericUpDown2
+            // resultsIframeVisibilityUpDown
             // 
-            resources.ApplyResources(this.numericUpDown2, "numericUpDown2");
-            this.numericUpDown2.Maximum = new decimal(new int[] {10000, 0, 0, 0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Value = new decimal(new int[] {60, 0, 0, 0});
+            resources.ApplyResources(this.resultsIframeVisibilityUpDown, "resultsIframeVisibilityUpDown");
+            this.resultsIframeVisibilityUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.resultsIframeVisibilityUpDown.Name = "resultsIframeVisibilityUpDown";
+            this.resultsIframeVisibilityUpDown.Value = new decimal(new int[] {60, 0, 0, 0});
+            this.resultsIframeVisibilityUpDown.ValueChanged += new System.EventHandler(this.resultsIframeVisibilityUpDown_ValueChanged);
             // 
             // label13
             // 
@@ -593,12 +606,13 @@
             resources.ApplyResources(this.label11, "label11");
             this.label11.Name = "label11";
             // 
-            // numericUpDown1
+            // clockVisibilityDurationUpDown
             // 
-            resources.ApplyResources(this.numericUpDown1, "numericUpDown1");
-            this.numericUpDown1.Maximum = new decimal(new int[] {10000, 0, 0, 0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Value = new decimal(new int[] {60, 0, 0, 0});
+            resources.ApplyResources(this.clockVisibilityDurationUpDown, "clockVisibilityDurationUpDown");
+            this.clockVisibilityDurationUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.clockVisibilityDurationUpDown.Name = "clockVisibilityDurationUpDown";
+            this.clockVisibilityDurationUpDown.Value = new decimal(new int[] {60, 0, 0, 0});
+            this.clockVisibilityDurationUpDown.ValueChanged += new System.EventHandler(this.clockVisibilityDurationUpDown_ValueChanged);
             // 
             // TimerForm
             // 
@@ -644,26 +658,27 @@
             this.appearanceGroupBox.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.resultsIframeVisibilityUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize) (this.clockVisibilityDurationUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
 
-        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.NumericUpDown clockVisibilityDurationUpDown;
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox enableByDefaultCheckBox;
+        private System.Windows.Forms.TextBox iframeSourceTextBox;
+        private System.Windows.Forms.NumericUpDown resultsIframeVisibilityUpDown;
+        private System.Windows.Forms.Label selectedRoundsLabel;
+        private System.Windows.Forms.Button selectRoundsButton;
 
-        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.CheckBox resultsIframeCheckBox;
 
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox textBox1;
 
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
 
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
 
         private System.Windows.Forms.GroupBox groupBox4;
 

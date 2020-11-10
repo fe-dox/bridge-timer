@@ -14,6 +14,13 @@ namespace Utils
         [DataMember] private bool? _overtimeAfterRound;
         [DataMember] private string? _breakText;
         [DataMember] private string? _timerName;
+        [DataMember] private bool? _resultsIframeActive;
+
+        public bool? ResultsIframeActive
+        {
+            get => _resultsIframeActive;
+            set => _resultsIframeActive = value;
+        }
 
         public TimeSpan? Duration
         {

@@ -3,20 +3,72 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Runtime.Serialization;
 using System.Timers;
-using System.Xml;
-using Utils.Annotations;
 
 namespace Utils
 {
     [DataContract]
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
-        private Timer _framesTimer;
+        private Timer _clockTimer;
+        private Timer _resultsIframeTimer;
+
         [DataMember] public DateTime SerializationTimeStamp { get; private set; } = DateTime.Now;
+
         [DataMember] private decimal _defaultRoundDuration;
         [DataMember] private int _defaultBreakDuration;
         [DataMember] private TimerMessage? _timerMessage;
         [DataMember] private string _style = StyleSheet.Default;
+        [DataMember] public DateTime ResultsIframeTimerTarget { get; private set; }
+
+        public bool ResultsIframeEnabled
+        {
+            get => _resultsIframeEnabled;
+            set
+            {
+                if (value)
+                    _resultsIframeTimer.Start();
+                else
+                    _resultsIframeTimer.Stop();
+                OnFileUpdateRequired();
+                _resultsIframeEnabled = value;
+            }
+        }
+
+        [DataMember] public bool DefaultResultsIframeActive { get; set; }
+        [DataMember] public string ResultsIframeSource { get; set; } = string.Empty;
+
+        public int ResultsIframeIframeVisibility
+        {
+            get => _resultsIframeIframeVisibility;
+            set
+            {
+                if (_resultsIframeVisible)
+                {
+                    ResultsIframeTimerTarget += new TimeSpan(0, 0, value - _resultsIframeIframeVisibility);
+                }
+
+                _resultsIframeIframeVisibility = value;
+            }
+        }
+
+        public int ResultsIframeClockVisibility
+        {
+            get => _resultsIframeClockVisibility;
+            set
+            {
+                if (!_resultsIframeVisible)
+                {
+                    ResultsIframeTimerTarget += new TimeSpan(0, 0, value - _resultsIframeClockVisibility);
+                }
+
+                _resultsIframeClockVisibility = value;
+            }
+        }
+
+        [DataMember] private bool _resultsIframeVisible;
+        [DataMember] private bool _resultsIframeEnabled;
+        [DataMember] private int _resultsIframeIframeVisibility = 60;
+        [DataMember] private int _resultsIframeClockVisibility = 60;
         [DataMember] public bool Finished { get; private set; }
         [DataMember] public string DefaultBreakText { get; set; } = string.Empty;
         [DataMember] public string DefaultTimerName { get; set; } = string.Empty;
@@ -98,6 +150,14 @@ namespace Utils
         public string TimerName => RoundsList[CurrentRoundId].TimerName ?? DefaultTimerName;
         public bool Overtime => RoundsList[CurrentRoundId].OvertimeAfterRound ?? DefaultOvertimeAfterRound;
 
+        public bool ResultsIframeVisible =>
+            (RoundsList[CurrentRoundId].ResultsIframeActive ?? DefaultResultsIframeActive) &&
+            !string.IsNullOrWhiteSpace(ResultsIframeSource) && ResultsIframeEnabled && _resultsIframeVisible;
+
+        public bool ResultsIframeEnabledInCurrentRound => ResultsIframeEnabled &&
+                                                          (RoundsList[CurrentRoundId].ResultsIframeActive ??
+                                                           DefaultResultsIframeActive);
+
         public TimeSpan BlinkingDuration =>
             RoundsList[CurrentRoundId].BlinkingDuration ?? DefaultBlinkingDurationTimeSpan;
 
@@ -131,10 +191,12 @@ namespace Utils
             DefaultRoundDuration = defaultRoundDuration;
             DefaultBreakDuration = defaultBreakDuration;
             DefaultBlinkingDuration = defaultBlinkingDuration;
-            _framesTimer = new Timer(50);
-            _framesTimer.Elapsed += OnTick;
+            _clockTimer = new Timer(50);
+            _clockTimer.Elapsed += OnTick;
             Target = DateTime.Now + (CurrentRound.Duration ?? DefaultRoundDurationTimeSpan);
             PausedAtTime = DateTime.Now;
+            _resultsIframeTimer = new Timer(200);
+            _resultsIframeTimer.Elapsed += ResultsIframeTimerElapsed;
         }
 
         private void OnRoundsListChanged(object sender,
@@ -287,7 +349,7 @@ namespace Utils
 
             Running = true;
             Finished = false;
-            _framesTimer.Start();
+            _clockTimer.Start();
             OnFileUpdateRequired();
         }
 
@@ -295,7 +357,7 @@ namespace Utils
         {
             PausedAtTime = DateTime.Now;
             Running = false;
-            _framesTimer.Stop();
+            _clockTimer.Stop();
             OnFileUpdateRequired();
         }
 
@@ -357,6 +419,16 @@ namespace Utils
             OnFileUpdateRequired();
         }
 
+        private void ResultsIframeTimerElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
+        {
+            if (ResultsIframeTimerTarget >= DateTime.Now) return;
+
+            ResultsIframeTimerTarget = DateTime.Now + new TimeSpan(0, 0,
+                _resultsIframeVisible ? ResultsIframeClockVisibility : ResultsIframeIframeVisibility);
+            _resultsIframeVisible = !_resultsIframeVisible;
+            if (RoundsList[CurrentRoundId].ResultsIframeActive ?? DefaultResultsIframeActive) OnFileUpdateRequired();
+        }
+
         public void OnFileUpdateRequired()
         {
             FileUpdateRequired?.Invoke(this, EventArgs.Empty);
@@ -371,11 +443,18 @@ namespace Utils
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context)
         {
-            _framesTimer = new Timer(50);
-            _framesTimer.Elapsed += OnTick;
+            _clockTimer = new Timer(50);
+            _clockTimer.Elapsed += OnTick;
             if (Running)
             {
-                _framesTimer.Start();
+                _clockTimer.Start();
+            }
+
+            _resultsIframeTimer = new Timer(200);
+            _resultsIframeTimer.Elapsed += ResultsIframeTimerElapsed;
+            if (ResultsIframeEnabled)
+            {
+                _resultsIframeTimer.Start();
             }
         }
 
@@ -386,8 +465,15 @@ namespace Utils
             if (ReferenceEquals(this, other)) return true;
             return _defaultRoundDuration == other._defaultRoundDuration &&
                    _defaultBreakDuration == other._defaultBreakDuration && Equals(_timerMessage, other._timerMessage) &&
-                   Finished == other.Finished && DefaultBreakText == other.DefaultBreakText &&
-                   DefaultTimerName == other.DefaultTimerName &&
+                   _style == other._style && _resultsIframeVisible == other._resultsIframeVisible &&
+                   _resultsIframeEnabled == other._resultsIframeEnabled &&
+                   _resultsIframeIframeVisibility == other._resultsIframeIframeVisibility &&
+                   _resultsIframeClockVisibility == other._resultsIframeClockVisibility &&
+                   SerializationTimeStamp.Equals(other.SerializationTimeStamp) &&
+                   ResultsIframeTimerTarget.Equals(other.ResultsIframeTimerTarget) &&
+                   DefaultResultsIframeActive == other.DefaultResultsIframeActive &&
+                   ResultsIframeSource == other.ResultsIframeSource && Finished == other.Finished &&
+                   DefaultBreakText == other.DefaultBreakText && DefaultTimerName == other.DefaultTimerName &&
                    DefaultBlinkingDuration == other.DefaultBlinkingDuration &&
                    DefaultOvertimeAfterRound == other.DefaultOvertimeAfterRound && ResultsUrl == other.ResultsUrl &&
                    Running == other.Running && IsBreak == other.IsBreak && RoundsList.Equals(other.RoundsList) &&
@@ -411,6 +497,15 @@ namespace Utils
                 var hashCode = _defaultRoundDuration.GetHashCode();
                 hashCode = (hashCode * 397) ^ _defaultBreakDuration;
                 hashCode = (hashCode * 397) ^ (_timerMessage != null ? _timerMessage.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ _style.GetHashCode();
+                hashCode = (hashCode * 397) ^ _resultsIframeVisible.GetHashCode();
+                hashCode = (hashCode * 397) ^ _resultsIframeEnabled.GetHashCode();
+                hashCode = (hashCode * 397) ^ _resultsIframeIframeVisibility;
+                hashCode = (hashCode * 397) ^ _resultsIframeClockVisibility;
+                hashCode = (hashCode * 397) ^ SerializationTimeStamp.GetHashCode();
+                hashCode = (hashCode * 397) ^ ResultsIframeTimerTarget.GetHashCode();
+                hashCode = (hashCode * 397) ^ DefaultResultsIframeActive.GetHashCode();
+                hashCode = (hashCode * 397) ^ ResultsIframeSource.GetHashCode();
                 hashCode = (hashCode * 397) ^ Finished.GetHashCode();
                 hashCode = (hashCode * 397) ^ DefaultBreakText.GetHashCode();
                 hashCode = (hashCode * 397) ^ DefaultTimerName.GetHashCode();
@@ -424,6 +519,7 @@ namespace Utils
                 hashCode = (hashCode * 397) ^ PausedAtTime.GetHashCode();
                 hashCode = (hashCode * 397) ^ CurrentRoundId;
                 return hashCode;
+                // ReSharper enable NonReadonlyMemberInGetHashCode
             }
         }
     }

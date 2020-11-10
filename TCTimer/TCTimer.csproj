@@ -76,9 +76,6 @@
       <Reference Include="System.Net.Http"/>
       <Reference Include="System.Windows.Forms"/>
       <Reference Include="System.Xml"/>
-      <Reference Include="TCTimer, Version=1.0.2.26338, Culture=neutral, PublicKeyToken=null">
-          <HintPath>bin\Debug\TCTimer.exe</HintPath>
-      </Reference>
   </ItemGroup>
     <ItemGroup>
         <Compile Include="AboutForm.cs">
@@ -86,6 +83,13 @@
         </Compile>
         <Compile Include="AboutForm.Designer.cs">
             <DependentUpon>AboutForm.cs</DependentUpon>
+        </Compile>
+        <Compile Include="CheckListOption.cs"/>
+        <Compile Include="ChooseFromCheckList.cs">
+            <SubType>Form</SubType>
+        </Compile>
+        <Compile Include="ChooseFromCheckList.Designer.cs">
+            <DependentUpon>ChooseFromCheckList.cs</DependentUpon>
         </Compile>
         <Compile Include="RoundsManager.cs"/>
         <Compile Include="RoundsManager.Designer.cs">
@@ -100,6 +104,9 @@
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <EmbeddedResource Include="AboutForm.resx">
             <DependentUpon>AboutForm.cs</DependentUpon>
+        </EmbeddedResource>
+        <EmbeddedResource Include="ChooseFromCheckList.resx">
+            <DependentUpon>ChooseFromCheckList.cs</DependentUpon>
         </EmbeddedResource>
         <EmbeddedResource Include="Properties\Resources.resx">
             <Generator>ResXFileCodeGenerator</Generator>

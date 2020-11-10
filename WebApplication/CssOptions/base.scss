@@ -25,6 +25,11 @@ app {
   height: 100%;
 }
 
+iframe {
+  outline: none;
+  border: none;
+}
+
 .main {
   display: flex;
   flex-direction: column;

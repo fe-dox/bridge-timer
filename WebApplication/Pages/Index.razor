@@ -13,9 +13,9 @@ else
 {
     <div class="disconnected">Disconnected <span class="emoji">🔌</span></div>
 }
-@if (_showingResults)
+@if (_tournamentTimer != null && _tournamentTimer.ResultsIframeVisible)
 {
-    <iframe width="80%" height="80%" src="http://localhost:55607/0/projector0.html"></iframe>
+    <iframe width="100%" height="100%" src="@_tournamentTimer.ResultsIframeSource"></iframe>
 }
 else
 {
@@ -77,13 +77,12 @@ else
     private bool _showingMessage;
     private TimerMessage _currentOrLastMessage;
     private DateTime _showingMessageTarget;
-    private int _connectionErrors = 0;
+    private int _connectionErrors;
     private TournamentTimer _tournamentTimer;
     private readonly DataContractSerializer _serializer = new DataContractSerializer(typeof(TournamentTimer));
     private string _clockValue = "00:00";
     private readonly HttpClient _httpClient = new HttpClient();
     private string _blinking = "";
-    private bool _showingResults = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -117,7 +116,8 @@ else
             var timerDataStream =
                 await httpClient.GetStreamAsync(NavigationManager.BaseUri + "/timer.xml?=" + DateTime.Now);
             var tmpTimer = _serializer.ReadObject(timerDataStream) as TournamentTimer;
-            if (!_tournamentTimer.Equals(tmpTimer) && tmpTimer != null && !(tmpTimer.Target < DateTime.Now && !tmpTimer.Overtime))
+            if (!_tournamentTimer.Equals(tmpTimer) && tmpTimer != null && !(tmpTimer.Target < DateTime.Now && !tmpTimer.Overtime)
+                && !(tmpTimer.ResultsIframeTimerTarget < DateTime.Now && tmpTimer.ResultsIframeEnabled && tmpTimer.ResultsIframeEnabledInCurrentRound))
             {
                 _tournamentTimer = tmpTimer;
             }
@@ -144,7 +144,7 @@ else
                 _refreshTimer.Interval = Math.Min(10000, (_connectionErrors + 1) * 1000);
             }
         }
-        _isConnectionLost = DateTime.Now - _tournamentTimer.SerializationTimeStamp > new TimeSpan(0, 2, 0);
+        _isConnectionLost = DateTime.Now - _tournamentTimer.SerializationTimeStamp > new TimeSpan(0, 1, 10);
         StateHasChanged();
     }
 

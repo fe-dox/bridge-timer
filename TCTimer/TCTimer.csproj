@@ -147,6 +147,7 @@
   <ItemGroup>
     <None Include="Resources\StartWithoutDebug_16x.png" />
     <None Include="Resources\Pause_16x.png" />
+      <Content Include="BuildMSI.ps1"/>
     <Content Include="TCTimer.wxs" />
     <Content Include="timer_16xMD.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

@@ -41,16 +41,16 @@ namespace TCTimer
             // labelTitle
             // 
             this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new System.Drawing.Font("Comfortaa", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.labelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.labelTitle.Location = new System.Drawing.Point(12, 9);
             this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(216, 34);
+            this.labelTitle.Size = new System.Drawing.Size(187, 25);
             this.labelTitle.TabIndex = 0;
             this.labelTitle.Text = "Tournament Timer";
             // 
             // label2
             // 
-            this.label2.Font = new System.Drawing.Font("Comfortaa", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.label2.Location = new System.Drawing.Point(12, 75);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(299, 32);
@@ -60,7 +60,7 @@ namespace TCTimer
             // 
             // label3
             // 
-            this.label3.Font = new System.Drawing.Font("Comfortaa", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.label3.Location = new System.Drawing.Point(12, 107);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(240, 32);
@@ -69,7 +69,7 @@ namespace TCTimer
             // 
             // tournamentVerion
             // 
-            this.tournamentVerion.Font = new System.Drawing.Font("Comfortaa", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.tournamentVerion.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.tournamentVerion.Location = new System.Drawing.Point(12, 43);
             this.tournamentVerion.Name = "tournamentVerion";
             this.tournamentVerion.Size = new System.Drawing.Size(295, 32);
@@ -84,7 +84,9 @@ namespace TCTimer
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.labelTitle);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon) (resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "AboutForm";
             this.Text = "About";
             this.ResumeLayout(false);

@@ -95,9 +95,9 @@
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-              </xsd:sequence>
+                <xsd:sequence>
+                    <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                </xsd:sequence>
                 <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>

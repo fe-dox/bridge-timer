@@ -1,0 +1,6 @@
+﻿<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="publish_static" type="DotNetFolderPublish" factoryName="Publish to folder">
+    <riderPublish runtime="Portable" target_folder="../TCTimer/WebApp/" target_framework="netstandard2.1" uuid_high="-6425923893718334401" uuid_low="-6986655462930815074" />
+    <method v="2" />
+  </configuration>
+</component>

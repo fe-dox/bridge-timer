@@ -1,0 +1,5 @@
+﻿<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="BuildMSI" type="PowerShellRunType" factoryName="PowerShell" scriptUrl="C:\Users\fedox\RiderProjects\TCTimer\TCTimer\BuildMSI.ps1" workingDirectory="C:\Users\fedox\RiderProjects\TCTimer\TCTimer">
+    <method v="2" />
+  </configuration>
+</component>

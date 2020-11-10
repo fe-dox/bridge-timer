@@ -1,0 +1,8 @@
+﻿<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Prepare Stylesheets" type="js.build_tools.grunt">
+    <node-interpreter value="project" />
+    <gruntfile value="$PROJECT_DIR$/WebApplication/Gruntfile.js" />
+    <envs />
+    <method v="2" />
+  </configuration>
+</component>

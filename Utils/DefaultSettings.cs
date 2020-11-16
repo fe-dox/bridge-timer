@@ -8,6 +8,6 @@
         BreakDuration = 3,
         BreakText = 4,
         TimerName = 5,
-        NumberOfRounds = 6,
+        NumberOfRounds = 6
     }
 }

@@ -5,12 +5,12 @@ using System.Net;
 
 namespace Utils
 {
+    // TODO-soon: This will need to be merged with TC
     public class Ftp
     {
+        private readonly string _address;
         private readonly NetworkCredential _credentials;
         private readonly string _path;
-        private readonly string _address;
-        public bool Connected { get; private set; }
 
 
         public Ftp(string username, string password, string path)
@@ -23,6 +23,8 @@ namespace Utils
             _credentials = new NetworkCredential(username, password);
             Connected = false;
         }
+
+        public bool Connected { get; private set; }
 
         public void ConnectAndCreateDirectories()
         {

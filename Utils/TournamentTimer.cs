@@ -10,14 +10,35 @@ namespace Utils
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
         private Timer _clockTimer;
-        private Timer _resultsIframeTimer;
-
-        [DataMember] public DateTime SerializationTimeStamp { get; private set; } = DateTime.Now;
+        [DataMember] private int _defaultBreakDuration;
 
         [DataMember] private decimal _defaultRoundDuration;
-        [DataMember] private int _defaultBreakDuration;
-        [DataMember] private TimerMessage? _timerMessage;
+        [DataMember] private int _resultsIframeClockVisibility = 60;
+        [DataMember] private bool _resultsIframeEnabled;
+        [DataMember] private int _resultsIframeIframeVisibility = 60;
+        private Timer _resultsIframeTimer;
+
+        [DataMember] private bool _resultsIframeVisible;
         [DataMember] private string _style = StyleSheet.Default;
+        [DataMember] private TimerMessage? _timerMessage;
+
+        public TournamentTimer(int numberOfRounds, decimal defaultRoundDuration, int defaultBreakDuration,
+            int defaultBlinkingDuration)
+        {
+            RoundsList.CollectionChanged += OnRoundsListChanged;
+            NumberOfRounds = numberOfRounds;
+            DefaultRoundDuration = defaultRoundDuration;
+            DefaultBreakDuration = defaultBreakDuration;
+            DefaultBlinkingDuration = defaultBlinkingDuration;
+            _clockTimer = new Timer(50);
+            _clockTimer.Elapsed += OnTick;
+            Target = DateTime.Now + (CurrentRound.Duration ?? DefaultRoundDurationTimeSpan);
+            PausedAtTime = DateTime.Now;
+            _resultsIframeTimer = new Timer(200);
+            _resultsIframeTimer.Elapsed += ResultsIframeTimerElapsed;
+        }
+
+        [DataMember] public DateTime SerializationTimeStamp { get; private set; } = DateTime.Now;
         [DataMember] public DateTime ResultsIframeTimerTarget { get; private set; }
 
         public bool ResultsIframeEnabled
@@ -37,6 +58,7 @@ namespace Utils
         [DataMember] public bool DefaultResultsIframeActive { get; set; }
         [DataMember] public string ResultsIframeSource { get; set; } = string.Empty;
 
+        // TODO: The name is not clear - it doesn't show that it takes the number of seconds. Better name or better type please (the latter would be better).
         public int ResultsIframeIframeVisibility
         {
             get => _resultsIframeIframeVisibility;
@@ -51,6 +73,7 @@ namespace Utils
             }
         }
 
+        // TODO: The name is not clear - it doesn't show that it takes the number of seconds. Better name or better type please (the latter would be better).
         public int ResultsIframeClockVisibility
         {
             get => _resultsIframeClockVisibility;
@@ -65,16 +88,12 @@ namespace Utils
             }
         }
 
-        [DataMember] private bool _resultsIframeVisible;
-        [DataMember] private bool _resultsIframeEnabled;
-        [DataMember] private int _resultsIframeIframeVisibility = 60;
-        [DataMember] private int _resultsIframeClockVisibility = 60;
         [DataMember] public bool Finished { get; private set; }
         [DataMember] public string DefaultBreakText { get; set; } = string.Empty;
         [DataMember] public string DefaultTimerName { get; set; } = string.Empty;
         [DataMember] public int DefaultBlinkingDuration { get; set; }
 
-
+        // TODO: The name is not clear - it doesn't show that it takes the number of minutes. Better name or better type please (the latter would be better).
         public decimal DefaultRoundDuration
         {
             get => _defaultRoundDuration;
@@ -93,6 +112,7 @@ namespace Utils
             }
         }
 
+        // TODO: The name is not clear - it doesn't show that it takes the number of seconds. Better name or better type please (the latter would be better).
         public int DefaultBreakDuration
         {
             get => _defaultBreakDuration;
@@ -140,12 +160,6 @@ namespace Utils
         [DataMember] public DateTime PausedAtTime { get; private set; }
         [DataMember] public int CurrentRoundId { get; private set; }
 
-        public event EventHandler<DateTime>? SettingsChanged;
-        public event EventHandler<DateTime>? Ticked;
-        public event EventHandler? OnFinished;
-        public event EventHandler<DefaultSettings>? DefaultSettingsChanged;
-        public event EventHandler? FileUpdateRequired;
-
         public string BreakText => RoundsList[CurrentRoundId].BreakText ?? DefaultBreakText;
         public string TimerName => RoundsList[CurrentRoundId].TimerName ?? DefaultTimerName;
         public bool Overtime => RoundsList[CurrentRoundId].OvertimeAfterRound ?? DefaultOvertimeAfterRound;
@@ -171,11 +185,13 @@ namespace Utils
             get => RoundsList.Count;
             set
             {
+                // TODO Enumerable.Range().Select(...)
                 while (value > RoundsList.Count)
                 {
                     RoundsList.Add(new Round());
                 }
 
+                // TODO RoundsList.Take()
                 while (value < RoundsList.Count && value > CurrentRoundId)
                 {
                     RoundsList.RemoveAt(RoundsList.Count - 1);
@@ -183,27 +199,41 @@ namespace Utils
             }
         }
 
-        public TournamentTimer(int numberOfRounds, decimal defaultRoundDuration, int defaultBreakDuration,
-            int defaultBlinkingDuration)
+
+        public bool Equals(TournamentTimer? other)
         {
-            RoundsList.CollectionChanged += OnRoundsListChanged;
-            NumberOfRounds = numberOfRounds;
-            DefaultRoundDuration = defaultRoundDuration;
-            DefaultBreakDuration = defaultBreakDuration;
-            DefaultBlinkingDuration = defaultBlinkingDuration;
-            _clockTimer = new Timer(50);
-            _clockTimer.Elapsed += OnTick;
-            Target = DateTime.Now + (CurrentRound.Duration ?? DefaultRoundDurationTimeSpan);
-            PausedAtTime = DateTime.Now;
-            _resultsIframeTimer = new Timer(200);
-            _resultsIframeTimer.Elapsed += ResultsIframeTimerElapsed;
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return _defaultRoundDuration == other._defaultRoundDuration &&
+                   _defaultBreakDuration == other._defaultBreakDuration && Equals(_timerMessage, other._timerMessage) &&
+                   _style == other._style && _resultsIframeVisible == other._resultsIframeVisible &&
+                   _resultsIframeEnabled == other._resultsIframeEnabled &&
+                   _resultsIframeIframeVisibility == other._resultsIframeIframeVisibility &&
+                   _resultsIframeClockVisibility == other._resultsIframeClockVisibility &&
+                   SerializationTimeStamp.Equals(other.SerializationTimeStamp) &&
+                   ResultsIframeTimerTarget.Equals(other.ResultsIframeTimerTarget) &&
+                   DefaultResultsIframeActive == other.DefaultResultsIframeActive &&
+                   ResultsIframeSource == other.ResultsIframeSource && Finished == other.Finished &&
+                   DefaultBreakText == other.DefaultBreakText && DefaultTimerName == other.DefaultTimerName &&
+                   DefaultBlinkingDuration == other.DefaultBlinkingDuration &&
+                   DefaultOvertimeAfterRound == other.DefaultOvertimeAfterRound && ResultsUrl == other.ResultsUrl &&
+                   Running == other.Running && IsBreak == other.IsBreak && RoundsList.Equals(other.RoundsList) &&
+                   Target.Equals(other.Target) && PausedAtTime.Equals(other.PausedAtTime) &&
+                   CurrentRoundId == other.CurrentRoundId;
         }
+
+        public event EventHandler<DateTime>? SettingsChanged;
+        public event EventHandler<DateTime>? Ticked;
+        public event EventHandler? OnFinished;
+        public event EventHandler<DefaultSettings>? DefaultSettingsChanged;
+        public event EventHandler? FileUpdateRequired;
 
         private void OnRoundsListChanged(object sender,
             NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
             switch (notifyCollectionChangedEventArgs.Action)
             {
+                // TODO Hm, smart! I didn't knew it existed and I wrote it myself. Feel free to remove this TODO once you read it.
                 case NotifyCollectionChangedAction.Add:
                 {
                     foreach (Round round in notifyCollectionChangedEventArgs.NewItems)
@@ -254,6 +284,7 @@ namespace Utils
 
                     break;
                 }
+                // TODO Why don't you care about those?
                 case NotifyCollectionChangedAction.Replace:
                     break;
                 case NotifyCollectionChangedAction.Move:
@@ -268,11 +299,13 @@ namespace Utils
         private void RoundPropertyChanged(object sender, (string, TimeSpan?) valueTuple)
         {
             var (propertyName, newValue) = valueTuple;
+            // TODO Can this happen?
             if (!(sender is Round changedRound)) return;
 
 
             switch (propertyName)
             {
+                // TODO I would prefare [nameof(Round.Duration)] - then if the name of Round.Duration changes this code will still work.
                 case "Duration":
                 {
                     if (RoundsList.IndexOf(changedRound) != CurrentRoundId) break;
@@ -361,6 +394,7 @@ namespace Utils
             OnFileUpdateRequired();
         }
 
+        // TODO Those two functions are very similar. Refactor?
         public void AddMinute()
         {
             Target += new TimeSpan(0, 1, 0);
@@ -412,6 +446,7 @@ namespace Utils
 
             IsBreak = false;
 
+            // TODO: Why do you need to call this twice?
             OnFileUpdateRequired();
             if (Running) return;
             PausedAtTime = DateTime.Now;
@@ -443,6 +478,7 @@ namespace Utils
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context)
         {
+            // TODO: Code repetition with the constructor. Factor out [initializeTimers]?
             _clockTimer = new Timer(50);
             _clockTimer.Elapsed += OnTick;
             if (Running)
@@ -458,34 +494,11 @@ namespace Utils
             }
         }
 
-
-        public bool Equals(TournamentTimer? other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return _defaultRoundDuration == other._defaultRoundDuration &&
-                   _defaultBreakDuration == other._defaultBreakDuration && Equals(_timerMessage, other._timerMessage) &&
-                   _style == other._style && _resultsIframeVisible == other._resultsIframeVisible &&
-                   _resultsIframeEnabled == other._resultsIframeEnabled &&
-                   _resultsIframeIframeVisibility == other._resultsIframeIframeVisibility &&
-                   _resultsIframeClockVisibility == other._resultsIframeClockVisibility &&
-                   SerializationTimeStamp.Equals(other.SerializationTimeStamp) &&
-                   ResultsIframeTimerTarget.Equals(other.ResultsIframeTimerTarget) &&
-                   DefaultResultsIframeActive == other.DefaultResultsIframeActive &&
-                   ResultsIframeSource == other.ResultsIframeSource && Finished == other.Finished &&
-                   DefaultBreakText == other.DefaultBreakText && DefaultTimerName == other.DefaultTimerName &&
-                   DefaultBlinkingDuration == other.DefaultBlinkingDuration &&
-                   DefaultOvertimeAfterRound == other.DefaultOvertimeAfterRound && ResultsUrl == other.ResultsUrl &&
-                   Running == other.Running && IsBreak == other.IsBreak && RoundsList.Equals(other.RoundsList) &&
-                   Target.Equals(other.Target) && PausedAtTime.Equals(other.PausedAtTime) &&
-                   CurrentRoundId == other.CurrentRoundId;
-        }
-
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((TournamentTimer) obj);
         }
 

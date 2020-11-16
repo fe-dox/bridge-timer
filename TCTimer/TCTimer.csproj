@@ -61,70 +61,74 @@
     <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <ItemGroup>
-      <Reference Include="Microsoft.VisualBasic.Compatibility"/>
-      <Reference Include="System"/>
-      <Reference Include="System.Core"/>
-      <Reference Include="System.IO.Compression.FileSystem"/>
-      <Reference Include="System.Runtime.Serialization"/>
-      <Reference Include="System.Web"/>
-      <Reference Include="System.Xml.Linq"/>
-      <Reference Include="System.Data.DataSetExtensions"/>
-      <Reference Include="Microsoft.CSharp"/>
-      <Reference Include="System.Data"/>
-      <Reference Include="System.Deployment"/>
-      <Reference Include="System.Drawing"/>
-      <Reference Include="System.Net.Http"/>
-      <Reference Include="System.Windows.Forms"/>
-      <Reference Include="System.Xml"/>
+    <Reference Include="Microsoft.VisualBasic.Compatibility" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
-    <ItemGroup>
-        <Compile Include="AboutForm.cs">
-            <SubType>Form</SubType>
-        </Compile>
-        <Compile Include="AboutForm.Designer.cs">
-            <DependentUpon>AboutForm.cs</DependentUpon>
-        </Compile>
-        <Compile Include="CheckListOption.cs"/>
-        <Compile Include="ChooseFromCheckList.cs">
-            <SubType>Form</SubType>
-        </Compile>
-        <Compile Include="ChooseFromCheckList.Designer.cs">
-            <DependentUpon>ChooseFromCheckList.cs</DependentUpon>
-        </Compile>
-        <Compile Include="RoundsManager.cs"/>
-        <Compile Include="RoundsManager.Designer.cs">
-            <DependentUpon>RoundsManager.cs</DependentUpon>
-        </Compile>
-        <Compile Include="Settings.cs"/>
-        <Compile Include="TimerUI.cs"/>
-        <Compile Include="TimerUI.Designer.cs">
-            <DependentUpon>TimerUI.cs</DependentUpon>
-        </Compile>
-        <Compile Include="Program.cs"/>
-        <Compile Include="Properties\AssemblyInfo.cs"/>
-        <EmbeddedResource Include="AboutForm.resx">
-            <DependentUpon>AboutForm.cs</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="ChooseFromCheckList.resx">
-            <DependentUpon>ChooseFromCheckList.cs</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Properties\Resources.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <Compile Include="Properties\Resources.Designer.cs">
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Resources.resx</DependentUpon>
-            <DesignTime>True</DesignTime>
-        </Compile>
-        <EmbeddedResource Include="RoundsManager.resx">
-            <DependentUpon>RoundsManager.cs</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="TimerUI.resx">
-            <DependentUpon>TimerUI.cs</DependentUpon>
-        </EmbeddedResource>
-        <None Include="app.manifest"/>
+  <ItemGroup>
+    <Compile Include="AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CheckListOption.cs" />
+    <Compile Include="ChooseFromCheckList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChooseFromCheckList.Designer.cs">
+      <DependentUpon>ChooseFromCheckList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RoundsManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RoundsManager.Designer.cs">
+      <DependentUpon>RoundsManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="TimerUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TimerUI.Designer.cs">
+      <DependentUpon>TimerUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ChooseFromCheckList.resx">
+      <DependentUpon>ChooseFromCheckList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="RoundsManager.resx">
+      <DependentUpon>RoundsManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TimerUI.resx">
+      <DependentUpon>TimerUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -147,7 +151,7 @@
   <ItemGroup>
     <None Include="Resources\StartWithoutDebug_16x.png" />
     <None Include="Resources\Pause_16x.png" />
-      <Content Include="BuildMSI.ps1"/>
+    <Content Include="BuildMSI.ps1" />
     <Content Include="TCTimer.wxs" />
     <Content Include="timer_16xMD.ico">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

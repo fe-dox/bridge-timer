@@ -5,8 +5,10 @@ using System.Net.Http;
 
 namespace Utils
 {
+    // TODO: Can this class be made static?
     public class ResultsUrlShortener
     {
+        // TODO: can it happen that ShortenUrl will be called multiple times concurrently? If so, should this be ConcurrentDictionary?
         private readonly Dictionary<Uri, Uri> _shortenedUrls = new Dictionary<Uri, Uri>();
 
         public Uri ShortenUrl(Uri uri)
@@ -30,8 +32,9 @@ namespace Utils
             {
                 _shortenedUrls.Add(uri, shortenedUrl);
             }
-            catch (ArgumentException e)
+            catch (ArgumentException)
             {
+                // TODO-someday: In the future log this error somewhere
                 // ignore
             }
 

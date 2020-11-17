@@ -3,9 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-#if !DEBUG
-using System.IO.Compression;
-#endif
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +11,10 @@ using TCTimer.Properties;
 using Utils;
 using Utils.Annotations;
 using Timer = System.Timers.Timer;
+
+#if !DEBUG
+using System.IO.Compression;
+#endif
 
 namespace TCTimer
 {
@@ -43,6 +44,7 @@ namespace TCTimer
             _tournamentTimer.FileUpdateRequired += WriteTournamentTimer;
             if (!Directory.Exists(_timerPath))
             {
+                // TODO: What if exception here?
                 Directory.CreateDirectory(_timerPath);
             }
 #if !DEBUG
@@ -51,10 +53,12 @@ namespace TCTimer
                 ZipFile.ExtractToDirectory(Application.StartupPath + "\\WebApp.app", _timerPath);
             }).Start();
 #endif
+            // TODO: Constant
             customCSSLabel.Text = Settings.Read("APPEARANCE_FILE_NAME") ?? "None selected";
+            // TODO: Constant
             _customCss = Settings.Read("APPEARANCE_CUSTOM_CSS_STRING");
             _simpleHttpServer = new SimpleHttpServer(_timerPath);
-            _serializationTimer = new Timer(60000);
+            _serializationTimer = new Timer(60_000);
             _serializationTimer.Elapsed += WriteTournamentTimer;
             _serializationTimer.Start();
             WriteTournamentTimer(this, EventArgs.Empty);
@@ -74,6 +78,7 @@ namespace TCTimer
         {
             if (MessageBox.Show("Are you sure you want to close this window?", "Are you sure?",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) formClosingEvent.Cancel = true;
+            // TODO: Why is this done independently of whether we closed or not?
             _simpleHttpServer.Stop();
 #if !DEBUG
             try
@@ -101,9 +106,11 @@ namespace TCTimer
         private async void WriteTournamentTimer(object sender, EventArgs eventArgs)
         {
             var success = false;
+            // TODO: This can never end and hang indefinitely?
             while (!success)
             {
                 var serializer = new DataContractSerializer(typeof(TournamentTimer));
+                // TODO: [using] instead of this
                 FileStream writer = null;
                 try
                 {
@@ -126,7 +133,9 @@ namespace TCTimer
                 ftpStatusIndicator.BackColor = Color.DodgerBlue;
                 await Task.Run(() =>
                 {
+                    // TODO: What does 2 mean? Why not just success?
                     var success2 = false;
+                    // TODO: Again might be infinite loop
                     while (!success2)
                     {
                         if (_ftp == null)
@@ -150,11 +159,12 @@ namespace TCTimer
                     ? (target - DateTime.Now).ToString(@"hh\:mm\:ss")
                     : "-" + (target - DateTime.Now).ToString(@"hh\:mm\:ss");
                 currentRoundLabel.Text =
-                    _tournamentTimer.IsBreak ? "Break" : $@"Round {(_tournamentTimer.CurrentRoundId + 1).ToString()}";
+                    _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRoundId + 1}";
                 numberOfRoundsUpDown.Minimum = _tournamentTimer.CurrentRoundId + 1;
             });
         }
 
+        // TODO: Same function in different place. Move to utils.
         private void RunAction(Action action)
         {
             if (InvokeRequired)
@@ -223,6 +233,7 @@ namespace TCTimer
             }
             catch
             {
+                // TODO: Display exception that occurred?
                 MessageBox.Show("Couldn't shorten URL", "Something went wrong", MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -335,7 +346,7 @@ namespace TCTimer
         {
             using var openFileDialog = new OpenFileDialog
             {
-                Filter = @"css files (*.css)|*.css|All files (*.*)|*.*",
+                Filter = @"css files (*.css)|*.css|All files|*",
                 FilterIndex = 2,
                 RestoreDirectory = true
             };
@@ -343,7 +354,9 @@ namespace TCTimer
             var filePath = openFileDialog.FileName;
             _customCss = _tournamentTimer.Style = File.ReadAllText(filePath);
             customCSSLabel.Text = Path.GetFileName(filePath);
+            // TODO: Constant
             Settings.Write("APPEARANCE_FILE_NAME", Path.GetFileName(filePath));
+            // TODO: Constant
             Settings.Write("APPEARANCE_CUSTOM_CSS_STRING", _customCss);
         }
 
@@ -367,6 +380,7 @@ namespace TCTimer
                     {
                         _ftp = new Ftp(textBoxFtpUsername.Text, textBoxFtpPassword.Text, textBoxFtpPath.Text);
                         _ftp.ConnectAndCreateDirectories();
+                        // TODO: Constants
                         Settings.Write("LAST_FTP_PATH", textBoxFtpPath.Text);
                         Settings.Write("LAST_FTP_USERNAME", textBoxFtpUsername.Text);
                         Settings.Write("LAST_FTP_PASSWORD", textBoxFtpPassword.Text);
@@ -415,6 +429,7 @@ namespace TCTimer
 
         private void buttonLoadLastCredentials_Click(object sender, EventArgs e)
         {
+            // TODO: Constants
             textBoxFtpPath.Text = Settings.Read("LAST_FTP_PATH") ?? string.Empty;
             textBoxFtpUsername.Text = Settings.Read("LAST_FTP_USERNAME") ?? string.Empty;
             textBoxFtpPassword.Text = Settings.Read("LAST_FTP_PASSWORD") ?? string.Empty;
@@ -459,7 +474,7 @@ namespace TCTimer
         private void selectRoundsButton_Click(object sender, EventArgs e)
         {
             var rounds = _tournamentTimer.RoundsList.Select((o, i) =>
-                new CheckListOption<Round>($"Round {(i + 1).ToString()}" + (o.ResultsIframeActive == null
+                new CheckListOption<Round>($"Round {i + 1}" + (o.ResultsIframeActive == null
                     ? " [DEFAULT]"
                     : ""), o)).ToList();
 
@@ -521,7 +536,7 @@ namespace TCTimer
                     _tournamentTimer.DefaultResultsIframeActive)
                 .ToList();
 
-            for (int i = 0; i < enabledRoundsIds.Count; i++)
+            for (var i = 0; i < enabledRoundsIds.Count; i++)
             {
                 var current = enabledRoundsIds[i];
                 var previous = enabledRoundsIds.ElementAtOrDefault(i - 1);

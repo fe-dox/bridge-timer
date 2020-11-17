@@ -60,11 +60,11 @@ namespace TCTimer
             this.setToDefaultToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.addRoundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.breakDurationUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.roundsDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blinkingDurationUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.breakDurationUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minutesPerRoundUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberOfRoundsUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundsDataGridView)).BeginInit();
             this.roundContextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,34 +124,66 @@ namespace TCTimer
             // blinkingDurationUpDown
             // 
             resources.ApplyResources(this.blinkingDurationUpDown, "blinkingDurationUpDown");
-            this.blinkingDurationUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.blinkingDurationUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.blinkingDurationUpDown.Name = "blinkingDurationUpDown";
-            this.blinkingDurationUpDown.Value = new decimal(new int[] {90, 0, 0, 0});
+            this.blinkingDurationUpDown.Value = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
             this.blinkingDurationUpDown.ValueChanged += new System.EventHandler(this.blinkingDurationUpDown_ValueChanged);
             // 
             // breakDurationUpDown
             // 
             resources.ApplyResources(this.breakDurationUpDown, "breakDurationUpDown");
-            this.breakDurationUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.breakDurationUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.breakDurationUpDown.Name = "breakDurationUpDown";
-            this.breakDurationUpDown.Value = new decimal(new int[] {30, 0, 0, 0});
+            this.breakDurationUpDown.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             this.breakDurationUpDown.ValueChanged += new System.EventHandler(this.breakDurationUpDown_ValueChanged);
             // 
             // minutesPerRoundUpDown
             // 
             this.minutesPerRoundUpDown.DecimalPlaces = 1;
             resources.ApplyResources(this.minutesPerRoundUpDown, "minutesPerRoundUpDown");
-            this.minutesPerRoundUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.minutesPerRoundUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.minutesPerRoundUpDown.Name = "minutesPerRoundUpDown";
-            this.minutesPerRoundUpDown.Value = new decimal(new int[] {165, 0, 0, 65536});
+            this.minutesPerRoundUpDown.Value = new decimal(new int[] {
+            165,
+            0,
+            0,
+            65536});
             this.minutesPerRoundUpDown.ValueChanged += new System.EventHandler(this.minutesPerRoundUpDown_ValueChanged_1);
             // 
             // numberOfRoundsUpDown
             // 
             resources.ApplyResources(this.numberOfRoundsUpDown, "numberOfRoundsUpDown");
-            this.numberOfRoundsUpDown.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numberOfRoundsUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numberOfRoundsUpDown.Name = "numberOfRoundsUpDown";
-            this.numberOfRoundsUpDown.Value = new decimal(new int[] {12, 0, 0, 0});
+            this.numberOfRoundsUpDown.Value = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
             this.numberOfRoundsUpDown.ValueChanged += new System.EventHandler(this.numberOfRoundsUpDown_ValueChanged);
             // 
             // label1
@@ -176,8 +208,15 @@ namespace TCTimer
             resources.ApplyResources(this.roundsDataGridView, "roundsDataGridView");
             this.roundsDataGridView.CausesValidation = false;
             this.roundsDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.roundsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {this.Duration, this.BlinkingDuration, this.Overtime, this.BreakDuration, this.BrakText, this.TimerName});
+            this.roundsDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Duration,
+            this.BlinkingDuration,
+            this.Overtime,
+            this.BreakDuration,
+            this.BrakText,
+            this.TimerName});
             this.roundsDataGridView.Name = "roundsDataGridView";
+            this.roundsDataGridView.RowHeadersVisible = false;
             this.roundsDataGridView.RowTemplate.ContextMenuStrip = this.roundContextMenuStrip;
             this.roundsDataGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.roundsDataGridView_CellValidating);
             this.roundsDataGridView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.roundsDataGridView_MouseDown);
@@ -214,7 +253,10 @@ namespace TCTimer
             // 
             // roundContextMenuStrip
             // 
-            this.roundContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.deleteToolStripMenuItem, this.setToDefaultToolStripMenuItem, this.addRoundToolStripMenuItem});
+            this.roundContextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteToolStripMenuItem,
+            this.setToDefaultToolStripMenuItem,
+            this.addRoundToolStripMenuItem});
             this.roundContextMenuStrip.Name = "roundContextMenuStrip";
             resources.ApplyResources(this.roundContextMenuStrip, "roundContextMenuStrip");
             // 
@@ -246,13 +288,14 @@ namespace TCTimer
             this.Name = "RoundsManager";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.breakDurationUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.roundsDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blinkingDurationUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.breakDurationUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minutesPerRoundUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberOfRoundsUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.roundsDataGridView)).EndInit();
             this.roundContextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         private System.Windows.Forms.ToolStripMenuItem addRoundToolStripMenuItem;

@@ -25,6 +25,7 @@ namespace TCTimer
             UpdateRounds();
         }
 
+        // TODO This should be in some Utils file. BTW I have to do the same in TC.
         private void RunAction(Action action)
         {
             if (InvokeRequired)
@@ -40,7 +41,7 @@ namespace TCTimer
 
         private void UpdateColumn(DefaultSettings defaultSettings)
         {
-            for (int i = 0; i < roundsDataGridView.Rows.Count; i++)
+            for (var i = 0; i < roundsDataGridView.Rows.Count; i++)
             {
                 var round = _tournamentTimer.RoundsList[i];
                 if (defaultSettings switch
@@ -84,20 +85,10 @@ namespace TCTimer
                 switch (defaultSettings)
                 {
                     case DefaultSettings.TimerName:
-                        UpdateColumn(defaultSettings);
-                        break;
                     case DefaultSettings.BreakText:
-                        UpdateColumn(defaultSettings);
-                        break;
                     case DefaultSettings.BreakDuration:
-                        UpdateColumn(defaultSettings);
-                        break;
                     case DefaultSettings.BlinkingDuration:
-                        UpdateColumn(defaultSettings);
-                        break;
                     case DefaultSettings.AfterRoundOvertime:
-                        UpdateColumn(defaultSettings);
-                        break;
                     case DefaultSettings.RoundDuration:
                         UpdateColumn(defaultSettings);
                         break;
@@ -129,14 +120,16 @@ namespace TCTimer
         private void UpdateRounds()
         {
             roundsDataGridView.Rows.Clear();
-            foreach (Round round in _tournamentTimer.RoundsList)
+            foreach (var round in _tournamentTimer.RoundsList)
             {
                 AddRoundToDataGridView(round);
             }
         }
 
+        // TODO: Why do you need this function at all? What is it's purpose? Does it achieve single select? If so you can just set MultiSelect to false on dataGridView (it's a property)
         private void roundsDataGridView_MouseDown(object sender, EventArgs eventArgs)
         {
+            // TODO: The argument of this function should just be MouseEventArgs
             if (!(eventArgs is MouseEventArgs mouseEventArgs)) return;
             if (mouseEventArgs.Button != MouseButtons.Right) return;
             var hitTestInfo = roundsDataGridView.HitTest(mouseEventArgs.X, mouseEventArgs.Y);
@@ -200,6 +193,7 @@ namespace TCTimer
         {
             foreach (DataGridViewCell cell in roundsDataGridView.SelectedCells)
             {
+                // TODO: Some error message
                 if (_tournamentTimer.RoundsList.Count == 1) break;
                 try
                 {
@@ -207,6 +201,7 @@ namespace TCTimer
                 }
                 catch
                 {
+                    // TODO: Some error message
                     // Ignore 
                 }
             }
@@ -258,6 +253,7 @@ namespace TCTimer
 
         private static bool GetDecimalFromCellValue(string value, out decimal result)
         {
+            // TODO: Instead of all this just decimal.TryParse?
             var numbersRegex = new Regex(@"(\d+(\.\d+)?)", RegexOptions.Compiled);
             var match = numbersRegex.Match(value);
 
@@ -273,6 +269,7 @@ namespace TCTimer
 
         private void roundsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
+            // TODO: e.Cancel = false is the default. You don't have to set it.
             decimal result;
             if (_tournamentTimer.RoundsList.Count <= e.RowIndex) return;
             switch (e.ColumnIndex)

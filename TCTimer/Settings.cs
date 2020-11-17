@@ -1,13 +1,13 @@
-﻿using System;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Utils.Annotations;
 
 namespace TCTimer
 {
+    // TODO: Should be static?
     public class Settings
     {
-        private static readonly RegistryKey BaseKey = Registry.CurrentUser;
         private const string SettingsKey = "SOFTWARE\\TC_TIMER\\SETTINGS";
+        private static readonly RegistryKey BaseKey = Registry.CurrentUser;
 
         public static void Write(string key, string value)
         {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Timers;
 
@@ -10,32 +11,47 @@ namespace Utils
     public class TournamentTimer : IEquatable<TournamentTimer>
     {
         private Timer _clockTimer;
-        [DataMember] private int _defaultBreakDuration;
+        [DataMember] private int _defaultBreakDurationSeconds;
 
-        [DataMember] private decimal _defaultRoundDuration;
-        [DataMember] private int _resultsIframeClockVisibility = 60;
+        [DataMember] private decimal _defaultRoundDurationMinutes;
+        [DataMember] private int _resultsIframeClockVisibilityDurationSeconds = 60;
         [DataMember] private bool _resultsIframeEnabled;
-        [DataMember] private int _resultsIframeIframeVisibility = 60;
+        [DataMember] private int _resultsIframeIframeVisibilityDurationSeconds = 60;
         private Timer _resultsIframeTimer;
 
         [DataMember] private bool _resultsIframeVisible;
         [DataMember] private string _style = StyleSheet.Default;
         [DataMember] private TimerMessage? _timerMessage;
 
-        public TournamentTimer(int numberOfRounds, decimal defaultRoundDuration, int defaultBreakDuration,
+#pragma warning disable 8618
+        public TournamentTimer(int numberOfRounds, decimal defaultRoundDurationMinutes, int defaultBreakDurationSeconds,
             int defaultBlinkingDuration)
         {
             RoundsList.CollectionChanged += OnRoundsListChanged;
             NumberOfRounds = numberOfRounds;
-            DefaultRoundDuration = defaultRoundDuration;
-            DefaultBreakDuration = defaultBreakDuration;
+            DefaultRoundDurationMinutes = defaultRoundDurationMinutes;
+            DefaultBreakDurationSeconds = defaultBreakDurationSeconds;
             DefaultBlinkingDuration = defaultBlinkingDuration;
-            _clockTimer = new Timer(50);
-            _clockTimer.Elapsed += OnTick;
+            InitializeTimers();
             Target = DateTime.Now + (CurrentRound.Duration ?? DefaultRoundDurationTimeSpan);
             PausedAtTime = DateTime.Now;
+        }
+#pragma warning restore 8618
+        private void InitializeTimers()
+        {
+            _clockTimer = new Timer(50);
+            _clockTimer.Elapsed += OnTick;
+            if (Running)
+            {
+                _clockTimer.Start();
+            }
+
             _resultsIframeTimer = new Timer(200);
             _resultsIframeTimer.Elapsed += ResultsIframeTimerElapsed;
+            if (ResultsIframeEnabled)
+            {
+                _resultsIframeTimer.Start();
+            }
         }
 
         [DataMember] public DateTime SerializationTimeStamp { get; private set; } = DateTime.Now;
@@ -58,33 +74,33 @@ namespace Utils
         [DataMember] public bool DefaultResultsIframeActive { get; set; }
         [DataMember] public string ResultsIframeSource { get; set; } = string.Empty;
 
-        // TODO: The name is not clear - it doesn't show that it takes the number of seconds. Better name or better type please (the latter would be better).
-        public int ResultsIframeIframeVisibility
+        public int ResultsIframeIframeVisibilityDurationSeconds
         {
-            get => _resultsIframeIframeVisibility;
+            get => _resultsIframeIframeVisibilityDurationSeconds;
             set
             {
                 if (_resultsIframeVisible)
                 {
-                    ResultsIframeTimerTarget += new TimeSpan(0, 0, value - _resultsIframeIframeVisibility);
+                    ResultsIframeTimerTarget +=
+                        new TimeSpan(0, 0, value - _resultsIframeIframeVisibilityDurationSeconds);
                 }
 
-                _resultsIframeIframeVisibility = value;
+                _resultsIframeIframeVisibilityDurationSeconds = value;
             }
         }
 
-        // TODO: The name is not clear - it doesn't show that it takes the number of seconds. Better name or better type please (the latter would be better).
-        public int ResultsIframeClockVisibility
+        public int ResultsIframeClockVisibilityDurationSeconds
         {
-            get => _resultsIframeClockVisibility;
+            get => _resultsIframeClockVisibilityDurationSeconds;
             set
             {
                 if (!_resultsIframeVisible)
                 {
-                    ResultsIframeTimerTarget += new TimeSpan(0, 0, value - _resultsIframeClockVisibility);
+                    ResultsIframeTimerTarget +=
+                        new TimeSpan(0, 0, value - _resultsIframeClockVisibilityDurationSeconds);
                 }
 
-                _resultsIframeClockVisibility = value;
+                _resultsIframeClockVisibilityDurationSeconds = value;
             }
         }
 
@@ -93,10 +109,9 @@ namespace Utils
         [DataMember] public string DefaultTimerName { get; set; } = string.Empty;
         [DataMember] public int DefaultBlinkingDuration { get; set; }
 
-        // TODO: The name is not clear - it doesn't show that it takes the number of minutes. Better name or better type please (the latter would be better).
-        public decimal DefaultRoundDuration
+        public decimal DefaultRoundDurationMinutes
         {
-            get => _defaultRoundDuration;
+            get => _defaultRoundDurationMinutes;
             set
             {
                 if (CurrentRound.Duration == null && !IsBreak)
@@ -108,14 +123,13 @@ namespace Utils
                     }
                 }
 
-                _defaultRoundDuration = value;
+                _defaultRoundDurationMinutes = value;
             }
         }
 
-        // TODO: The name is not clear - it doesn't show that it takes the number of seconds. Better name or better type please (the latter would be better).
-        public int DefaultBreakDuration
+        public int DefaultBreakDurationSeconds
         {
-            get => _defaultBreakDuration;
+            get => _defaultBreakDurationSeconds;
             set
             {
                 if (CurrentRound.BreakDuration == null && IsBreak)
@@ -127,7 +141,7 @@ namespace Utils
                     }
                 }
 
-                _defaultBreakDuration = value;
+                _defaultBreakDurationSeconds = value;
             }
         }
 
@@ -175,8 +189,8 @@ namespace Utils
         public TimeSpan BlinkingDuration =>
             RoundsList[CurrentRoundId].BlinkingDuration ?? DefaultBlinkingDurationTimeSpan;
 
-        public TimeSpan DefaultRoundDurationTimeSpan => new TimeSpan(0, 0, (int) (DefaultRoundDuration * 60));
-        public TimeSpan DefaultBreakDurationTimeSpan => new TimeSpan(0, 0, DefaultBreakDuration);
+        public TimeSpan DefaultRoundDurationTimeSpan => new TimeSpan(0, 0, (int) (DefaultRoundDurationMinutes * 60));
+        public TimeSpan DefaultBreakDurationTimeSpan => new TimeSpan(0, 0, DefaultBreakDurationSeconds);
         public TimeSpan DefaultBlinkingDurationTimeSpan => new TimeSpan(0, 0, DefaultBlinkingDuration);
         private Round CurrentRound => RoundsList[CurrentRoundId];
 
@@ -185,13 +199,11 @@ namespace Utils
             get => RoundsList.Count;
             set
             {
-                // TODO Enumerable.Range().Select(...)
                 while (value > RoundsList.Count)
                 {
                     RoundsList.Add(new Round());
                 }
 
-                // TODO RoundsList.Take()
                 while (value < RoundsList.Count && value > CurrentRoundId)
                 {
                     RoundsList.RemoveAt(RoundsList.Count - 1);
@@ -204,12 +216,14 @@ namespace Utils
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
-            return _defaultRoundDuration == other._defaultRoundDuration &&
-                   _defaultBreakDuration == other._defaultBreakDuration && Equals(_timerMessage, other._timerMessage) &&
+            return _defaultRoundDurationMinutes == other._defaultRoundDurationMinutes &&
+                   _defaultBreakDurationSeconds == other._defaultBreakDurationSeconds &&
+                   Equals(_timerMessage, other._timerMessage) &&
                    _style == other._style && _resultsIframeVisible == other._resultsIframeVisible &&
                    _resultsIframeEnabled == other._resultsIframeEnabled &&
-                   _resultsIframeIframeVisibility == other._resultsIframeIframeVisibility &&
-                   _resultsIframeClockVisibility == other._resultsIframeClockVisibility &&
+                   _resultsIframeIframeVisibilityDurationSeconds ==
+                   other._resultsIframeIframeVisibilityDurationSeconds &&
+                   _resultsIframeClockVisibilityDurationSeconds == other._resultsIframeClockVisibilityDurationSeconds &&
                    SerializationTimeStamp.Equals(other.SerializationTimeStamp) &&
                    ResultsIframeTimerTarget.Equals(other.ResultsIframeTimerTarget) &&
                    DefaultResultsIframeActive == other.DefaultResultsIframeActive &&
@@ -231,9 +245,9 @@ namespace Utils
         private void OnRoundsListChanged(object sender,
             NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
+            // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
             switch (notifyCollectionChangedEventArgs.Action)
             {
-                // TODO Hm, smart! I didn't knew it existed and I wrote it myself. Feel free to remove this TODO once you read it.
                 case NotifyCollectionChangedAction.Add:
                 {
                     foreach (Round round in notifyCollectionChangedEventArgs.NewItems)
@@ -284,34 +298,27 @@ namespace Utils
 
                     break;
                 }
-                // TODO Why don't you care about those?
-                case NotifyCollectionChangedAction.Replace:
-                    break;
-                case NotifyCollectionChangedAction.Move:
-                    break;
-                case NotifyCollectionChangedAction.Reset:
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
 
-        private void RoundPropertyChanged(object sender, (string, TimeSpan?) valueTuple)
+        private void RoundPropertyChanged(object sender, (string, object) valueTuple)
         {
             var (propertyName, newValue) = valueTuple;
-            // TODO Can this happen?
-            if (!(sender is Round changedRound)) return;
+            var changedRound = sender as Round;
 
 
             switch (propertyName)
             {
-                // TODO I would prefare [nameof(Round.Duration)] - then if the name of Round.Duration changes this code will still work.
-                case "Duration":
+                case nameof(Round.Duration):
                 {
-                    if (RoundsList.IndexOf(changedRound) != CurrentRoundId) break;
+                    if (RoundsList.IndexOf(changedRound!) != CurrentRoundId) break;
                     if (IsBreak) break;
-                    Target += (newValue ?? DefaultRoundDurationTimeSpan) -
-                              (changedRound.Duration ?? DefaultRoundDurationTimeSpan);
+                    var timeSpan = newValue as TimeSpan? ?? null;
+
+                    Target += (timeSpan ?? DefaultRoundDurationTimeSpan) -
+                              (changedRound!.Duration ?? DefaultRoundDurationTimeSpan);
                     if (!Running)
                     {
                         SettingsChanged?.Invoke(this, Target + (DateTime.Now - PausedAtTime));
@@ -319,12 +326,13 @@ namespace Utils
 
                     break;
                 }
-                case "BreakDuration":
+                case nameof(Round.BreakDuration):
                 {
-                    if (RoundsList.IndexOf(changedRound) != CurrentRoundId) break;
+                    if (RoundsList.IndexOf(changedRound!) != CurrentRoundId) break;
                     if (!IsBreak) break;
-                    Target += (newValue ?? DefaultRoundDurationTimeSpan) -
-                              (changedRound.BreakDuration ?? DefaultBreakDurationTimeSpan);
+                    var timeSpan = newValue as TimeSpan? ?? null;
+                    Target += (timeSpan ?? DefaultRoundDurationTimeSpan) -
+                              (changedRound!.BreakDuration ?? DefaultBreakDurationTimeSpan);
                     if (!Running)
                     {
                         SettingsChanged?.Invoke(this, Target + (DateTime.Now - PausedAtTime));
@@ -394,19 +402,21 @@ namespace Utils
             OnFileUpdateRequired();
         }
 
-        // TODO Those two functions are very similar. Refactor?
-        public void AddMinute()
+        private void AddTimeSpan(TimeSpan timeSpan)
         {
-            Target += new TimeSpan(0, 1, 0);
+            Target += timeSpan;
             SettingsChanged?.Invoke(this, Running ? Target : Target + (DateTime.Now - PausedAtTime));
             OnFileUpdateRequired();
         }
 
+        public void AddMinute()
+        {
+            AddTimeSpan(new TimeSpan(0, 1, 0));
+        }
+
         public void SubtractMinute()
         {
-            Target -= new TimeSpan(0, 1, 0);
-            SettingsChanged?.Invoke(this, Running ? Target : Target + (DateTime.Now - PausedAtTime));
-            OnFileUpdateRequired();
+            AddTimeSpan(new TimeSpan(0, -1, 0));
         }
 
         private bool IsFinished()
@@ -446,11 +456,12 @@ namespace Utils
 
             IsBreak = false;
 
-            // TODO: Why do you need to call this twice?
-            OnFileUpdateRequired();
-            if (Running) return;
-            PausedAtTime = DateTime.Now;
-            SettingsChanged?.Invoke(this, Target);
+            if (!Running)
+            {
+                PausedAtTime = DateTime.Now;
+                SettingsChanged?.Invoke(this, Target);
+            }
+
             OnFileUpdateRequired();
         }
 
@@ -459,7 +470,9 @@ namespace Utils
             if (ResultsIframeTimerTarget >= DateTime.Now) return;
 
             ResultsIframeTimerTarget = DateTime.Now + new TimeSpan(0, 0,
-                _resultsIframeVisible ? ResultsIframeClockVisibility : ResultsIframeIframeVisibility);
+                _resultsIframeVisible
+                    ? ResultsIframeClockVisibilityDurationSeconds
+                    : ResultsIframeIframeVisibilityDurationSeconds);
             _resultsIframeVisible = !_resultsIframeVisible;
             if (RoundsList[CurrentRoundId].ResultsIframeActive ?? DefaultResultsIframeActive) OnFileUpdateRequired();
         }
@@ -478,20 +491,7 @@ namespace Utils
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context)
         {
-            // TODO: Code repetition with the constructor. Factor out [initializeTimers]?
-            _clockTimer = new Timer(50);
-            _clockTimer.Elapsed += OnTick;
-            if (Running)
-            {
-                _clockTimer.Start();
-            }
-
-            _resultsIframeTimer = new Timer(200);
-            _resultsIframeTimer.Elapsed += ResultsIframeTimerElapsed;
-            if (ResultsIframeEnabled)
-            {
-                _resultsIframeTimer.Start();
-            }
+            InitializeTimers();
         }
 
         public override bool Equals(object? obj)
@@ -507,14 +507,14 @@ namespace Utils
             unchecked
             {
                 // ReSharper disable NonReadonlyMemberInGetHashCode
-                var hashCode = _defaultRoundDuration.GetHashCode();
-                hashCode = (hashCode * 397) ^ _defaultBreakDuration;
+                var hashCode = _defaultRoundDurationMinutes.GetHashCode();
+                hashCode = (hashCode * 397) ^ _defaultBreakDurationSeconds;
                 hashCode = (hashCode * 397) ^ (_timerMessage != null ? _timerMessage.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ _style.GetHashCode();
                 hashCode = (hashCode * 397) ^ _resultsIframeVisible.GetHashCode();
                 hashCode = (hashCode * 397) ^ _resultsIframeEnabled.GetHashCode();
-                hashCode = (hashCode * 397) ^ _resultsIframeIframeVisibility;
-                hashCode = (hashCode * 397) ^ _resultsIframeClockVisibility;
+                hashCode = (hashCode * 397) ^ _resultsIframeIframeVisibilityDurationSeconds;
+                hashCode = (hashCode * 397) ^ _resultsIframeClockVisibilityDurationSeconds;
                 hashCode = (hashCode * 397) ^ SerializationTimeStamp.GetHashCode();
                 hashCode = (hashCode * 397) ^ ResultsIframeTimerTarget.GetHashCode();
                 hashCode = (hashCode * 397) ^ DefaultResultsIframeActive.GetHashCode();

@@ -3,8 +3,7 @@ using Utils.Annotations;
 
 namespace TCTimer
 {
-    // TODO: Should be static?
-    public class Settings
+    public static class Settings
     {
         private const string SettingsKey = "SOFTWARE\\TC_TIMER\\SETTINGS";
         private static readonly RegistryKey BaseKey = Registry.CurrentUser;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Utils.Annotations;
@@ -6,7 +7,6 @@ using Utils.Annotations;
 namespace Utils
 {
     [DataContract]
-    // TODO Should this inherit INotifyPropertyChanged?
     public sealed class Round
     {
         [DataMember] private TimeSpan? _blinkingDuration;
@@ -14,7 +14,6 @@ namespace Utils
         [DataMember] private string? _breakText;
         [DataMember] private TimeSpan? _duration;
         [DataMember] private bool? _overtimeAfterRound;
-        [DataMember] private bool? _resultsIframeActive;
         [DataMember] private string? _timerName;
 
 
@@ -39,19 +38,13 @@ namespace Utils
             TimerName = null;
         }
 
-        // TODO: Convert to auto=property?
-        public bool? ResultsIframeActive
-        {
-            get => _resultsIframeActive;
-            set => _resultsIframeActive = value;
-        }
+        [DataMember] public bool? ResultsIframeActive { get; set; }
 
         public TimeSpan? Duration
         {
             get => _duration;
             set
             {
-                // TODO: I'm confused. First parameter of OnPropertyChange is called [oldValue]. But here you're using the new value. The same holds true elsewhere (below).
                 OnPropertyChanged(value);
                 _duration = value;
             }
@@ -73,8 +66,7 @@ namespace Utils
             set
             {
                 _blinkingDuration = value;
-                // TODO: Why old value is null? (The same question below)
-                OnPropertyChanged(null);
+                OnPropertyChanged(value);
             }
         }
 
@@ -84,7 +76,7 @@ namespace Utils
             set
             {
                 _overtimeAfterRound = value;
-                OnPropertyChanged(null);
+                OnPropertyChanged(value);
             }
         }
 
@@ -94,7 +86,7 @@ namespace Utils
             set
             {
                 _breakText = value;
-                OnPropertyChanged(null);
+                OnPropertyChanged(value);
             }
         }
 
@@ -104,17 +96,16 @@ namespace Utils
             set
             {
                 _timerName = value;
-                OnPropertyChanged(null);
+                OnPropertyChanged(value);
             }
         }
 
-        public event EventHandler<(string, TimeSpan?)>? PropertyChanged;
+        public event EventHandler<(string, object?)> PropertyChanged;
 
-        // TODO: This has the parameter [oldValue] of type [TimeSpan?] but you're using it for other things as well. I don't understand this design.
         [NotifyPropertyChangedInvocator]
-        private void OnPropertyChanged(TimeSpan? oldValue, [CallerMemberName] string propertyName = "")
+        private void OnPropertyChanged(object? newValue, [CallerMemberName] string propertyName = "")
         {
-            PropertyChanged?.Invoke(this, (propertyName, oldValue));
+            PropertyChanged?.Invoke(this, (propertyName, newValue));
         }
     }
 }

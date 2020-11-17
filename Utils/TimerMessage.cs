@@ -4,7 +4,6 @@ using System.Runtime.Serialization;
 namespace Utils
 {
     [DataContract]
-    // TODO You need more equality members, also implemented in slightly different way. I added them. This is important to understand, feel free to ask questions if you want me to explain.
     public class TimerMessage : IEquatable<TimerMessage>
     {
         [DataMember] private Guid _id;

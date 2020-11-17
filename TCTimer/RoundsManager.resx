@@ -157,13 +157,13 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="timerNameTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>355, 39</value>
+    <value>353, 39</value>
   </data>
   <data name="timerNameTextBox.MaxLength" type="System.Int32, mscorlib">
     <value>30</value>
   </data>
   <data name="timerNameTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>445, 20</value>
+    <value>447, 20</value>
   </data>
   <data name="timerNameTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -211,10 +211,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="breakTextTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>355, 13</value>
+    <value>344, 13</value>
   </data>
   <data name="breakTextTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>445, 20</value>
+    <value>456, 20</value>
   </data>
   <data name="breakTextTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>

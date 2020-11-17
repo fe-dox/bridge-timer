@@ -16,28 +16,14 @@ namespace TCTimer
             InitializeComponent();
             _tournamentTimer.DefaultSettingsChanged += UpdateAfterDefaultSettingsChanged;
             numberOfRoundsUpDown.Value = _tournamentTimer.NumberOfRounds;
-            minutesPerRoundUpDown.Value = _tournamentTimer.DefaultRoundDuration;
-            breakDurationUpDown.Value = _tournamentTimer.DefaultBreakDuration;
+            minutesPerRoundUpDown.Value = _tournamentTimer.DefaultRoundDurationMinutes;
+            breakDurationUpDown.Value = _tournamentTimer.DefaultBreakDurationSeconds;
             blinkingDurationUpDown.Value = _tournamentTimer.DefaultBlinkingDuration;
             roundOvertimeCheckBox.Checked = _tournamentTimer.DefaultOvertimeAfterRound;
             timerNameTextBox.Text = _tournamentTimer.DefaultTimerName;
             breakTextTextBox.Text = _tournamentTimer.DefaultBreakText;
             UpdateRounds();
         }
-
-        // TODO This should be in some Utils file. BTW I have to do the same in TC.
-        private void RunAction(Action action)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(action);
-            }
-            else
-            {
-                action();
-            }
-        }
-
 
         private void UpdateColumn(DefaultSettings defaultSettings)
         {
@@ -80,7 +66,7 @@ namespace TCTimer
 
         private void UpdateAfterDefaultSettingsChanged(object sender, DefaultSettings defaultSettings)
         {
-            RunAction(() =>
+            Utils.RunAction(this, () =>
             {
                 switch (defaultSettings)
                 {
@@ -126,13 +112,10 @@ namespace TCTimer
             }
         }
 
-        // TODO: Why do you need this function at all? What is it's purpose? Does it achieve single select? If so you can just set MultiSelect to false on dataGridView (it's a property)
-        private void roundsDataGridView_MouseDown(object sender, EventArgs eventArgs)
+        private void roundsDataGridView_MouseDown(object sender, MouseEventArgs eventArgs)
         {
-            // TODO: The argument of this function should just be MouseEventArgs
-            if (!(eventArgs is MouseEventArgs mouseEventArgs)) return;
-            if (mouseEventArgs.Button != MouseButtons.Right) return;
-            var hitTestInfo = roundsDataGridView.HitTest(mouseEventArgs.X, mouseEventArgs.Y);
+            if (eventArgs.Button != MouseButtons.Right) return;
+            var hitTestInfo = roundsDataGridView.HitTest(eventArgs.X, eventArgs.Y);
             if (hitTestInfo.RowIndex < 0 || hitTestInfo.ColumnIndex < 0) return;
             if (roundsDataGridView.Rows[hitTestInfo.RowIndex].Cells[hitTestInfo.ColumnIndex].Selected) return;
             roundsDataGridView.ClearSelection();
@@ -150,7 +133,7 @@ namespace TCTimer
                     {
                         case 0:
                             round.Duration = null;
-                            cell.Value = _tournamentTimer.DefaultRoundDuration + " m";
+                            cell.Value = _tournamentTimer.DefaultRoundDurationMinutes + " m";
                             break;
                         case 1:
                             round.BlinkingDuration = null;
@@ -162,7 +145,7 @@ namespace TCTimer
                             break;
                         case 3:
                             round.BreakDuration = null;
-                            cell.Value = _tournamentTimer.DefaultBreakDuration + " s";
+                            cell.Value = _tournamentTimer.DefaultBreakDurationSeconds + " s";
                             break;
                         case 4:
                             round.BreakText = null;
@@ -217,13 +200,13 @@ namespace TCTimer
 
         private void minutesPerRoundUpDown_ValueChanged_1(object sender, EventArgs e)
         {
-            _tournamentTimer.DefaultRoundDuration = minutesPerRoundUpDown.Value;
+            _tournamentTimer.DefaultRoundDurationMinutes = minutesPerRoundUpDown.Value;
             _tournamentTimer.OnDefaultSettingsChanged(DefaultSettings.RoundDuration);
         }
 
         private void breakDurationUpDown_ValueChanged(object sender, EventArgs e)
         {
-            _tournamentTimer.DefaultBreakDuration = (int) breakDurationUpDown.Value;
+            _tournamentTimer.DefaultBreakDurationSeconds = (int) breakDurationUpDown.Value;
             _tournamentTimer.OnDefaultSettingsChanged(DefaultSettings.BreakDuration);
         }
 
@@ -253,7 +236,6 @@ namespace TCTimer
 
         private static bool GetDecimalFromCellValue(string value, out decimal result)
         {
-            // TODO: Instead of all this just decimal.TryParse?
             var numbersRegex = new Regex(@"(\d+(\.\d+)?)", RegexOptions.Compiled);
             var match = numbersRegex.Match(value);
 
@@ -269,7 +251,6 @@ namespace TCTimer
 
         private void roundsDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            // TODO: e.Cancel = false is the default. You don't have to set it.
             decimal result;
             if (_tournamentTimer.RoundsList.Count <= e.RowIndex) return;
             switch (e.ColumnIndex)
@@ -277,20 +258,18 @@ namespace TCTimer
                 case 0:
                     if (!GetDecimalFromCellValue(e.FormattedValue.ToString(), out result))
                     {
-                        e.Cancel = true;
                         break;
                     }
 
                     e.Cancel = false;
                     _tournamentTimer.RoundsList[e.RowIndex].Duration =
-                        result == _tournamentTimer.DefaultRoundDuration
+                        result == _tournamentTimer.DefaultRoundDurationMinutes
                             ? (TimeSpan?) null
                             : new TimeSpan(0, 0, (int) (result * 60));
                     break;
                 case 1:
                     if (!GetDecimalFromCellValue(e.FormattedValue.ToString(), out result))
                     {
-                        e.Cancel = true;
                         break;
                     }
 
@@ -315,7 +294,7 @@ namespace TCTimer
 
                     e.Cancel = false;
                     _tournamentTimer.RoundsList[e.RowIndex].BreakDuration =
-                        result == _tournamentTimer.DefaultBreakDuration
+                        result == _tournamentTimer.DefaultBreakDurationSeconds
                             ? (TimeSpan?) null
                             : new TimeSpan(0, 0, (int) result);
                     break;

@@ -20,13 +20,20 @@ namespace TCTimer
 {
     public partial class TimerForm : Form
     {
+        private const string SettingsCustomCssFileRegister = "APPEARANCE_FILE_NAME";
+        private const string SettingsCustomCssStringRegister = "APPEARANCE_CUSTOM_CSS_STRING";
+        private const string SettingsLastFtpPath = "LAST_FTP_PATH";
+        private const string SettingsLastFtpUsername = "LAST_FTP_USERNAME";
+        private const string SettingsLastFtpPassword = "LAST_FTP_PASSWORD";
+        private const int NumberOfRetries = 25;
+
         private readonly Timer _serializationTimer;
-        private readonly ResultsUrlShortener _resultsUrlShortener;
         private readonly SimpleHttpServer _simpleHttpServer;
 #if !DEBUG
         private readonly string _timerPath = Path.GetTempPath() + "\\bridge_timer\\" + Path.GetRandomFileName();
 #else
-        private readonly string _timerPath = "..\\..\\WebApp\\wwwroot";
+        // ReSharper disable once InconsistentNaming
+        private const string _timerPath = "..\\..\\WebApp\\wwwroot";
 #endif
         private readonly TournamentTimer _tournamentTimer;
         [CanBeNull] private Ftp _ftp;
@@ -35,7 +42,6 @@ namespace TCTimer
         public TimerForm()
         {
             InitializeComponent();
-            _resultsUrlShortener = new ResultsUrlShortener();
             _tournamentTimer = new TournamentTimer((int) numberOfRoundsUpDown.Value,
                 minutesPerRoundUpDown.Value, (int) breakTimeUpDown.Value, 90);
             _tournamentTimer.Ticked += UpdateTime;
@@ -44,7 +50,6 @@ namespace TCTimer
             _tournamentTimer.FileUpdateRequired += WriteTournamentTimer;
             if (!Directory.Exists(_timerPath))
             {
-                // TODO: What if exception here?
                 Directory.CreateDirectory(_timerPath);
             }
 #if !DEBUG
@@ -53,10 +58,8 @@ namespace TCTimer
                 ZipFile.ExtractToDirectory(Application.StartupPath + "\\WebApp.app", _timerPath);
             }).Start();
 #endif
-            // TODO: Constant
-            customCSSLabel.Text = Settings.Read("APPEARANCE_FILE_NAME") ?? "None selected";
-            // TODO: Constant
-            _customCss = Settings.Read("APPEARANCE_CUSTOM_CSS_STRING");
+            customCSSLabel.Text = Settings.Read(SettingsCustomCssFileRegister) ?? "None selected";
+            _customCss = Settings.Read(SettingsCustomCssStringRegister);
             _simpleHttpServer = new SimpleHttpServer(_timerPath);
             _serializationTimer = new Timer(60_000);
             _serializationTimer.Elapsed += WriteTournamentTimer;
@@ -77,8 +80,12 @@ namespace TCTimer
         private void TimerForm_FormClosing(object sender, FormClosingEventArgs formClosingEvent)
         {
             if (MessageBox.Show("Are you sure you want to close this window?", "Are you sure?",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No) formClosingEvent.Cancel = true;
-            // TODO: Why is this done independently of whether we closed or not?
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            {
+                formClosingEvent.Cancel = true;
+                return;
+            }
+
             _simpleHttpServer.Stop();
 #if !DEBUG
             try
@@ -103,50 +110,66 @@ namespace TCTimer
             about.ShowDialog(this);
         }
 
-        private async void WriteTournamentTimer(object sender, EventArgs eventArgs)
+        private static async Task TryMultipleTimes(Action func)
         {
-            var success = false;
-            // TODO: This can never end and hang indefinitely?
-            while (!success)
+            var tries = 0;
+            while (true)
             {
-                var serializer = new DataContractSerializer(typeof(TournamentTimer));
-                // TODO: [using] instead of this
-                FileStream writer = null;
                 try
                 {
-                    writer = new FileStream(_timerPath + "\\timer.xml", FileMode.Create);
-                    serializer.WriteObject(writer, _tournamentTimer);
-                    success = true;
+                    await Task.Run(() => func);
+                    return;
                 }
                 catch
                 {
-                    success = false;
+                    tries++;
+                    if (tries > NumberOfRetries)
+                    {
+                        throw;
+                    }
                 }
-                finally
+            }
+        }
+
+        private async void WriteTournamentTimer(object sender, EventArgs eventArgs)
+        {
+            try
+            {
+                await TryMultipleTimes(() =>
                 {
-                    writer?.Close();
-                }
+                    var serializer = new DataContractSerializer(typeof(TournamentTimer));
+                    using var writer = new FileStream(_timerPath + "\\timer.xml", FileMode.Create);
+                    serializer.WriteObject(writer, _tournamentTimer);
+                });
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Couldn't update timer file\n{e.Message}", "Something went wrong",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
 
             if (_ftp?.Connected ?? false)
             {
                 ftpStatusIndicator.BackColor = Color.DodgerBlue;
-                await Task.Run(() =>
+                try
                 {
-                    // TODO: What does 2 mean? Why not just success?
-                    var success2 = false;
-                    // TODO: Again might be infinite loop
-                    while (!success2)
+                    await TryMultipleTimes(() =>
                     {
                         if (_ftp == null)
                         {
-                            success = true;
-                            break;
+                            return;
                         }
 
-                        success2 = _ftp.UploadFile("timer.xml", _timerPath + "\\timer.xml");
-                    }
-                });
+                        _ftp.UploadFile("timer.xml", _timerPath + "\\timer.xml");
+                    });
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show($"Couldn't send timer to ftp\n{e.Message}", "Something went wrong",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 ftpStatusIndicator.BackColor = Color.LawnGreen;
             }
         }
@@ -164,17 +187,9 @@ namespace TCTimer
             });
         }
 
-        // TODO: Same function in different place. Move to utils.
         private void RunAction(Action action)
         {
-            if (InvokeRequired)
-            {
-                Invoke(action);
-            }
-            else
-            {
-                action();
-            }
+            Utils.RunAction(this, action);
         }
 
         private void numberOfRoundsUpDown_ValueChanged(object sender, EventArgs e)
@@ -186,13 +201,13 @@ namespace TCTimer
 
         private void minutesPerRoundUpDown_ValueChanged(object sender, EventArgs e)
         {
-            _tournamentTimer.DefaultRoundDuration = minutesPerRoundUpDown.Value;
+            _tournamentTimer.DefaultRoundDurationMinutes = minutesPerRoundUpDown.Value;
             _tournamentTimer.OnFileUpdateRequired();
         }
 
         private void breakTimeUpDown_ValueChanged(object sender, EventArgs e)
         {
-            _tournamentTimer.DefaultBreakDuration = (int) breakTimeUpDown.Value;
+            _tournamentTimer.DefaultBreakDurationSeconds = (int) breakTimeUpDown.Value;
             _tournamentTimer.OnFileUpdateRequired();
         }
 
@@ -227,14 +242,14 @@ namespace TCTimer
             try
             {
                 var shortenedUrl = await
-                    Task.Factory.StartNew(() => _resultsUrlShortener.ShortenUrl(new Uri(resultsUrlTextBox.Text)));
+                    Task.Factory.StartNew(() => ResultsUrlShortener.ShortenUrl(new Uri(resultsUrlTextBox.Text)));
                 _tournamentTimer.ResultsUrl = shortenedUrl.ToString().Replace("https://", "");
                 _tournamentTimer.OnFileUpdateRequired();
             }
-            catch
+            catch (Exception exception)
             {
-                // TODO: Display exception that occurred?
-                MessageBox.Show("Couldn't shorten URL", "Something went wrong", MessageBoxButtons.OK,
+                MessageBox.Show($"Couldn't shorten URL\n{exception.Message}", "Something went wrong",
+                    MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
         }
@@ -304,8 +319,8 @@ namespace TCTimer
             var roundsManager = new RoundsManager(_tournamentTimer);
             roundsManager.ShowDialog();
             blinkingDurationNumericUpDown.Value = _tournamentTimer.DefaultBlinkingDuration;
-            minutesPerRoundUpDown.Value = _tournamentTimer.DefaultRoundDuration;
-            breakTimeUpDown.Value = _tournamentTimer.DefaultBreakDuration;
+            minutesPerRoundUpDown.Value = _tournamentTimer.DefaultRoundDurationMinutes;
+            breakTimeUpDown.Value = _tournamentTimer.DefaultBreakDurationSeconds;
             numberOfRoundsUpDown.Value = _tournamentTimer.NumberOfRounds;
             breakTextBox.Text = _tournamentTimer.DefaultBreakText;
             tournamentNameTextBox.Text = _tournamentTimer.DefaultTimerName;
@@ -354,10 +369,8 @@ namespace TCTimer
             var filePath = openFileDialog.FileName;
             _customCss = _tournamentTimer.Style = File.ReadAllText(filePath);
             customCSSLabel.Text = Path.GetFileName(filePath);
-            // TODO: Constant
-            Settings.Write("APPEARANCE_FILE_NAME", Path.GetFileName(filePath));
-            // TODO: Constant
-            Settings.Write("APPEARANCE_CUSTOM_CSS_STRING", _customCss);
+            Settings.Write(SettingsCustomCssFileRegister, Path.GetFileName(filePath));
+            Settings.Write(SettingsCustomCssStringRegister, _customCss);
         }
 
         private async void checkBoxFtpEnabled_CheckedChanged(object sender, EventArgs e)
@@ -380,17 +393,16 @@ namespace TCTimer
                     {
                         _ftp = new Ftp(textBoxFtpUsername.Text, textBoxFtpPassword.Text, textBoxFtpPath.Text);
                         _ftp.ConnectAndCreateDirectories();
-                        // TODO: Constants
-                        Settings.Write("LAST_FTP_PATH", textBoxFtpPath.Text);
-                        Settings.Write("LAST_FTP_USERNAME", textBoxFtpUsername.Text);
-                        Settings.Write("LAST_FTP_PASSWORD", textBoxFtpPassword.Text);
+                        Settings.Write(SettingsLastFtpPath, textBoxFtpPath.Text);
+                        Settings.Write(SettingsLastFtpUsername, textBoxFtpUsername.Text);
+                        Settings.Write(SettingsLastFtpPassword, textBoxFtpPassword.Text);
                         RunAction(() => ftpStatusIndicator.BackColor = Color.LawnGreen);
                     }
                     catch (Exception exception)
                     {
                         RunAction(() =>
                         {
-                            MessageBox.Show($"Can't start FTP {exception.Message}", "Something went wrong",
+                            MessageBox.Show($"Couldn't start FTP {exception.Message}", "Something went wrong",
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                             checkBoxFtpEnabled.Checked = false;
                         });
@@ -429,10 +441,9 @@ namespace TCTimer
 
         private void buttonLoadLastCredentials_Click(object sender, EventArgs e)
         {
-            // TODO: Constants
-            textBoxFtpPath.Text = Settings.Read("LAST_FTP_PATH") ?? string.Empty;
-            textBoxFtpUsername.Text = Settings.Read("LAST_FTP_USERNAME") ?? string.Empty;
-            textBoxFtpPassword.Text = Settings.Read("LAST_FTP_PASSWORD") ?? string.Empty;
+            textBoxFtpPath.Text = Settings.Read(SettingsLastFtpPath) ?? string.Empty;
+            textBoxFtpUsername.Text = Settings.Read(SettingsLastFtpUsername) ?? string.Empty;
+            textBoxFtpPassword.Text = Settings.Read(SettingsLastFtpPassword) ?? string.Empty;
         }
 
         private void resultsIframeCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -448,13 +459,13 @@ namespace TCTimer
 
         private void resultsIframeVisibilityUpDown_ValueChanged(object sender, EventArgs e)
         {
-            _tournamentTimer.ResultsIframeIframeVisibility = (int) resultsIframeVisibilityUpDown.Value;
+            _tournamentTimer.ResultsIframeIframeVisibilityDurationSeconds = (int) resultsIframeVisibilityUpDown.Value;
             _tournamentTimer.OnFileUpdateRequired();
         }
 
         private void clockVisibilityDurationUpDown_ValueChanged(object sender, EventArgs e)
         {
-            _tournamentTimer.ResultsIframeClockVisibility = (int) clockVisibilityDurationUpDown.Value;
+            _tournamentTimer.ResultsIframeClockVisibilityDurationSeconds = (int) clockVisibilityDurationUpDown.Value;
             _tournamentTimer.OnFileUpdateRequired();
         }
 

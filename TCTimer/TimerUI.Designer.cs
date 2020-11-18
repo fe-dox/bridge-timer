@@ -62,7 +62,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.showMessageFullscreenCheckBox = new System.Windows.Forms.CheckBox();
             this.messageTextBox = new System.Windows.Forms.TextBox();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.miniToolStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -108,7 +108,7 @@
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.messageDurationUpDown)).BeginInit();
-            this.menuStrip1.SuspendLayout();
+            this.miniToolStrip.SuspendLayout();
             this.groupBoxFtp.SuspendLayout();
             this.appearanceGroupBox.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -343,11 +343,11 @@
             resources.ApplyResources(this.messageTextBox, "messageTextBox");
             this.messageTextBox.Name = "messageTextBox";
             // 
-            // menuStrip1
+            // miniToolStrip
             // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.fileToolStripMenuItem, this.aboutMenuItem});
-            resources.ApplyResources(this.menuStrip1, "menuStrip1");
-            this.menuStrip1.Name = "menuStrip1";
+            this.miniToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.fileToolStripMenuItem, this.aboutMenuItem});
+            resources.ApplyResources(this.miniToolStrip, "miniToolStrip");
+            this.miniToolStrip.Name = "miniToolStrip";
             // 
             // fileToolStripMenuItem
             // 
@@ -633,9 +633,8 @@
             this.Controls.Add(this.currentRoundLabel);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.showTimerButton);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.miniToolStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "TimerForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TimerForm_FormClosing);
@@ -650,8 +649,8 @@
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize) (this.messageDurationUpDown)).EndInit();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.miniToolStrip.ResumeLayout(false);
+            this.miniToolStrip.PerformLayout();
             this.groupBoxFtp.ResumeLayout(false);
             this.groupBoxFtp.PerformLayout();
             this.appearanceGroupBox.ResumeLayout(false);
@@ -663,6 +662,8 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.MenuStrip miniToolStrip;
 
         private System.Windows.Forms.NumericUpDown clockVisibilityDurationUpDown;
 
@@ -737,7 +738,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.NumericUpDown messageDurationUpDown;
         private System.Windows.Forms.TextBox messageTextBox;
         private System.Windows.Forms.NumericUpDown minutesPerRoundUpDown;

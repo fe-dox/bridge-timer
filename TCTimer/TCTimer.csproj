@@ -126,10 +126,13 @@
     <EmbeddedResource Include="RoundsManager.resx">
       <DependentUpon>RoundsManager.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TimerUI.pl-PL.resx">
+      <DependentUpon>TimerUI.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TimerUI.resx">
       <DependentUpon>TimerUI.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="app.manifest" />
+    <None Include="app.manifest"/>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

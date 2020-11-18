@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Globalization;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace TCTimer
@@ -14,6 +13,8 @@ namespace TCTimer
         [STAThread]
         static void Main()
         {
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("pl-Pl");
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("pl-Pl");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new TimerForm());

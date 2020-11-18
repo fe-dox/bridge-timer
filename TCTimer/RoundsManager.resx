@@ -244,7 +244,7 @@
     <value>7</value>
   </data>
   <data name="label4.Text" xml:space="preserve">
-    <value>Blinking time</value>
+    <value>Blinking duration</value>
   </data>
   <data name="&gt;&gt;label4.Name" xml:space="preserve">
     <value>label4</value>
@@ -406,7 +406,7 @@
     <value>1</value>
   </data>
   <data name="label2.Text" xml:space="preserve">
-    <value>Minutes per round</value>
+    <value>Round duration (m)</value>
   </data>
   <data name="&gt;&gt;label2.Name" xml:space="preserve">
     <value>label2</value>
@@ -433,7 +433,7 @@
     <value>2</value>
   </data>
   <data name="label3.Text" xml:space="preserve">
-    <value>Seconds for break</value>
+    <value>Break duration (s)</value>
   </data>
   <data name="&gt;&gt;label3.Name" xml:space="preserve">
     <value>label3</value>

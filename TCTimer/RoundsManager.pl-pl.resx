@@ -1,0 +1,72 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="$this.Text" xml:space="preserve">
+        <value>Menedżer Rund</value>
+    </data>
+    <data name="addRoundToolStripMenuItem.Text" xml:space="preserve">
+        <value>Dodaj Rundę</value>
+    </data>
+    <data name="BlinkingDuration.HeaderText" xml:space="preserve">
+        <value>Długość migania</value>
+    </data>
+    <data name="BreakDuration.HeaderText" xml:space="preserve">
+        <value>Długość przerwy</value>
+    </data>
+    <data name="deleteToolStripMenuItem.Text" xml:space="preserve">
+        <value>Usuń rundę</value>
+    </data>
+    <data name="Duration.HeaderText" xml:space="preserve">
+        <value>Czas trwania</value>
+    </data>
+    <data name="groupBox1.Text" xml:space="preserve">
+        <value>Ustawienia domyślne</value>
+    </data>
+    <data name="label1.Text" xml:space="preserve">
+        <value>Ilość rund</value>
+    </data>
+    <data name="label2.Text" xml:space="preserve">
+        <value>Długość rundy (m)</value>
+    </data>
+    <data name="label3.Text" xml:space="preserve">
+        <value>Długość przerwy (s)</value>
+    </data>
+    <data name="label4.Text" xml:space="preserve">
+        <value>Długość migania (s)</value>
+    </data>
+    <data name="label5.Text" xml:space="preserve">
+        <value>Komunikat przerwy</value>
+    </data>
+    <data name="roundOvertimeCheckBox.Text" xml:space="preserve">
+        <value>Opóźnienie</value>
+    </data>
+    <data name="setToDefaultToolStripMenuItem.Text" xml:space="preserve">
+        <value>Przywróć Domyślne</value>
+    </data>
+    <data name="TimerName.HeaderText" xml:space="preserve">
+        <value>Nazwa zegara</value>
+    </data>
+    <data name="BrakText.HeaderText" xml:space="preserve">
+        <value>Komunikat przerwy</value>
+    </data>
+    <data name="label6.Text" xml:space="preserve">
+        <value>Nazwa zegara</value>
+    </data>
+    <data name="Overtime.HeaderText" xml:space="preserve">
+        <value>Opóźnienie</value>
+    </data>
+</root>

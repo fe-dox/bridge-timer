@@ -2108,8 +2108,8 @@
     <value>Wygląd</value>
   </data>
     <data name="buttonLoadLastCredentials.Text" xml:space="preserve">
-    <value>Poprzednie Ustawienia</value>
-  </data>
+        <value>Poprzednie ustawienia</value>
+    </data>
     <data name="checkBoxFtpEnabled.Text" xml:space="preserve">
     <value>Włączone</value>
   </data>
@@ -2159,8 +2159,8 @@
     <value>Zegar (s)</value>
   </data>
     <data name="label12.Text" xml:space="preserve">
-    <value>Dłogość migania</value>
-  </data>
+        <value>Dłogość migania (s)</value>
+    </data>
     <data name="label13.Text" xml:space="preserve">
     <value>Wyniki (s)</value>
   </data>
@@ -2174,8 +2174,8 @@
     <value>Długość rundy (m)</value>
   </data>
     <data name="label3.Text" xml:space="preserve">
-    <value>Długość przerwy (s)</value>
-  </data>
+        <value>Długość przerwy (s)</value>
+    </data>
     <data name="label4.Text" xml:space="preserve">
     <value>Nazwa zegara</value>
   </data>
@@ -2186,8 +2186,8 @@
     <value>URL do wyników</value>
   </data>
     <data name="label7.Text" xml:space="preserve">
-    <value>Tekst podczas przerwy</value>
-  </data>
+        <value>Komunikat przerwy</value>
+    </data>
     <data name="label8.Text" xml:space="preserve">
     <value>Hasło:</value>
   </data>
@@ -2219,8 +2219,8 @@
     <value>Wybierz rundy</value>
   </data>
     <data name="sendMessageButton.Text" xml:space="preserve">
-    <value>Wyślij wiadomość</value>
-  </data>
+        <value>Wyślij</value>
+    </data>
     <data name="shortenUrlCheckBox.Text" xml:space="preserve">
     <value>Skracaj URL</value>
   </data>

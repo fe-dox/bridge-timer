@@ -58,7 +58,8 @@ namespace TCTimer
                 ZipFile.ExtractToDirectory(Application.StartupPath + "\\WebApp.app", _timerPath);
             }).Start();
 #endif
-            customCSSLabel.Text = Settings.Read(SettingsCustomCssFileRegister) ?? "None selected";
+            customCSSLabel.Text = Settings.Read(SettingsCustomCssFileRegister) ??
+                                  Resources.TimerForm_TimerForm_None_selected;
             _customCss = Settings.Read(SettingsCustomCssStringRegister);
             _simpleHttpServer = new SimpleHttpServer(_timerPath);
             _serializationTimer = new Timer(60_000);
@@ -79,7 +80,8 @@ namespace TCTimer
 
         private void TimerForm_FormClosing(object sender, FormClosingEventArgs formClosingEvent)
         {
-            if (MessageBox.Show("Are you sure you want to close this window?", "Are you sure?",
+            if (MessageBox.Show(Resources.TimerForm_TimerForm_FormClosing_Are_you_sure_you_want_to_close_this_window_,
+                Resources.TimerForm_TimerForm_FormClosing_Are_you_sure_,
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
                 formClosingEvent.Cancel = true;
@@ -144,7 +146,8 @@ namespace TCTimer
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Couldn't update timer file\n{e.Message}", "Something went wrong",
+                MessageBox.Show(string.Format(Resources.TimerForm_WriteTournamentTimer_, e.Message),
+                    Resources.TimerForm_WriteTournamentTimer_Something_went_wrong,
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
@@ -166,7 +169,9 @@ namespace TCTimer
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show($"Couldn't send timer to ftp\n{e.Message}", "Something went wrong",
+                    MessageBox.Show(
+                        string.Format(Resources.TimerForm_WriteTournamentTimer_couldn_t_send_timer_to_ftp_, e.Message),
+                        Resources.TimerForm_WriteTournamentTimer_Something_went_wrong,
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
@@ -182,7 +187,10 @@ namespace TCTimer
                     ? (target - DateTime.Now).ToString(@"hh\:mm\:ss")
                     : "-" + (target - DateTime.Now).ToString(@"hh\:mm\:ss");
                 currentRoundLabel.Text =
-                    _tournamentTimer.IsBreak ? "Break" : $@"Round {_tournamentTimer.CurrentRoundId + 1}";
+                    _tournamentTimer.IsBreak
+                        ? "Break"
+                        : string.Format(Resources.TimerForm_UpdateTime_Round__0_,
+                            _tournamentTimer.CurrentRoundId + 1);
                 numberOfRoundsUpDown.Minimum = _tournamentTimer.CurrentRoundId + 1;
             });
         }
@@ -248,7 +256,8 @@ namespace TCTimer
             }
             catch (Exception exception)
             {
-                MessageBox.Show($"Couldn't shorten URL\n{exception.Message}", "Something went wrong",
+                MessageBox.Show($"Couldn't shorten URL\n{exception.Message}",
+                    Resources.TimerForm_WriteTournamentTimer_Something_went_wrong,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
             }
@@ -402,7 +411,9 @@ namespace TCTimer
                     {
                         RunAction(() =>
                         {
-                            MessageBox.Show($"Couldn't start FTP {exception.Message}", "Something went wrong",
+                            MessageBox.Show(
+                                string.Format(Resources.TimerForm_CheckBoxFtpChanged_Couldn_t_start_FTP__0_,
+                                    exception.Message), Resources.TimerForm_WriteTournamentTimer_Something_went_wrong,
                                 MessageBoxButtons.OK, MessageBoxIcon.Error);
                             checkBoxFtpEnabled.Checked = false;
                         });
@@ -485,15 +496,17 @@ namespace TCTimer
         private void selectRoundsButton_Click(object sender, EventArgs e)
         {
             var rounds = _tournamentTimer.RoundsList.Select((o, i) =>
-                new CheckListOption<Round>($"Round {i + 1}" + (o.ResultsIframeActive == null
-                    ? " [DEFAULT]"
-                    : ""), o)).ToList();
+                new CheckListOption<Round>(string.Format(Resources.TimerForm_UpdateTime_Round__0_, i + 1) +
+                                           (o.ResultsIframeActive == null
+                                               ? " [DEFAULT]"
+                                               : ""), o)).ToList();
 
             var roundsSelectDialog = new ChooseFromCheckList<Round>(
                 rounds,
                 rounds.Where(o => o.Value.ResultsIframeActive ?? _tournamentTimer.DefaultResultsIframeActive)
                     .ToList(),
-                "Select rounds", "Select rounds in which results should be shown", true);
+                Resources.TimerForm_selectRoundsButton_Click_Select_rounds,
+                Resources.TimerForm_selectRoundsButton_Click_Select_rounds_in_which_results_should_be_shown, true);
             roundsSelectDialog.ShowDialog();
 
             // ReSharper disable once ConvertIfStatementToSwitchStatement
@@ -575,7 +588,7 @@ namespace TCTimer
                 }
             }
 
-            selectedRoundsLabel.Text = "Rounds: " + sb;
+            selectedRoundsLabel.Text = Resources.TimerForm_UpdateSelectedRoundsLabel_Rounds__ + sb;
         }
     }
 }

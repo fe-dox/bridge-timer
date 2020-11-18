@@ -79,5 +79,108 @@ namespace TCTimer.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t start FTP
+        ///{0}.
+        /// </summary>
+        internal static string TimerForm_CheckBoxFtpChanged_Couldn_t_start_FTP__0_ {
+            get {
+                return ResourceManager.GetString("TimerForm_CheckBoxFtpChanged_Couldn_t_start_FTP__0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select rounds.
+        /// </summary>
+        internal static string TimerForm_selectRoundsButton_Click_Select_rounds {
+            get {
+                return ResourceManager.GetString("TimerForm_selectRoundsButton_Click_Select_rounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select rounds in which results should be shown.
+        /// </summary>
+        internal static string TimerForm_selectRoundsButton_Click_Select_rounds_in_which_results_should_be_shown {
+            get {
+                return ResourceManager.GetString("TimerForm_selectRoundsButton_Click_Select_rounds_in_which_results_should_be_shown" +
+                        "", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure?.
+        /// </summary>
+        internal static string TimerForm_TimerForm_FormClosing_Are_you_sure_ {
+            get {
+                return ResourceManager.GetString("TimerForm_TimerForm_FormClosing_Are_you_sure_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to close this window?.
+        /// </summary>
+        internal static string TimerForm_TimerForm_FormClosing_Are_you_sure_you_want_to_close_this_window_ {
+            get {
+                return ResourceManager.GetString("TimerForm_TimerForm_FormClosing_Are_you_sure_you_want_to_close_this_window_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to None selected.
+        /// </summary>
+        internal static string TimerForm_TimerForm_None_selected {
+            get {
+                return ResourceManager.GetString("TimerForm_TimerForm_None_selected", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rounds: .
+        /// </summary>
+        internal static string TimerForm_UpdateSelectedRoundsLabel_Rounds__ {
+            get {
+                return ResourceManager.GetString("TimerForm_UpdateSelectedRoundsLabel_Rounds__", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Round {0}.
+        /// </summary>
+        internal static string TimerForm_UpdateTime_Round__0_ {
+            get {
+                return ResourceManager.GetString("TimerForm_UpdateTime_Round__0_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t update timer file
+        ///{0}.
+        /// </summary>
+        internal static string TimerForm_WriteTournamentTimer_ {
+            get {
+                return ResourceManager.GetString("TimerForm_WriteTournamentTimer_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t send timer to ftp
+        ///{0}.
+        /// </summary>
+        internal static string TimerForm_WriteTournamentTimer_couldn_t_send_timer_to_ftp_ {
+            get {
+                return ResourceManager.GetString("TimerForm_WriteTournamentTimer_couldn_t_send_timer_to_ftp_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong.
+        /// </summary>
+        internal static string TimerForm_WriteTournamentTimer_Something_went_wrong {
+            get {
+                return ResourceManager.GetString("TimerForm_WriteTournamentTimer_Something_went_wrong", resourceCulture);
+            }
+        }
     }
 }

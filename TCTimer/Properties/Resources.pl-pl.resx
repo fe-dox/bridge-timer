@@ -1,0 +1,54 @@
+﻿<root>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>1.3</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="TimerForm_CheckBoxFtpChanged_Couldn_t_start_FTP__0_" xml:space="preserve">
+        <value>Nie udało się uruchomić FTP
+{0}</value>
+    </data>
+    <data name="TimerForm_selectRoundsButton_Click_Select_rounds" xml:space="preserve">
+        <value>Wybierz rundy</value>
+    </data>
+    <data name="TimerForm_selectRoundsButton_Click_Select_rounds_in_which_results_should_be_shown" xml:space="preserve">
+        <value>Wybierz rundy, w których powinny być pokazywane wyniki</value>
+    </data>
+    <data name="TimerForm_TimerForm_FormClosing_Are_you_sure_" xml:space="preserve">
+        <value>Czy jesteś pewien?</value>
+    </data>
+    <data name="TimerForm_TimerForm_FormClosing_Are_you_sure_you_want_to_close_this_window_" xml:space="preserve">
+        <value>Czy jesteś pewien, że chcesz zamknąć to okno?</value>
+    </data>
+    <data name="TimerForm_TimerForm_None_selected" xml:space="preserve">
+        <value>Nie wybrano</value>
+    </data>
+    <data name="TimerForm_UpdateSelectedRoundsLabel_Rounds__" xml:space="preserve">
+        <value>Rundy: </value>
+    </data>
+    <data name="TimerForm_UpdateTime_Round__0_" xml:space="preserve">
+        <value>Runda {0}</value>
+    </data>
+    <data name="TimerForm_WriteTournamentTimer_" xml:space="preserve">
+        <value>Nie udało się zaktualizować pliku zegara
+{0}</value>
+    </data>
+    <data name="TimerForm_WriteTournamentTimer_couldn_t_send_timer_to_ftp_" xml:space="preserve">
+        <value>Nie udało się wysłać zegara na ftp
+{0}</value>
+    </data>
+    <data name="TimerForm_WriteTournamentTimer_Something_went_wrong" xml:space="preserve">
+        <value>Coś poszło nie tak</value>
+    </data>
+</root>

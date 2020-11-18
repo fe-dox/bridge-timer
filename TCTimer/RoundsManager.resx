@@ -157,13 +157,13 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="timerNameTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>353, 39</value>
+    <value>385, 39</value>
   </data>
   <data name="timerNameTextBox.MaxLength" type="System.Int32, mscorlib">
     <value>30</value>
   </data>
   <data name="timerNameTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>447, 20</value>
+    <value>415, 20</value>
   </data>
   <data name="timerNameTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -211,10 +211,10 @@
     <value>Top, Left, Right</value>
   </data>
   <data name="breakTextTextBox.Location" type="System.Drawing.Point, System.Drawing">
-    <value>344, 13</value>
+    <value>385, 13</value>
   </data>
   <data name="breakTextTextBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>456, 20</value>
+    <value>415, 20</value>
   </data>
   <data name="breakTextTextBox.TabIndex" type="System.Int32, mscorlib">
     <value>10</value>
@@ -238,7 +238,7 @@
     <value>283, 68</value>
   </data>
   <data name="label4.Size" type="System.Drawing.Size, System.Drawing">
-    <value>66, 13</value>
+    <value>85, 13</value>
   </data>
   <data name="label4.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -258,11 +258,14 @@
   <data name="&gt;&gt;label4.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="roundOvertimeCheckBox.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="roundOvertimeCheckBox.Location" type="System.Drawing.Point, System.Drawing">
     <value>190, 40</value>
   </data>
   <data name="roundOvertimeCheckBox.Size" type="System.Drawing.Size, System.Drawing">
-    <value>69, 20</value>
+    <value>68, 17</value>
   </data>
   <data name="roundOvertimeCheckBox.TabIndex" type="System.Int32, mscorlib">
     <value>8</value>
@@ -283,7 +286,7 @@
     <value>5</value>
   </data>
   <data name="blinkingDurationUpDown.Location" type="System.Drawing.Point, System.Drawing">
-    <value>355, 66</value>
+    <value>385, 66</value>
   </data>
   <data name="blinkingDurationUpDown.Size" type="System.Drawing.Size, System.Drawing">
     <value>54, 20</value>
@@ -366,6 +369,9 @@
   <data name="&gt;&gt;numberOfRoundsUpDown.ZOrder" xml:space="preserve">
     <value>9</value>
   </data>
+  <data name="label1.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="label1.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -373,7 +379,7 @@
     <value>6, 16</value>
   </data>
   <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>101, 20</value>
+    <value>91, 13</value>
   </data>
   <data name="label1.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -393,6 +399,9 @@
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>10</value>
   </data>
+  <data name="label2.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="label2.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -400,7 +409,7 @@
     <value>6, 42</value>
   </data>
   <data name="label2.Size" type="System.Drawing.Size, System.Drawing">
-    <value>93, 21</value>
+    <value>97, 13</value>
   </data>
   <data name="label2.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -420,6 +429,9 @@
   <data name="&gt;&gt;label2.ZOrder" xml:space="preserve">
     <value>11</value>
   </data>
+  <data name="label3.AutoSize" type="System.Boolean, mscorlib">
+    <value>True</value>
+  </data>
   <data name="label3.ImeMode" type="System.Windows.Forms.ImeMode, System.Windows.Forms">
     <value>NoControl</value>
   </data>
@@ -427,7 +439,7 @@
     <value>6, 68</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>101, 17</value>
+    <value>90, 13</value>
   </data>
   <data name="label3.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -490,7 +502,7 @@
     <value>Overtime</value>
   </data>
   <data name="Overtime.Width" type="System.Int32, mscorlib">
-    <value>60</value>
+    <value>65</value>
   </data>
   <data name="BreakDuration.HeaderText" xml:space="preserve">
     <value>Break Duration</value>

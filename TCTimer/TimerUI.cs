@@ -11,30 +11,27 @@ using TCTimer.Properties;
 using Utils;
 using Utils.Annotations;
 using Timer = System.Timers.Timer;
-
-#if !DEBUG
+// #if !DEBUG
 using System.IO.Compression;
-#endif
+
+// #endif
 
 namespace TCTimer
 {
     public partial class TimerForm : Form
     {
-        private const string SettingsCustomCssFileRegister = "APPEARANCE_FILE_NAME";
-        private const string SettingsCustomCssStringRegister = "APPEARANCE_CUSTOM_CSS_STRING";
-        private const string SettingsLastFtpPath = "LAST_FTP_PATH";
-        private const string SettingsLastFtpUsername = "LAST_FTP_USERNAME";
-        private const string SettingsLastFtpPassword = "LAST_FTP_PASSWORD";
         private const int NumberOfRetries = 25;
-
         private readonly Timer _serializationTimer;
-        private readonly SimpleHttpServer _simpleHttpServer;
-#if !DEBUG
+
+        private SimpleHttpServer _simpleHttpServer;
+
+// #if !DEBUG
         private readonly string _timerPath = Path.GetTempPath() + "\\bridge_timer\\" + Path.GetRandomFileName();
-#else
+
+// #else
         // ReSharper disable once InconsistentNaming
-        private const string _timerPath = "..\\..\\WebApp\\wwwroot";
-#endif
+        // private const string _timerPath = "..\\..\\WebApp\\wwwroot";
+// #endif
         private readonly TournamentTimer _tournamentTimer;
         [CanBeNull] private Ftp _ftp;
         [CanBeNull] private string _customCss;
@@ -48,24 +45,64 @@ namespace TCTimer
             _tournamentTimer.SettingsChanged += UpdateTime;
             _tournamentTimer.OnFinished += OnFinished;
             _tournamentTimer.FileUpdateRequired += WriteTournamentTimer;
-            if (!Directory.Exists(_timerPath))
-            {
-                Directory.CreateDirectory(_timerPath);
-            }
-#if !DEBUG
-            new Task(() =>
-            {
-                ZipFile.ExtractToDirectory(Application.StartupPath + "\\WebApp.app", _timerPath);
-            }).Start();
-#endif
-            customCSSLabel.Text = Settings.Read(SettingsCustomCssFileRegister) ??
+            CreateDirectoryAndUnZip().Wait();
+            customCSSLabel.Text = Settings.Read(Settings.SettingsCustomCssFileRegister) ??
                                   Resources.TimerForm_TimerForm_None_selected;
-            _customCss = Settings.Read(SettingsCustomCssStringRegister);
-            _simpleHttpServer = new SimpleHttpServer(_timerPath);
-            _serializationTimer = new Timer(60_000);
+            _customCss = Settings.Read(Settings.SettingsCustomCssStringRegister);
+            _serializationTimer = new Timer(60000);
             _serializationTimer.Elapsed += WriteTournamentTimer;
             _serializationTimer.Start();
             WriteTournamentTimer(this, EventArgs.Empty);
+        }
+
+        private async Task CreateDirectoryAndUnZip(bool askForPath = false)
+        {
+            if (askForPath)
+            {
+                using var openFolderDialog = new FolderBrowserDialog();
+                while (openFolderDialog.ShowDialog() != DialogResult.OK)
+                {
+                    MessageBox.Show("You have to choose location");
+                }
+            }
+
+            try
+            {
+                await TryMultipleTimes(() =>
+                {
+                    if (!Directory.Exists(_timerPath))
+                    {
+                        Directory.CreateDirectory(_timerPath);
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    $"Couldn't create directory {_timerPath} because {e.Message}, please choose another location",
+                    Resources.TimerForm_WriteTournamentTimer_Something_went_wrong, MessageBoxButtons.OK);
+                await CreateDirectoryAndUnZip(true);
+            }
+
+// #if !DEBUG
+            try
+            {
+                await TryMultipleTimes(() =>
+                {
+                    ZipFile.ExtractToDirectory(Application.StartupPath + "\\WebApp.app", _timerPath);
+                });
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(
+                    $"Couldn't extract web app files to directory {_timerPath} because {e.Message}, please choose another location",
+                    Resources.TimerForm_WriteTournamentTimer_Something_went_wrong, MessageBoxButtons.OK);
+                await CreateDirectoryAndUnZip(true);
+            }
+
+// #endif
+            _simpleHttpServer?.Stop();
+            _simpleHttpServer = new SimpleHttpServer(_timerPath);
         }
 
         private void OnFinished(object sender, EventArgs e)
@@ -119,7 +156,7 @@ namespace TCTimer
             {
                 try
                 {
-                    await Task.Run(() => func);
+                    await Task.Run(func);
                     return;
                 }
                 catch
@@ -378,8 +415,8 @@ namespace TCTimer
             var filePath = openFileDialog.FileName;
             _customCss = _tournamentTimer.Style = File.ReadAllText(filePath);
             customCSSLabel.Text = Path.GetFileName(filePath);
-            Settings.Write(SettingsCustomCssFileRegister, Path.GetFileName(filePath));
-            Settings.Write(SettingsCustomCssStringRegister, _customCss);
+            Settings.Write(Settings.SettingsCustomCssFileRegister, Path.GetFileName(filePath));
+            Settings.Write(Settings.SettingsCustomCssStringRegister, _customCss);
         }
 
         private async void checkBoxFtpEnabled_CheckedChanged(object sender, EventArgs e)
@@ -402,9 +439,9 @@ namespace TCTimer
                     {
                         _ftp = new Ftp(textBoxFtpUsername.Text, textBoxFtpPassword.Text, textBoxFtpPath.Text);
                         _ftp.ConnectAndCreateDirectories();
-                        Settings.Write(SettingsLastFtpPath, textBoxFtpPath.Text);
-                        Settings.Write(SettingsLastFtpUsername, textBoxFtpUsername.Text);
-                        Settings.Write(SettingsLastFtpPassword, textBoxFtpPassword.Text);
+                        Settings.Write(Settings.SettingsLastFtpPathRegister, textBoxFtpPath.Text);
+                        Settings.Write(Settings.SettingsLastFtpUsernameRegister, textBoxFtpUsername.Text);
+                        Settings.Write(Settings.SettingsLastFtpPasswordRegister, textBoxFtpPassword.Text);
                         RunAction(() => ftpStatusIndicator.BackColor = Color.LawnGreen);
                     }
                     catch (Exception exception)
@@ -452,9 +489,9 @@ namespace TCTimer
 
         private void buttonLoadLastCredentials_Click(object sender, EventArgs e)
         {
-            textBoxFtpPath.Text = Settings.Read(SettingsLastFtpPath) ?? string.Empty;
-            textBoxFtpUsername.Text = Settings.Read(SettingsLastFtpUsername) ?? string.Empty;
-            textBoxFtpPassword.Text = Settings.Read(SettingsLastFtpPassword) ?? string.Empty;
+            textBoxFtpPath.Text = Settings.Read(Settings.SettingsLastFtpPathRegister) ?? string.Empty;
+            textBoxFtpUsername.Text = Settings.Read(Settings.SettingsLastFtpUsernameRegister) ?? string.Empty;
+            textBoxFtpPassword.Text = Settings.Read(Settings.SettingsLastFtpPasswordRegister) ?? string.Empty;
         }
 
         private void resultsIframeCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -589,6 +626,16 @@ namespace TCTimer
             }
 
             selectedRoundsLabel.Text = Resources.TimerForm_UpdateSelectedRoundsLabel_Rounds__ + sb;
+        }
+
+        private void englishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        private void polishToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

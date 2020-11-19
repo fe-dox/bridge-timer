@@ -27,5 +27,12 @@ namespace TCTimer
                 return null;
             }
         }
+
+        internal const string SettingsCustomCssFileRegister = "APPEARANCE_FILE_NAME";
+        internal const string SettingsCustomCssStringRegister = "APPEARANCE_CUSTOM_CSS_STRING";
+        internal const string SettingsLastFtpPathRegister = "LAST_FTP_PATH";
+        internal const string SettingsLastFtpUsernameRegister = "LAST_FTP_USERNAME";
+        internal const string SettingsLastFtpPasswordRegister = "LAST_FTP_PASSWORD";
+        internal const string SettingsLanguageRegister = "PROGRAM_LANGUAGE";
     }
 }

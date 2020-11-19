@@ -2250,4 +2250,10 @@
     <data name="$this.Text" xml:space="preserve">
     <value>Zegar Brydżowy</value>
   </data>
+    <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
+        <value>Ustawienia</value>
+    </data>
+    <data name="languageToolStripMenuItem.Text" xml:space="preserve">
+        <value>Język</value>
+    </data>
 </root>

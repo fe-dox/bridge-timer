@@ -13,8 +13,8 @@ namespace TCTimer
         [STAThread]
         static void Main()
         {
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("pl-Pl");
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("pl-Pl");
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-EN");
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-EN");
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new TimerForm());

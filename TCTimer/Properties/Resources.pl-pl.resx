@@ -51,4 +51,32 @@
     <data name="TimerForm_WriteTournamentTimer_Something_went_wrong" xml:space="preserve">
         <value>Coś poszło nie tak</value>
     </data>
+    <data name="TimerForm_CreateDirectoryAndUnZip_Couldn_t_create_directory__0__because__1___please_choose_another_location"
+          xml:space="preserve">
+        <value>Nie udało się utworzyć folderu {0} ponieważ {1}. Proszę wybrać inną lokalizację.</value>
+    </data>
+    <data name="TimerForm_CreateDirectoryAndUnZip_Couldn_t_extract_web_app_files_to_directory__0__because__1___please_choose_another_location"
+          xml:space="preserve">
+        <value>Nie udało się rozpakować plików aplikacji webowej do folderu {0} ponieważ {1}. Proszę wybrać inną lokalizację</value>
+    </data>
+    <data name="TimerForm_CreateDirectoryAndUnZip_Please_choose_valid_location" xml:space="preserve">
+        <value>Proszę wybrać prawidłową lokalizację</value>
+    </data>
+    <data name="TimerForm_CreateDirectoryAndUnZip_You_have_to_choose_location" xml:space="preserve">
+        <value>Musisz wybrać lokalizację</value>
+    </data>
+    <data name="TimerForm_englishToolStripMenuItem_Click_Changing_settings_requires_restart" xml:space="preserve">
+        <value>Zmiana ustawień wymaga ponownego uruchomienia programu</value>
+    </data>
+    <data name="TimerForm_englishToolStripMenuItem_Click_Language_will_be_update_after_app_restart"
+          xml:space="preserve">
+        <value>Język zostanie zmieniony po restarcie aplikacji</value>
+    </data>
+    <data name="TimerForm_OnFinished_Finished" xml:space="preserve">
+        <value>Koniec</value>
+    </data>
+    <data name="TimerForm_resultsUrlTextBox_TextChanged_" xml:space="preserve">
+        <value>Nie udało się skrócić URLa
+{0}</value>
+    </data>
 </root>

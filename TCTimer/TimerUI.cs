@@ -1,37 +1,37 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TCTimer.Properties;
 using Utils;
 using Utils.Annotations;
 using Timer = System.Timers.Timer;
-// #if !DEBUG
-using System.IO.Compression;
 
-// #endif
+#if !DEBUG
+using System.IO.Compression;
+#endif
 
 namespace TCTimer
 {
     public partial class TimerForm : Form
     {
         private const int NumberOfRetries = 25;
-        private readonly Timer _serializationTimer;
-
         private SimpleHttpServer _simpleHttpServer;
 
-// #if !DEBUG
-        private readonly string _timerPath = Path.GetTempPath() + "\\bridge_timer\\" + Path.GetRandomFileName();
+#if !DEBUG
+        private string _timerPath = Path.GetTempPath() + "\\bridge_timer\\" + Path.GetRandomFileName();
 
-// #else
+#else
         // ReSharper disable once InconsistentNaming
-        // private const string _timerPath = "..\\..\\WebApp\\wwwroot";
-// #endif
+        private string _timerPath = "..\\..\\WebApp\\wwwroot";
+#endif
         private readonly TournamentTimer _tournamentTimer;
         [CanBeNull] private Ftp _ftp;
         [CanBeNull] private string _customCss;
@@ -39,70 +39,91 @@ namespace TCTimer
         public TimerForm()
         {
             InitializeComponent();
+            if (Thread.CurrentThread.CurrentUICulture.Equals(CultureInfo.GetCultureInfo("pl-PL")))
+            {
+                polishToolStripMenuItem.Checked = true;
+            }
+            else
+            {
+                englishToolStripMenuItem.Checked = true;
+            }
+
             _tournamentTimer = new TournamentTimer((int) numberOfRoundsUpDown.Value,
                 minutesPerRoundUpDown.Value, (int) breakTimeUpDown.Value, 90);
             _tournamentTimer.Ticked += UpdateTime;
             _tournamentTimer.SettingsChanged += UpdateTime;
             _tournamentTimer.OnFinished += OnFinished;
             _tournamentTimer.FileUpdateRequired += WriteTournamentTimer;
-            CreateDirectoryAndUnZip().Wait();
+            CreateDirectoryAndUnZip();
             customCSSLabel.Text = Settings.Read(Settings.SettingsCustomCssFileRegister) ??
                                   Resources.TimerForm_TimerForm_None_selected;
             _customCss = Settings.Read(Settings.SettingsCustomCssStringRegister);
-            _serializationTimer = new Timer(60000);
-            _serializationTimer.Elapsed += WriteTournamentTimer;
-            _serializationTimer.Start();
+            var serializationTimer = new Timer(60000);
+            serializationTimer.Elapsed += WriteTournamentTimer;
+            serializationTimer.Start();
             WriteTournamentTimer(this, EventArgs.Empty);
         }
 
-        private async Task CreateDirectoryAndUnZip(bool askForPath = false)
+        private void CreateDirectoryAndUnZip(bool askForPath = false)
         {
-            if (askForPath)
+            var t = Task.Run(async () =>
             {
-                using var openFolderDialog = new FolderBrowserDialog();
-                while (openFolderDialog.ShowDialog() != DialogResult.OK)
+                if (askForPath)
                 {
-                    MessageBox.Show("You have to choose location");
-                }
-            }
-
-            try
-            {
-                await TryMultipleTimes(() =>
-                {
-                    if (!Directory.Exists(_timerPath))
+                    using var openFolderDialog = new FolderBrowserDialog();
+                    while (openFolderDialog.ShowDialog() != DialogResult.OK)
                     {
-                        Directory.CreateDirectory(_timerPath);
+                        MessageBox.Show(Resources.TimerForm_CreateDirectoryAndUnZip_Please_choose_valid_location,
+                            Resources.TimerForm_CreateDirectoryAndUnZip_You_have_to_choose_location,
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                });
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(
-                    $"Couldn't create directory {_timerPath} because {e.Message}, please choose another location",
-                    Resources.TimerForm_WriteTournamentTimer_Something_went_wrong, MessageBoxButtons.OK);
-                await CreateDirectoryAndUnZip(true);
-            }
 
-// #if !DEBUG
-            try
-            {
-                await TryMultipleTimes(() =>
+                    _timerPath = openFolderDialog.SelectedPath;
+                }
+
+                try
                 {
-                    ZipFile.ExtractToDirectory(Application.StartupPath + "\\WebApp.app", _timerPath);
-                });
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(
-                    $"Couldn't extract web app files to directory {_timerPath} because {e.Message}, please choose another location",
-                    Resources.TimerForm_WriteTournamentTimer_Something_went_wrong, MessageBoxButtons.OK);
-                await CreateDirectoryAndUnZip(true);
-            }
+                    await TryMultipleTimes(() =>
+                    {
+                        if (!Directory.Exists(_timerPath))
+                        {
+                            Directory.CreateDirectory(_timerPath);
+                        }
+                    });
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(
+                        string.Format(
+                            Resources
+                                .TimerForm_CreateDirectoryAndUnZip_Couldn_t_create_directory__0__because__1___please_choose_another_location,
+                            _timerPath, e.Message),
+                        Resources.TimerForm_WriteTournamentTimer_Something_went_wrong, MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    CreateDirectoryAndUnZip(true);
+                }
 
-// #endif
-            _simpleHttpServer?.Stop();
-            _simpleHttpServer = new SimpleHttpServer(_timerPath);
+#if !DEBUG
+                try
+                {
+                    await TryMultipleTimes(() =>
+                    {
+                        ZipFile.ExtractToDirectory(Application.StartupPath + "\\WebApp.app", _timerPath);
+                    });
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(
+                        string.Format(Resources.TimerForm_CreateDirectoryAndUnZip_Couldn_t_extract_web_app_files_to_directory__0__because__1___please_choose_another_location, _timerPath, e.Message),
+                        Resources.TimerForm_WriteTournamentTimer_Something_went_wrong, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    CreateDirectoryAndUnZip(true);
+                }
+
+#endif
+                _simpleHttpServer?.Stop();
+                _simpleHttpServer = new SimpleHttpServer(_timerPath);
+            });
+            t.Wait();
         }
 
         private void OnFinished(object sender, EventArgs e)
@@ -111,7 +132,7 @@ namespace TCTimer
             {
                 stopStartButton.Image = Resources.StartWithoutDebug_16x;
                 currentTime.Text = DateTime.Now.ToString(@"HH\:mm");
-                currentRoundLabel.Text = "Finished";
+                currentRoundLabel.Text = Resources.TimerForm_OnFinished_Finished;
             });
         }
 
@@ -293,7 +314,7 @@ namespace TCTimer
             }
             catch (Exception exception)
             {
-                MessageBox.Show($"Couldn't shorten URL\n{exception.Message}",
+                MessageBox.Show(string.Format(Resources.TimerForm_resultsUrlTextBox_TextChanged_, exception.Message),
                     Resources.TimerForm_WriteTournamentTimer_Something_went_wrong,
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Error);
@@ -630,12 +651,26 @@ namespace TCTimer
 
         private void englishToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            Settings.Write(Settings.SettingsLanguageRegister, "en-EN");
+            englishToolStripMenuItem.Checked = true;
+            polishToolStripMenuItem.Checked = false;
+            if (Thread.CurrentThread.CurrentUICulture.Equals(CultureInfo.GetCultureInfo("pl-PL")))
+                MessageBox.Show(
+                    Resources.TimerForm_englishToolStripMenuItem_Click_Language_will_be_update_after_app_restart,
+                    Resources.TimerForm_englishToolStripMenuItem_Click_Changing_settings_requires_restart,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void polishToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            throw new System.NotImplementedException();
+            Settings.Write(Settings.SettingsLanguageRegister, "pl-Pl");
+            englishToolStripMenuItem.Checked = false;
+            polishToolStripMenuItem.Checked = true;
+            if (!Thread.CurrentThread.CurrentUICulture.Equals(CultureInfo.GetCultureInfo("pl-PL")))
+                MessageBox.Show(
+                    Resources.TimerForm_englishToolStripMenuItem_Click_Language_will_be_update_after_app_restart,
+                    Resources.TimerForm_englishToolStripMenuItem_Click_Changing_settings_requires_restart,
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

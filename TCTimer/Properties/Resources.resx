@@ -167,4 +167,31 @@
   <data name="TimerForm_UpdateSelectedRoundsLabel_Rounds__" xml:space="preserve">
     <value>Rounds: </value>
   </data>
+  <data name="TimerForm_CreateDirectoryAndUnZip_Please_choose_valid_location" xml:space="preserve">
+    <value>Please choose valid location</value>
+  </data>
+  <data name="TimerForm_CreateDirectoryAndUnZip_You_have_to_choose_location" xml:space="preserve">
+    <value>You have to choose location</value>
+  </data>
+  <data name="TimerForm_CreateDirectoryAndUnZip_Couldn_t_create_directory__0__because__1___please_choose_another_location"
+        xml:space="preserve">
+    <value>Couldn't create directory {0} because {1}, please choose another location</value>
+  </data>
+  <data name="TimerForm_CreateDirectoryAndUnZip_Couldn_t_extract_web_app_files_to_directory__0__because__1___please_choose_another_location"
+        xml:space="preserve">
+    <value>Couldn't extract web app files to directory {0} because {1}, please choose another location</value>
+  </data>
+  <data name="TimerForm_resultsUrlTextBox_TextChanged_" xml:space="preserve">
+    <value>Couldn't shorten URL
+{0}</value>
+  </data>
+  <data name="TimerForm_OnFinished_Finished" xml:space="preserve">
+    <value>Finished</value>
+  </data>
+  <data name="TimerForm_englishToolStripMenuItem_Click_Language_will_be_update_after_app_restart" xml:space="preserve">
+    <value>Language will be update after app restart</value>
+  </data>
+  <data name="TimerForm_englishToolStripMenuItem_Click_Changing_settings_requires_restart" xml:space="preserve">
+    <value>Changing settings requires app restart</value>
+  </data>
 </root>

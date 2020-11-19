@@ -91,6 +91,82 @@ namespace TCTimer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t create directory {0} because {1}, please choose another location.
+        /// </summary>
+        internal static string TimerForm_CreateDirectoryAndUnZip_Couldn_t_create_directory__0__because__1___please_choose_another_location {
+            get {
+                return ResourceManager.GetString("TimerForm_CreateDirectoryAndUnZip_Couldn_t_create_directory__0__because__1___plea" +
+                        "se_choose_another_location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t extract web app files to directory {0} because {1}, please choose another location.
+        /// </summary>
+        internal static string TimerForm_CreateDirectoryAndUnZip_Couldn_t_extract_web_app_files_to_directory__0__because__1___please_choose_another_location {
+            get {
+                return ResourceManager.GetString("TimerForm_CreateDirectoryAndUnZip_Couldn_t_extract_web_app_files_to_directory__0_" +
+                        "_because__1___please_choose_another_location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please choose valid location.
+        /// </summary>
+        internal static string TimerForm_CreateDirectoryAndUnZip_Please_choose_valid_location {
+            get {
+                return ResourceManager.GetString("TimerForm_CreateDirectoryAndUnZip_Please_choose_valid_location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have to choose location.
+        /// </summary>
+        internal static string TimerForm_CreateDirectoryAndUnZip_You_have_to_choose_location {
+            get {
+                return ResourceManager.GetString("TimerForm_CreateDirectoryAndUnZip_You_have_to_choose_location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Changing settings requires app restart.
+        /// </summary>
+        internal static string TimerForm_englishToolStripMenuItem_Click_Changing_settings_requires_restart {
+            get {
+                return ResourceManager.GetString("TimerForm_englishToolStripMenuItem_Click_Changing_settings_requires_restart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language will be update after app restart.
+        /// </summary>
+        internal static string TimerForm_englishToolStripMenuItem_Click_Language_will_be_update_after_app_restart {
+            get {
+                return ResourceManager.GetString("TimerForm_englishToolStripMenuItem_Click_Language_will_be_update_after_app_restar" +
+                        "t", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Finished.
+        /// </summary>
+        internal static string TimerForm_OnFinished_Finished {
+            get {
+                return ResourceManager.GetString("TimerForm_OnFinished_Finished", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Couldn&apos;t shorten URL
+        ///{0}.
+        /// </summary>
+        internal static string TimerForm_resultsUrlTextBox_TextChanged_ {
+            get {
+                return ResourceManager.GetString("TimerForm_resultsUrlTextBox_TextChanged_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select rounds.
         /// </summary>
         internal static string TimerForm_selectRoundsButton_Click_Select_rounds {

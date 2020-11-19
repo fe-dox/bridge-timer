@@ -1062,27 +1062,27 @@
     <data name="aboutMenuItem.Text" xml:space="preserve">
     <value>About</value>
   </data>
-    <data name="englishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-        <value>152, 22</value>
-    </data>
-    <data name="englishToolStripMenuItem.Text" xml:space="preserve">
+  <data name="englishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="englishToolStripMenuItem.Text" xml:space="preserve">
     <value>English</value>
   </data>
-    <data name="polishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-        <value>152, 22</value>
-    </data>
-    <data name="polishToolStripMenuItem.Text" xml:space="preserve">
-    <value>Polish</value>
+  <data name="polishToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
   </data>
-    <data name="languageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-        <value>152, 22</value>
-    </data>
-    <data name="languageToolStripMenuItem.Text" xml:space="preserve">
+  <data name="polishToolStripMenuItem.Text" xml:space="preserve">
+    <value>Polski</value>
+  </data>
+  <data name="languageToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="languageToolStripMenuItem.Text" xml:space="preserve">
     <value>Language</value>
   </data>
-    <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
-        <value>61, 20</value>
-    </data>
+  <data name="settingsToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>61, 20</value>
+  </data>
     <data name="settingsToolStripMenuItem.Text" xml:space="preserve">
     <value>Settings</value>
   </data>

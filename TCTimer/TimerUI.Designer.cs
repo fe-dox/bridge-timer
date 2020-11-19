@@ -105,19 +105,19 @@
             this.label11 = new System.Windows.Forms.Label();
             this.clockVisibilityDurationUpDown = new System.Windows.Forms.NumericUpDown();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationNumericUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blinkingDurationNumericUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.breakTimeUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minutesPerRoundUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberOfRoundsUpDown)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.messageDurationUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.messageDurationUpDown)).BeginInit();
             this.miniToolStrip.SuspendLayout();
             this.groupBoxFtp.SuspendLayout();
             this.appearanceGroupBox.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.resultsIframeVisibilityUpDown)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.clockVisibilityDurationUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.resultsIframeVisibilityUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clockVisibilityDurationUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // showTimerButton
@@ -150,9 +150,17 @@
             // blinkingDurationNumericUpDown
             // 
             resources.ApplyResources(this.blinkingDurationNumericUpDown, "blinkingDurationNumericUpDown");
-            this.blinkingDurationNumericUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.blinkingDurationNumericUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.blinkingDurationNumericUpDown.Name = "blinkingDurationNumericUpDown";
-            this.blinkingDurationNumericUpDown.Value = new decimal(new int[] {90, 0, 0, 0});
+            this.blinkingDurationNumericUpDown.Value = new decimal(new int[] {
+            90,
+            0,
+            0,
+            0});
             this.blinkingDurationNumericUpDown.ValueChanged += new System.EventHandler(this.blinkingDurationNumericUpDown_ValueChanged);
             // 
             // advancedRoundEditor
@@ -165,26 +173,50 @@
             // breakTimeUpDown
             // 
             resources.ApplyResources(this.breakTimeUpDown, "breakTimeUpDown");
-            this.breakTimeUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.breakTimeUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.breakTimeUpDown.Name = "breakTimeUpDown";
-            this.breakTimeUpDown.Value = new decimal(new int[] {30, 0, 0, 0});
+            this.breakTimeUpDown.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
             this.breakTimeUpDown.ValueChanged += new System.EventHandler(this.breakTimeUpDown_ValueChanged);
             // 
             // minutesPerRoundUpDown
             // 
             this.minutesPerRoundUpDown.DecimalPlaces = 1;
             resources.ApplyResources(this.minutesPerRoundUpDown, "minutesPerRoundUpDown");
-            this.minutesPerRoundUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.minutesPerRoundUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.minutesPerRoundUpDown.Name = "minutesPerRoundUpDown";
-            this.minutesPerRoundUpDown.Value = new decimal(new int[] {165, 0, 0, 65536});
+            this.minutesPerRoundUpDown.Value = new decimal(new int[] {
+            165,
+            0,
+            0,
+            65536});
             this.minutesPerRoundUpDown.ValueChanged += new System.EventHandler(this.minutesPerRoundUpDown_ValueChanged);
             // 
             // numberOfRoundsUpDown
             // 
             resources.ApplyResources(this.numberOfRoundsUpDown, "numberOfRoundsUpDown");
-            this.numberOfRoundsUpDown.Minimum = new decimal(new int[] {1, 0, 0, 0});
+            this.numberOfRoundsUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numberOfRoundsUpDown.Name = "numberOfRoundsUpDown";
-            this.numberOfRoundsUpDown.Value = new decimal(new int[] {12, 0, 0, 0});
+            this.numberOfRoundsUpDown.Value = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
             this.numberOfRoundsUpDown.ValueChanged += new System.EventHandler(this.numberOfRoundsUpDown_ValueChanged);
             // 
             // label1
@@ -325,10 +357,22 @@
             // messageDurationUpDown
             // 
             resources.ApplyResources(this.messageDurationUpDown, "messageDurationUpDown");
-            this.messageDurationUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
-            this.messageDurationUpDown.Minimum = new decimal(new int[] {5, 0, 0, 0});
+            this.messageDurationUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.messageDurationUpDown.Minimum = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
             this.messageDurationUpDown.Name = "messageDurationUpDown";
-            this.messageDurationUpDown.Value = new decimal(new int[] {15, 0, 0, 0});
+            this.messageDurationUpDown.Value = new decimal(new int[] {
+            15,
+            0,
+            0,
+            0});
             // 
             // label5
             // 
@@ -349,13 +393,17 @@
             // 
             // miniToolStrip
             // 
-            this.miniToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {this.fileToolStripMenuItem, this.aboutMenuItem, this.settingsToolStripMenuItem});
+            this.miniToolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.settingsToolStripMenuItem,
+            this.aboutMenuItem});
             resources.ApplyResources(this.miniToolStrip, "miniToolStrip");
             this.miniToolStrip.Name = "miniToolStrip";
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.closeMenuItem});
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.closeMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             resources.ApplyResources(this.fileToolStripMenuItem, "fileToolStripMenuItem");
             // 
@@ -367,7 +415,9 @@
             // 
             // aboutMenuItem
             // 
-            this.aboutMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.aboutToolStripMenuItem, this.gitHubToolStripMenuItem});
+            this.aboutMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem,
+            this.gitHubToolStripMenuItem});
             this.aboutMenuItem.Name = "aboutMenuItem";
             resources.ApplyResources(this.aboutMenuItem, "aboutMenuItem");
             // 
@@ -385,13 +435,16 @@
             // 
             // settingsToolStripMenuItem
             // 
-            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.languageToolStripMenuItem});
+            this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.languageToolStripMenuItem});
             this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
             resources.ApplyResources(this.settingsToolStripMenuItem, "settingsToolStripMenuItem");
             // 
             // languageToolStripMenuItem
             // 
-            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {this.englishToolStripMenuItem, this.polishToolStripMenuItem});
+            this.languageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.englishToolStripMenuItem,
+            this.polishToolStripMenuItem});
             this.languageToolStripMenuItem.Name = "languageToolStripMenuItem";
             resources.ApplyResources(this.languageToolStripMenuItem, "languageToolStripMenuItem");
             // 
@@ -619,9 +672,17 @@
             // resultsIframeVisibilityUpDown
             // 
             resources.ApplyResources(this.resultsIframeVisibilityUpDown, "resultsIframeVisibilityUpDown");
-            this.resultsIframeVisibilityUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.resultsIframeVisibilityUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.resultsIframeVisibilityUpDown.Name = "resultsIframeVisibilityUpDown";
-            this.resultsIframeVisibilityUpDown.Value = new decimal(new int[] {60, 0, 0, 0});
+            this.resultsIframeVisibilityUpDown.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
             this.resultsIframeVisibilityUpDown.ValueChanged += new System.EventHandler(this.resultsIframeVisibilityUpDown_ValueChanged);
             // 
             // label13
@@ -637,9 +698,17 @@
             // clockVisibilityDurationUpDown
             // 
             resources.ApplyResources(this.clockVisibilityDurationUpDown, "clockVisibilityDurationUpDown");
-            this.clockVisibilityDurationUpDown.Maximum = new decimal(new int[] {10000, 0, 0, 0});
+            this.clockVisibilityDurationUpDown.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
             this.clockVisibilityDurationUpDown.Name = "clockVisibilityDurationUpDown";
-            this.clockVisibilityDurationUpDown.Value = new decimal(new int[] {60, 0, 0, 0});
+            this.clockVisibilityDurationUpDown.Value = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
             this.clockVisibilityDurationUpDown.ValueChanged += new System.EventHandler(this.clockVisibilityDurationUpDown_ValueChanged);
             // 
             // TimerForm
@@ -668,15 +737,15 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TimerForm_FormClosing);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.blinkingDurationNumericUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.breakTimeUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.minutesPerRoundUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.numberOfRoundsUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.blinkingDurationNumericUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.breakTimeUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.minutesPerRoundUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numberOfRoundsUpDown)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.messageDurationUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.messageDurationUpDown)).EndInit();
             this.miniToolStrip.ResumeLayout(false);
             this.miniToolStrip.PerformLayout();
             this.groupBoxFtp.ResumeLayout(false);
@@ -685,10 +754,11 @@
             this.appearanceGroupBox.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.resultsIframeVisibilityUpDown)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.clockVisibilityDurationUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.resultsIframeVisibilityUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.clockVisibilityDurationUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
         }
 
         private System.Windows.Forms.ToolStripMenuItem englishToolStripMenuItem;

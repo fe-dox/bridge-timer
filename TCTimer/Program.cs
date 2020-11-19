@@ -13,8 +13,9 @@ namespace TCTimer
         [STAThread]
         static void Main()
         {
-            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-EN");
-            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-EN");
+            var currentCulture = Settings.Read(Settings.SettingsLanguageRegister) ?? "en-EN";
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(currentCulture);
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo(currentCulture);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new TimerForm());

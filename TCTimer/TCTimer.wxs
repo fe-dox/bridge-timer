@@ -1,8 +1,8 @@
 ﻿<Wix xmlns='http://schemas.microsoft.com/wix/2006/wi'>
     <Product Name='TCTimer' Manufacturer='Mikolaj Bogucki'
-             Id='69F0EEF3-64F7-4C5A-8516-A1049F846313'
+             Id='E6171720-598E-409A-91FD-C80BA75FB065'
              UpgradeCode='FB92D70E-4301-44FD-A9B8-7CB28BF9F4E1'
-             Language='1033' Codepage='1252' Version='1.0.5'>
+             Language='1033' Codepage='1252' Version='1.0.6'>
         <Package Id='*' Keywords='Installer' Description="TCTimer 1.0.5 Installer" Manufacturer='Mikolaj Bogucki'
                  InstallerVersion='100' Languages='1033' Compressed='yes' SummaryCodepage='1252'/>
         <Condition Message="You need to be an administrator to install this product.">
@@ -11,7 +11,7 @@
         <Upgrade Id='FB92D70E-4301-44FD-A9B8-7CB28BF9F4E1'>
             <UpgradeVersion OnlyDetect='no' Property='PREVIOUSFOUND'
                             Minimum='1.0.0' IncludeMinimum='yes'
-                            Maximum='1.0.5' IncludeMaximum='no'/>
+                            Maximum='1.0.6' IncludeMaximum='no'/>
         </Upgrade>
 
         <InstallExecuteSequence>
@@ -51,6 +51,13 @@
                                   KeyPath="yes"/>
                         </Component>
 
+                        <Directory Id="Translation_pl_pl" Name="pl-pl">
+                            <Component Id="Translation_pl_pl_resources" Guid="F5531876-F685-4F6A-A8A9-80114E5B01D3">
+                                <File Id="TCTimer.resources.dll_pl_pl" Name="TCTimer.resources.dll" DiskId="1"
+                                      Source="./bin/Release/pl-pl/TCTimer.resources.dll" KeyPath="yes"/>
+                            </Component>
+                        </Directory>
+
                     </Directory>
                 </Directory>
             </Directory>
@@ -71,6 +78,7 @@
 
         <Feature Id='Complete' Level='1'>
             <ComponentRef Id='MainExecutable'/>
+            <ComponentRef Id='Translation_pl_pl_resources'/>
             <ComponentRef Id='MainExecutableConfig'/>
             <ComponentRef Id='WebApp'/>
             <ComponentRef Id='Utils'/>

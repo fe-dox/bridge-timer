@@ -100,7 +100,7 @@ namespace Utils
             }
         }
 
-        public event EventHandler<(string, object?)> PropertyChanged;
+        public event EventHandler<(string, object?)>? PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         private void OnPropertyChanged(object? newValue, [CallerMemberName] string propertyName = "")

@@ -303,7 +303,7 @@ namespace Utils
             }
         }
 
-        private void RoundPropertyChanged(object sender, (string, object) valueTuple)
+        private void RoundPropertyChanged(object sender, (string, object?) valueTuple)
         {
             var (propertyName, newValue) = valueTuple;
             var changedRound = sender as Round;
